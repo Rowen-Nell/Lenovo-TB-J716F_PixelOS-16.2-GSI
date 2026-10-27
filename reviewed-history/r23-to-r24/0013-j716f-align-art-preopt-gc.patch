@@ -1,0 +1,10 @@
+--- a/pixelos_tb03_arm64_ext4.mk
++++ b/pixelos_tb03_arm64_ext4.mk
+@@ -71,3 +71,7 @@
+ PRODUCT_COPY_FILES := $(filter-out device/phh/treble/remote/dbclient:system/bin/dbclient device/phh/treble/remote/phh-remotectl.rc:system/etc/init/phh-remotectl.rc device/phh/treble/remote/phh-remotectl.sh:system/bin/phh-remotectl.sh,$(PRODUCT_COPY_FILES))
+ # Names are defaults only. Existing user-selected settings are never rewritten.
+ PRODUCT_PACKAGE_OVERLAYS += device/tb03/gsi/overlay/product
++
++# J716F uses the stock non-GKI 4.19 kernel and runtime CC, not UFFD/CMC.
++# Match dexpreopt artifacts to this device; do not replace libart or the kernel.
++PRODUCT_ENABLE_UFFD_GC := false

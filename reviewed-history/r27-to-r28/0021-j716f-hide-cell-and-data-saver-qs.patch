@@ -1,0 +1,61 @@
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java
+@@ -17,6 +17,7 @@
+ import android.content.Intent;
+ import android.os.Handler;
+ import android.os.Looper;
++import android.os.SystemProperties;
+ import android.provider.Settings;
+ import android.service.quicksettings.Tile;
+ import android.widget.Switch;
+@@ -87,6 +88,12 @@
+     @Override
+     public BooleanState newTileState() {
+         return new BooleanState();
++    }
++
++    @Override
++    public boolean isAvailable() {
++        // J716F is Wi-Fi-only; do not expose its unsupported cellular settings entry.
++        return !"p11_pro_plus".equals(SystemProperties.get("ro.product.vendor.device"));
+     }
+ 
+     @Override
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt
+@@ -16,6 +16,7 @@
+ 
+ package com.android.systemui.qs.tiles.impl.saver.domain.interactor
+ 
++import android.os.SystemProperties
+ import android.os.UserHandle
+ import com.android.systemui.common.coroutine.ConflatedCallbackFlow
+ import com.android.systemui.qs.tiles.base.domain.interactor.QSTileDataInteractor
+@@ -47,5 +48,7 @@
+             awaitClose { dataSaverController.removeCallback(callback) }
+         }
+ 
+-    override fun availability(user: UserHandle): Flow<Boolean> = flowOf(true)
++    // Keep the underlying metered-network policy; hide only this product's QS entry.
++    override fun availability(user: UserHandle): Flow<Boolean> =
++        flowOf(SystemProperties.get("ro.product.vendor.device") != "p11_pro_plus")
+ }
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt
+@@ -17,6 +17,7 @@
+ package com.android.systemui.qs.tiles.impl.cell.domain.interactor
+ 
+ import android.content.Context
++import android.os.SystemProperties
+ import android.os.UserHandle
+ import com.android.settingslib.graph.SignalDrawable
+ import com.android.systemui.Flags as AconfigFlags
+@@ -127,6 +128,7 @@
+     override fun availability(user: UserHandle): Flow<Boolean> = flowOf(isAvailable())
+ 
+     fun isAvailable(): Boolean {
+-        return AconfigFlags.qsSplitInternetTile()
++        return AconfigFlags.qsSplitInternetTile() &&
++            SystemProperties.get("ro.product.vendor.device") != "p11_pro_plus"
+     }
+ }

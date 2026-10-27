@@ -1,0 +1,1007 @@
+[
+  {
+    "path": ".gitignore",
+    "sha256": "0e2e198b8c27f243eb5b187d646c473adf6345cc6e918d2c1e11df592bf0bae1",
+    "bytes": 79
+  },
+  {
+    "path": "BUILD.md",
+    "sha256": "1c0d9079ea4447054150c7be437a3f7c307159572c46614c70ac3a7348d0482b",
+    "bytes": 3954
+  },
+  {
+    "path": "INSTALL.md",
+    "sha256": "38a6515804dc6c9916a87ea7b44a6eab8de24006ab6de68e8e6af20c65e1eda0",
+    "bytes": 1321
+  },
+  {
+    "path": "KNOWN-ISSUES.md",
+    "sha256": "eb0dfb7680814adc2c15304df421a6101a756e7d248eddc0271ecb793f898bbe",
+    "bytes": 1278
+  },
+  {
+    "path": "LICENSE",
+    "sha256": "b9e78e7042796bb98df1e10fc29aee64cd75f1673e002438c5f8b60d45147ba4",
+    "bytes": 292
+  },
+  {
+    "path": "LICENSES.md",
+    "sha256": "56230811a885b2cabac6632bfe4d88a9950113ed11a5b0827b2421443349da30",
+    "bytes": 1616
+  },
+  {
+    "path": "PREINSTALLED-APPS.md",
+    "sha256": "94f9cc8260996a34974f97239f878ea5c8961009cbfee04c8a6661aff1478e6b",
+    "bytes": 107192
+  },
+  {
+    "path": "PRIVACY.md",
+    "sha256": "ddbd6eb7dfee733ce781a394495ac225745c89d8ef1f0671a6a64d7428441b92",
+    "bytes": 699
+  },
+  {
+    "path": "README.md",
+    "sha256": "295be9055b60c3b1a087cb739846c4256764a288563a4d2239b4965cb5e5bfd4",
+    "bytes": 975
+  },
+  {
+    "path": "RELEASE-CANDIDATE.md",
+    "sha256": "01d2d1ccfa5741c4169b8940d72acc690c602d0d32eb60169f36c2c8d0edfce9",
+    "bytes": 566
+  },
+  {
+    "path": "TEST-CARD.md",
+    "sha256": "299177f866655200396b30368ea59c0685d2c6377f1576eed6873033a1664d7b",
+    "bytes": 2035
+  },
+  {
+    "path": "apply.py",
+    "sha256": "b3801e2463b847f6303efc28ae7c5c38dd81890f91369e5dec7e822458926e26",
+    "bytes": 1206
+  },
+  {
+    "path": "build-identity.json",
+    "sha256": "a7ef5f17a9428c2badabddf759cc32f2dc39ff5ab7b4f90e4a185400646ae303",
+    "bytes": 390
+  },
+  {
+    "path": "build-reference.sh",
+    "sha256": "b4bb2206d557e91645ec98a7012311c6dcac16ae28ef4c37cae04b89859ac104",
+    "bytes": 689
+  },
+  {
+    "path": "exclusions.json",
+    "sha256": "2dcafb70f646c81f0810b6fefa0affe73f370c3c46c69075c52419685cedddd4",
+    "bytes": 1261
+  },
+  {
+    "path": "licenses/Apache-2.0.txt",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "bytes": 11358
+  },
+  {
+    "path": "licenses/build__blueprint/LICENSE",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "bytes": 11358
+  },
+  {
+    "path": "licenses/build__soong/Android.bp.license-reference",
+    "sha256": "add08c041846d95c62c2823c78306ace9c4559b430fd41a715cc7c3439b28e96",
+    "bytes": 7698
+  },
+  {
+    "path": "licenses/frameworks__av/NOTICE",
+    "sha256": "5f28c11f8b1b3f97b9d42c74b85371ebf4127f241b799279bcecd69f7ee542dc",
+    "bytes": 17680
+  },
+  {
+    "path": "licenses/frameworks__base/NOTICE",
+    "sha256": "cf4dd7cea5b6bcd2622ddd3529b3c74d16ba2b4db444575bc6f5c33f8a960530",
+    "bytes": 18182
+  },
+  {
+    "path": "licenses/frameworks__native/NOTICE",
+    "sha256": "5f28c11f8b1b3f97b9d42c74b85371ebf4127f241b799279bcecd69f7ee542dc",
+    "bytes": 17680
+  },
+  {
+    "path": "licenses/hardware__interfaces/NOTICE",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "bytes": 11358
+  },
+  {
+    "path": "licenses/packages__apps__Settings/NOTICE",
+    "sha256": "38751245389e1e23f73e6f5384b5cbe7fa972cc4410c5adc9c04b082a0b9561a",
+    "bytes": 10695
+  },
+  {
+    "path": "licenses/packages__modules__Bluetooth/NOTICE",
+    "sha256": "fcfd08d120e2558dded978b780df4404a221b94372f7d2aa407b7ada7c54ff07",
+    "bytes": 16650
+  },
+  {
+    "path": "licenses/packages__modules__Virtualization/NOTICE",
+    "sha256": "92f989d8bfd76f9593157e805642fbc4929a375445dfa4fec688a970523e89ff",
+    "bytes": 10694
+  },
+  {
+    "path": "licenses/system__core/Android.bp.license-reference",
+    "sha256": "c38ba05e26861a3ea8c1a65d1e3981390b6f71fefce7ccf58fb568e2c2308dc4",
+    "bytes": 128
+  },
+  {
+    "path": "licenses/vendor__lineage/LICENSE",
+    "sha256": "6686cda24fdf8158112cea8bcea0ff7254696b09547374cc77c6f74d26744b46",
+    "bytes": 640
+  },
+  {
+    "path": "manifest.xml",
+    "sha256": "d90635047eccd338a3807b6ae8796e6876a47094a8ed22115db55ca0d56a3273",
+    "bytes": 186266
+  },
+  {
+    "path": "patches/bionic.patch",
+    "sha256": "a4a6c9984799c4007273e1cbc51010cd9757b4b9b19d84af2e05778621bd8912",
+    "bytes": 2038
+  },
+  {
+    "path": "patches/build__blueprint.patch",
+    "sha256": "24440600de090d8a756f02fd46f3de7cc5693d02ffd9249c6d86066f8c52ff0a",
+    "bytes": 665
+  },
+  {
+    "path": "patches/build__soong.patch",
+    "sha256": "256da1cf2faafdd77f18d003e1fec20bd94971b2978e409e23ac8eb29c49e984",
+    "bytes": 725
+  },
+  {
+    "path": "patches/device__phh__treble.patch",
+    "sha256": "b962e1901bc9b416e78d5e7f025e0fddc83402b5faff4aaf86ca29d60d734581",
+    "bytes": 3838522
+  },
+  {
+    "path": "patches/frameworks__av.patch",
+    "sha256": "c1c0fff71f524c0180fd459f1bbaefff5a81c44a9d1b5fcf0508f1b56cd2602c",
+    "bytes": 3841
+  },
+  {
+    "path": "patches/frameworks__base.patch",
+    "sha256": "8fbe3f48c63e31f5b5a34b2da099b1bb9991ddefdd0c016ea4b5b74e0799aa3c",
+    "bytes": 22986
+  },
+  {
+    "path": "patches/frameworks__native.patch",
+    "sha256": "b077fa1f34fc9f1de05e7fd839727ae980d1792c746b05e8d4a346ae55dbd87e",
+    "bytes": 13260
+  },
+  {
+    "path": "patches/hardware__interfaces.patch",
+    "sha256": "362656344f2190b1b84d968f52787eb97490213c918ed736290fd53b93da3f30",
+    "bytes": 5364
+  },
+  {
+    "path": "patches/packages__apps__Settings.patch",
+    "sha256": "e74a739197bcce063bbffb2a7ba2feb636ae3c141462bb545b5cc6ede8d6efdf",
+    "bytes": 9561
+  },
+  {
+    "path": "patches/packages__modules__Bluetooth.patch",
+    "sha256": "a4e143a4a8fa70c7f42d0bd58fe492574601c43791c4f09d2c88d08244f9e096",
+    "bytes": 8921
+  },
+  {
+    "path": "patches/packages__modules__Connectivity.patch",
+    "sha256": "cc6bad3a514be05e9fc70362dd509651e9725956051aa89cb516c6ab3667b17d",
+    "bytes": 10192
+  },
+  {
+    "path": "patches/packages__modules__Virtualization.patch",
+    "sha256": "153c1a3c12e629a3db52f3299dfc1e29b33d26dfaf22b74f20b481114705eac7",
+    "bytes": 724
+  },
+  {
+    "path": "patches/packages__modules__vndk.patch",
+    "sha256": "a7892844141068585b5d589e25b2cd216971e8be333c1faefd96c074daaae671",
+    "bytes": 361
+  },
+  {
+    "path": "patches/system__core.patch",
+    "sha256": "8f6aad31ff10adbf5b4e0e32370619abb8be663af3b84e5bbf6ba7c7b0baac0f",
+    "bytes": 1470
+  },
+  {
+    "path": "patches/vendor__custom.patch",
+    "sha256": "4bd9ff2e236a1ee004c72e1eced169bb788a5e1ad415046efefacfc5c24f3c2d",
+    "bytes": 653
+  },
+  {
+    "path": "patches/vendor__hardware_overlay.patch",
+    "sha256": "e2fde823e3f533f9b9e0c4778d12212eb89b844bb0d8d853f4ee2043cd92801b",
+    "bytes": 412
+  },
+  {
+    "path": "patches/vendor__lineage.patch",
+    "sha256": "122904038fd24dc0c0bea401289f3e81a264129ee29ffaf4e9eb0ad822afc341",
+    "bytes": 822
+  },
+  {
+    "path": "reviewed-history/r23-to-r24/0013-j716f-align-art-preopt-gc.patch",
+    "sha256": "6f33dde7412dde7caf5afd1f9c2ca0795d0f1638be6e7688ff87206da4f067c5",
+    "bytes": 675
+  },
+  {
+    "path": "reviewed-history/r23-to-r24/0014-j716f-published-model-device.patch",
+    "sha256": "a2f046c9891ab8c7cbe8b1bac69c60ae1e6e76824b0d4b94a283bd3efd62f7f4",
+    "bytes": 434
+  },
+  {
+    "path": "reviewed-history/r23-to-r24/0015-j716f-settings-model-display.patch",
+    "sha256": "4d330fee7524b6c9ab5ce6aab481bd9e8104f8a36f2bcf4410c6b560ba8dd1e7",
+    "bytes": 1362
+  },
+  {
+    "path": "reviewed-history/r23-to-r24/0016-j716f-density-identity-guard.patch",
+    "sha256": "1b5feb7b89d95d5ccff2774dd10af095e2bf2da7083a680edf4a0be01c18cf00",
+    "bytes": 539
+  },
+  {
+    "path": "reviewed-history/r23-to-r24/0017-j716f-wallpaper-home-titles.patch",
+    "sha256": "3b0a3e6eddd42726436e7955b766f4390b6336f26914cb174217ab222f13a0b3",
+    "bytes": 12250
+  },
+  {
+    "path": "reviewed-history/r24-to-r25/0018-j716f-runtime-name-compatibility.patch",
+    "sha256": "4fe0e3c1e5f02786e6d72a43e84e3a8cdedda886e8ee0621938ba7c2e07ad721",
+    "bytes": 1834
+  },
+  {
+    "path": "reviewed-history/r25-to-r26/0019-wallpaper-rro-package-id.patch",
+    "sha256": "02c1966021bf8281c449ff6f8161fb3ae52ab352dcc54beba417ebee1a1106e5",
+    "bytes": 721
+  },
+  {
+    "path": "reviewed-history/r26-to-r27/0020-wallpaper-home-native-title-typography.patch",
+    "sha256": "dd58430c83bdb9db7ad5124c1f17d9c7212acddcccf5d78554a1a4e2e626001c",
+    "bytes": 15572
+  },
+  {
+    "path": "reviewed-history/r27-to-r28/0021-j716f-hide-cell-and-data-saver-qs.patch",
+    "sha256": "922388dded7517f783c5517e10add80c80528882bf4472978bb364e2d7aa9ca1",
+    "bytes": 2609
+  },
+  {
+    "path": "reviewed-history/r27-to-r28/r27-to-r28-complete-source.patch",
+    "sha256": "344f5971ead0962182cf0b286a3773093b3611251b8a651a3173d47eb3170ed4",
+    "bytes": 40109
+  },
+  {
+    "path": "series.json",
+    "sha256": "7813b0a2b68376e1edb0479c18838aa1b2a86ad8b854229747ff5b690e03f00e",
+    "bytes": 3979
+  },
+  {
+    "path": "signing-public/SHA256SUMS",
+    "sha256": "b44a5a7ed0919b443c5be96ab314f2698894a7a1dd9785e3f95eeb11ef4b7483",
+    "bytes": 9316
+  },
+  {
+    "path": "signing-public/SIGNING-PROFILE.json",
+    "sha256": "b5794b99ba06173d3bcd90d91bad2f59c9c9a9102f83b12c8a9bfe44fe636377",
+    "bytes": 27828
+  },
+  {
+    "path": "signing-public/bluetooth.x509.pem",
+    "sha256": "583e793b90f2721afa8f3cb3294ba1b4a5be6031cf3c646daeb9e9402471410f",
+    "bytes": 2021
+  },
+  {
+    "path": "signing-public/com.android.adbd.avbpubkey",
+    "sha256": "385806be43d147f974b2c51057b899200f5a376535f940ac8e2b8c7522d1e8c0",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.adbd.x509.pem",
+    "sha256": "bc9c2b1bebcc1c7b31b266cb474324c617ca5781d86a745b3bf7f8b7e35e4508",
+    "bytes": 2037
+  },
+  {
+    "path": "signing-public/com.android.adservices.api.x509.pem",
+    "sha256": "51890631d17a9256f2f342a8cb031cafda493039db33aefe3ee5740254727498",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.adservices.avbpubkey",
+    "sha256": "d163a6da20df39f8f1b4bc4601d67ca20c6d78860b762035bf526d84b73cea33",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.adservices.x509.pem",
+    "sha256": "8e5970a695ec90fa544a851b288a73b11d1af11cc2eabf5579e41fdfe8eca68b",
+    "bytes": 2057
+  },
+  {
+    "path": "signing-public/com.android.appsearch.apk.x509.pem",
+    "sha256": "b8d67a56d22f936f0f329106ffedba35e4dd81e4da9c44b64dff26788291b1ab",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.appsearch.avbpubkey",
+    "sha256": "0a1b78f6e0af0d9838b2b116cd29f54da4530ce6d6dd527fd476f52e4a62ac76",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.appsearch.x509.pem",
+    "sha256": "1ef058ce9ce5f5f7636a280bb571b7e93a38a076fa81439838aa8746cad51069",
+    "bytes": 2053
+  },
+  {
+    "path": "signing-public/com.android.art.avbpubkey",
+    "sha256": "29545d683d3b1cd51426a029fc0da4ab5d4c3d8843af74c98f4a62e5857962e2",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.art.x509.pem",
+    "sha256": "455933563a16f0007be970c4d42b6b7c21f5371cdf5d922272b420ff58e00639",
+    "bytes": 2037
+  },
+  {
+    "path": "signing-public/com.android.bt.avbpubkey",
+    "sha256": "c052d099a5ef0f7b3ab3b74f90b2f53cf69878913769cbe951fe9cb6a752af80",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.bt.x509.pem",
+    "sha256": "b49bf0da5274d8e8594421c14a724f1702282998e248974cafc65ac22cf4c3ea",
+    "bytes": 2033
+  },
+  {
+    "path": "signing-public/com.android.cellbroadcast.avbpubkey",
+    "sha256": "49bb98b4cd103678eaf4a0fa8ce1ac776ae638040f2082a3de43a9fae7d87a6f",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.cellbroadcast.x509.pem",
+    "sha256": "67bed2fd2e5aae0ade9446ff044f5072a12769e2c6f373e89f04aa9460527919",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.compos.avbpubkey",
+    "sha256": "f760e1366bc18f18447ded487e19491b94685858de35040dc9fec5d9c25efd59",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.compos.x509.pem",
+    "sha256": "0b0280a65956930d3a329e9b441ebe4820c76a56ecc5ee9d05ecd5fc32fbbeef",
+    "bytes": 2045
+  },
+  {
+    "path": "signing-public/com.android.configinfrastructure.avbpubkey",
+    "sha256": "579804b2a8cd469e9874daa112ef737face2a49c06628555ccf3b6bd80f7cf24",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.configinfrastructure.x509.pem",
+    "sha256": "b908acbc7980630b9da62f119ac1399d1757f591c0ad913c5dcf3fc3380121b7",
+    "bytes": 2082
+  },
+  {
+    "path": "signing-public/com.android.connectivity.resources.x509.pem",
+    "sha256": "61e3d768009db54bb5178ee975597e63bca6742fcd81263eec0003d1190ca97d",
+    "bytes": 2090
+  },
+  {
+    "path": "signing-public/com.android.conscrypt.avbpubkey",
+    "sha256": "768aef6ad8a6e999b386c86370aeba86e7101faaf493d9543668d380ceb4b137",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.conscrypt.x509.pem",
+    "sha256": "a8478970d7182b8df45f7db4ac412fe7795222d1fca32bb5682b6a074674209a",
+    "bytes": 2053
+  },
+  {
+    "path": "signing-public/com.android.crashrecovery.avbpubkey",
+    "sha256": "77574af1e3c0afb14096b0c82fbf9bd1b6014065ace0b2339d7a89d050fae867",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.crashrecovery.x509.pem",
+    "sha256": "5ed0263a294eecbe5f131b7c7d23d76cf021641bbe3aed9264f1ff3ce9754f64",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.devicelock.avbpubkey",
+    "sha256": "1e2574c6fc2c72b8c9378bd43a338b6ba0cc8b792b9454c85a5487219b00095c",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.devicelock.x509.pem",
+    "sha256": "ddc1ece07c8fbceac811892392c89484bd4e7b3e677b55910948bc249bae5ea3",
+    "bytes": 2057
+  },
+  {
+    "path": "signing-public/com.android.extservices.avbpubkey",
+    "sha256": "5775ecfbb1ee1504d52f3a34542c60ae50c366574517a8bbf7b5f75d47a6751b",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.extservices.x509.pem",
+    "sha256": "8eda56d2b958ec5c297cb45ac1851a9c9c0f5d8f3192094ad73f20e82f493436",
+    "bytes": 2057
+  },
+  {
+    "path": "signing-public/com.android.federatedcompute.x509.pem",
+    "sha256": "cca9ad30b2d32808d40edfc18ec5b02a7b2272a212e6302f0d694fdad88e2d1b",
+    "bytes": 2074
+  },
+  {
+    "path": "signing-public/com.android.health.connect.backuprestore.x509.pem",
+    "sha256": "c9df94bf6484474b8399b32bf1290bd8eca5c2940c8a93246cf9714f2327e361",
+    "bytes": 2106
+  },
+  {
+    "path": "signing-public/com.android.healthconnect.controller.x509.pem",
+    "sha256": "1274278be5389ec40141838ff56881d5e564231b5d640bb75889c63cf4492115",
+    "bytes": 2094
+  },
+  {
+    "path": "signing-public/com.android.healthfitness.avbpubkey",
+    "sha256": "a58362f87d6db2daa88be95189fefea04854a60e038d2ebe2e678b5d3053b0b2",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.healthfitness.x509.pem",
+    "sha256": "e6afa934b7f251ced22231d7f4bfd9d4bc7dbfe8519cfb12d48bdeb5e4b45efc",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.hotspot2.osulogin.x509.pem",
+    "sha256": "2977e9890e4dc7daca7a733c65dd4052e23e52257bd90769a3c16d401beea612",
+    "bytes": 2074
+  },
+  {
+    "path": "signing-public/com.android.i18n.avbpubkey",
+    "sha256": "bf8601e12df660233165928bb98fd834f767612127288197fdb39b4a78d96cdf",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.i18n.x509.pem",
+    "sha256": "f420954cfdf1eb573f4a2e2a8003855761698c4b4a9c88315a19fc2c0c539faa",
+    "bytes": 2041
+  },
+  {
+    "path": "signing-public/com.android.ipsec.avbpubkey",
+    "sha256": "8d6f015c199a547227611d10d08e95daff1ef75fe3644c0389087be4963d88ec",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.ipsec.x509.pem",
+    "sha256": "1d1c4553de67d080eef2f07aa744161fcecef31c5714fbcf20c92399988a9865",
+    "bytes": 2041
+  },
+  {
+    "path": "signing-public/com.android.media.avbpubkey",
+    "sha256": "2048a09a936f3a55ef7ac79288ffe38bcba3a0bc3476205faba830a218123462",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.media.swcodec.avbpubkey",
+    "sha256": "5bad523e10dabe7405b88105d5a8a5e4a33a147bbc88c02fa14bab26a9462e79",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.media.swcodec.x509.pem",
+    "sha256": "eb1ac4b38e2dd511ab3587a6a6932cbd5803bb78e088aede58c9a90ad81521ca",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.media.x509.pem",
+    "sha256": "a2da53cfe52d04d0220ba33a5eb3029723ff70a486825bbacd07189990c80b30",
+    "bytes": 2041
+  },
+  {
+    "path": "signing-public/com.android.mediaprovider.avbpubkey",
+    "sha256": "e7254c3a20a0f87e51a40c09e35055565945db0481a8d1c9d88a1406cd6d8565",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.mediaprovider.x509.pem",
+    "sha256": "ddc9dde99fdd717cae08ff5a5aaa72baa183b1530f38ec3d37f960703150623e",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.neuralnetworks.avbpubkey",
+    "sha256": "9fbaee0257818b1a4a898b1ba28e44783cd9d9948bc143a01547df7b5bfe2091",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.neuralnetworks.x509.pem",
+    "sha256": "c2a157b39993333c4a80451ef3bebaf964c0f2ea4b6c8638f895f5e9451bb7cf",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.nfcservices.avbpubkey",
+    "sha256": "9e85acfe128b3ebf7087b294994dece7ef9bd2fe7764a82c58f0cace13d16482",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.nfcservices.x509.pem",
+    "sha256": "fe56f00308f90d6c2b1556148d3a115a4adfd4764300347bda6416bf7661937c",
+    "bytes": 2057
+  },
+  {
+    "path": "signing-public/com.android.ondevicepersonalization.avbpubkey",
+    "sha256": "c1a79f0794052badd7e9beafc1ed5143714f348c055fdceb8adb3bab8df7c3be",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.ondevicepersonalization.x509.pem",
+    "sha256": "0c0b31d25ee449c0d32f157c7b6291f231ac92379a9341c8ab96128f2c863a6f",
+    "bytes": 2090
+  },
+  {
+    "path": "signing-public/com.android.os.statsd.avbpubkey",
+    "sha256": "f618ff2b1ce4e1a4d131968e1557a8093f2eb359a5500722e5a68996545a1105",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.os.statsd.x509.pem",
+    "sha256": "79b8116d4f849684f4548a6b2b1cd0bd34842e15fbf59864ab24d7b0b981abcc",
+    "bytes": 2053
+  },
+  {
+    "path": "signing-public/com.android.permission.avbpubkey",
+    "sha256": "e5b0ed70bb0d2653598a65398fc67b0dc92871565ea5d9b4c689503771604ed7",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.permission.x509.pem",
+    "sha256": "f7112ddaeb5a9a6d95846a9132215ac27ed9498c65ff7c5d3ef50fdb90e0f61d",
+    "bytes": 2057
+  },
+  {
+    "path": "signing-public/com.android.profiling.avbpubkey",
+    "sha256": "ae2b0f9befaed7a530db3bc741ecb585b8ea41759a19ca2b9b8cf8cbfcc4dbd0",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.profiling.x509.pem",
+    "sha256": "3c613fce5772f3cacfa91df571b5d2a485bc01a8ef228aeba31ffff57b883879",
+    "bytes": 2053
+  },
+  {
+    "path": "signing-public/com.android.ranging.rangingtestapp.x509.pem",
+    "sha256": "970db1a915a1c0f97022a83d51dc0af1263c720aa4db9a94d02922cd592bf147",
+    "bytes": 2090
+  },
+  {
+    "path": "signing-public/com.android.resolv.avbpubkey",
+    "sha256": "0a07662fe1afdc0135c5517ed2cded0370f6c671fa1eb8473535cc88c7117174",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.resolv.x509.pem",
+    "sha256": "b0301d46b1e15b13b18799041d8c79676fb2ac9d344278398eb583ce4ccbfb51",
+    "bytes": 2045
+  },
+  {
+    "path": "signing-public/com.android.rkpd.avbpubkey",
+    "sha256": "a19a45c732a7cd326a166391a0d980843aaa6bde61717cce3eacb6ece9eba124",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.rkpd.x509.pem",
+    "sha256": "ca9e0349faa9eb8aab770bc8e7ab0f4315ef18aadcae882d69419bd5a7a82d50",
+    "bytes": 2041
+  },
+  {
+    "path": "signing-public/com.android.runtime.avbpubkey",
+    "sha256": "bfc908f0173d0e4c6a7bfd13d8b4a35dbdd0effb19ce00f5e5232520ca48de8b",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.runtime.x509.pem",
+    "sha256": "e9998ddf164f4c0cfa30cd555fd929745a93dfe3e39d22ec9d9c0214abf8aa0c",
+    "bytes": 2049
+  },
+  {
+    "path": "signing-public/com.android.safetycenter.resources.x509.pem",
+    "sha256": "d984a23157951a2829fcbc41429dff574df45616414ccf199d354bb21a38d8d0",
+    "bytes": 2090
+  },
+  {
+    "path": "signing-public/com.android.scheduling.avbpubkey",
+    "sha256": "b348ec5af3c6ed903af5a5405f88ffd542dfbea819b0706b3c01250e00d201b5",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.scheduling.x509.pem",
+    "sha256": "2cd979b52871ed354fc6d435d0cc2a6726773a7a87f5546904e1c6ca34cc5679",
+    "bytes": 2057
+  },
+  {
+    "path": "signing-public/com.android.sdkext.avbpubkey",
+    "sha256": "aac6e7fd419cc75c13ad253bbf0637916aa4bb9cd717acea1a4c4f63eb9e97a2",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.sdkext.x509.pem",
+    "sha256": "a2685acbb4aa95a8618a5527362c1be672faab67ec04d3ba85d8d0b944d2dd8f",
+    "bytes": 2045
+  },
+  {
+    "path": "signing-public/com.android.telephonycore.avbpubkey",
+    "sha256": "9aff61576a27412137e448f7f494a3687cde895a1ba2da4ead596d7873237f5a",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.telephonycore.x509.pem",
+    "sha256": "cc2d142010f091fb20fa0c33d38b3de12553eddd6ad7c384a49ff703f5b2ea97",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.tethering.avbpubkey",
+    "sha256": "964fdb95c86844119d39d4e451e59ba155405567e2f7e9281032bcffac78473a",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.tethering.x509.pem",
+    "sha256": "429c1ff8cbb473607f6f1dec15226ffa083a3650b6cf4f331227f036555d676f",
+    "bytes": 2053
+  },
+  {
+    "path": "signing-public/com.android.tzdata.avbpubkey",
+    "sha256": "51792b7e3224ee0caa56f7f336427bc54205c2d12c51ad5ed0587588300c4827",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.tzdata.x509.pem",
+    "sha256": "40701a0ff8c2230c728bb81484608b3eea68124d2927ded99636c48d44f258ca",
+    "bytes": 2045
+  },
+  {
+    "path": "signing-public/com.android.uprobestats.avbpubkey",
+    "sha256": "651aa769560baef93cdc76f8592645f20e1f73777239fd524d69d784767e1a13",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.uprobestats.x509.pem",
+    "sha256": "34a028156ffde4b65508d970c9b6055ccef06787c80b47fbc0f91ee3836fb233",
+    "bytes": 2057
+  },
+  {
+    "path": "signing-public/com.android.uwb.avbpubkey",
+    "sha256": "278e79fb55fa2901b29a7a13e534b03caaed7570030ef97219bd15b40004797f",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.uwb.resources.x509.pem",
+    "sha256": "4632812603da44eb96cc34ecc69f1c76ecc80e47116edffa636ca7c7e7f60a50",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.uwb.x509.pem",
+    "sha256": "12588c7f86be0588ee90f7f432b1ff343a4b1f5d8dae61dc6680c251ca799d23",
+    "bytes": 2037
+  },
+  {
+    "path": "signing-public/com.android.virt.avbpubkey",
+    "sha256": "ae861d28fd70a0b034bc41ef4839bae0e2982e6b48bce16daac7b0247b87c360",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.virt.x509.pem",
+    "sha256": "e6ed38fb3906fba4aa63a13ca9fc4e943e9112bbbd9d3dc8319e58c97ef88b0d",
+    "bytes": 2041
+  },
+  {
+    "path": "signing-public/com.android.vndk.pubkey",
+    "sha256": "d2d804813cb5f4838c643786271581b441dc8c4e31eb42a16dc3f73cb581978a",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.vndk.x509.pem",
+    "sha256": "a3ad598a53f9355743b1210df6d7c972c8f433361b441245f9ae738067a083c6",
+    "bytes": 2041
+  },
+  {
+    "path": "signing-public/com.android.wifi.avbpubkey",
+    "sha256": "6918796e3bff56b45125bd2488af0613088ca109b863507e6487203b3b6925d0",
+    "bytes": 1032
+  },
+  {
+    "path": "signing-public/com.android.wifi.dialog.x509.pem",
+    "sha256": "f2d342fcf7e7c0847f8bd57fd8516cd56879376993d9702b14cba426ef57cfdc",
+    "bytes": 2057
+  },
+  {
+    "path": "signing-public/com.android.wifi.resources.x509.pem",
+    "sha256": "8a4954a470330cdea0eb1e6aeab8d6415aa0b00a14789472b0b94bb669765b70",
+    "bytes": 2065
+  },
+  {
+    "path": "signing-public/com.android.wifi.x509.pem",
+    "sha256": "100781b22c3343cdd06673357e7e7624604cbb95f8b72688560f766ddd2f3105",
+    "bytes": 2041
+  },
+  {
+    "path": "signing-public/media.x509.pem",
+    "sha256": "01f108ae3c8895214c3da25a9fddd475eff8daaa55f4d82bd9d4d11e6179e2f6",
+    "bytes": 2009
+  },
+  {
+    "path": "signing-public/networkstack.x509.pem",
+    "sha256": "6ce3ead60623cf74c867002edf615aaaf9a7c6a0c0e6f569138478d3f8c3de4f",
+    "bytes": 2029
+  },
+  {
+    "path": "signing-public/nfc.x509.pem",
+    "sha256": "0daf58d67c5c83fd57faf1b67f775ac607b41f58668a81592d058ed70be0b257",
+    "bytes": 2004
+  },
+  {
+    "path": "signing-public/platform.x509.pem",
+    "sha256": "00d9d2b9c73e12bd2c77608d53c036d942a73f9eaa5af5a5eb82d8388801da2f",
+    "bytes": 2017
+  },
+  {
+    "path": "signing-public/releasekey.x509.pem",
+    "sha256": "ddb890a335cb45e0d868abef5b652db8924bbc7e35a0ffb7a546a6243d739f3b",
+    "bytes": 2025
+  },
+  {
+    "path": "signing-public/sdk_sandbox.x509.pem",
+    "sha256": "f3b0eb05515315b2ac1a4d6d46c9622f354f91738d38105f441c6794431e9dbe",
+    "bytes": 2025
+  },
+  {
+    "path": "signing-public/shared.x509.pem",
+    "sha256": "94e17a30f6ac9075b28742a7d047fd8b3dbffa8c92709eb4ae9faee4b1d128da",
+    "bytes": 2013
+  },
+  {
+    "path": "signing-public/system-avb.avbpubkey",
+    "sha256": "4e1dccaf297e4ab87a51133eb31cd0f0933ed2829263417e1b1db45a5801ce7f",
+    "bytes": 520
+  },
+  {
+    "path": "source-lock.json",
+    "sha256": "ddf637df83e7badcc136d11762f0b3577b829ef882da29f59a83763aedf81d84",
+    "bytes": 27340
+  },
+  {
+    "path": "sources/device/phh/treble/j716f_input_backend/Android.bp",
+    "sha256": "01eab9251053bf5371cc630fd4001db8a7c2fbb2f3dd74be819a7c916aef3c64",
+    "bytes": 929
+  },
+  {
+    "path": "sources/device/phh/treble/j716f_input_backend/AndroidManifest.xml",
+    "sha256": "80da3ae58d66c8a4f0ce009f3b011f8cc8843f9ae2107892f523927bcccd2be2",
+    "bytes": 865
+  },
+  {
+    "path": "sources/device/phh/treble/j716f_input_backend/product.mk",
+    "sha256": "349fbf6f164406e80338bbd98ca261bbf534de876b902daa22ca2e31c858cdc5",
+    "bytes": 38
+  },
+  {
+    "path": "sources/device/phh/treble/j716f_input_backend/res/values/strings.xml",
+    "sha256": "9e41e66276d941c0f9fe2231af350a7ede304673ee7a218e0b5aaa72341f9dcc",
+    "bytes": 77
+  },
+  {
+    "path": "sources/device/phh/treble/j716f_input_backend/res/values-zh-rCN/strings.xml",
+    "sha256": "8dc6d573292b82cf3f5af8f474f14e0d26749577905952250ee6e865a88325c5",
+    "bytes": 75
+  },
+  {
+    "path": "sources/device/phh/treble/j716f_input_backend/src/local/j716f/input/BootReceiver.java",
+    "sha256": "5acdf8ba5df6f4a6c3bcb21f83e80423fd86d4d46820787b1354158f4d4d4707",
+    "bytes": 516
+  },
+  {
+    "path": "sources/device/phh/treble/j716f_input_backend/src/local/j716f/input/J716fInputService.java",
+    "sha256": "191811a04714609d2288ac18a2896666c421bedcbe790ace7a59208741c8ccd8",
+    "bytes": 3283
+  },
+  {
+    "path": "sources/device/phh/treble/j716f_input_backend/sysconfig.xml",
+    "sha256": "c6e1d7d92161214b7e2ef5a5c1a67c8c49ed28c352ae05bd09ffc22e8bf7f075",
+    "bytes": 69
+  },
+  {
+    "path": "sources/device/tb03/gsi/AndroidProducts.mk",
+    "sha256": "5842be86400a9d614092a8dfe17ad315e8340d426cb6289278e0a85dca3dd935",
+    "bytes": 124
+  },
+  {
+    "path": "sources/device/tb03/gsi/BoardConfigCommon.mk",
+    "sha256": "8e9e559f0c8e5c57c52b1fa47c7f7efc805b43db376fd51830e3724d994cfbd2",
+    "bytes": 781
+  },
+  {
+    "path": "sources/device/tb03/gsi/audio/audio_policy_configuration.xml",
+    "sha256": "1fd6a80388d25cfeb0f7d190ea249449219095f8e21930342b42b3d4d2dadd11",
+    "bytes": 17889
+  },
+  {
+    "path": "sources/device/tb03/gsi/audio/tb03-audio-policy.sh",
+    "sha256": "51e56e22ee07b902a86d177d728977c4c02be902674b5d66a655bfdbfacba0fb",
+    "bytes": 1362
+  },
+  {
+    "path": "sources/device/tb03/gsi/compatibility_matrix.zui15.xml",
+    "sha256": "fe140c01f9614298b40941af6f5967e0c147ee121d55db538c6d599b1d371b07",
+    "bytes": 14066
+  },
+  {
+    "path": "sources/device/tb03/gsi/manifest-pinned.xml",
+    "sha256": "3bbc331055f4fdc3458a32293b54136d9d9defcbc8af1838c21dc6a786271e2f",
+    "bytes": 185049
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb03J716FColorPolicyOverlay/Android.bp",
+    "sha256": "8ef95ecbda95ad6e7ea6eb598da59ffaaa067449343f81be748a29af16121f1f",
+    "bytes": 126
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb03J716FColorPolicyOverlay/AndroidManifest.xml",
+    "sha256": "2b890b26b63d81f9d9dc9b2712bc5e0094fd674200cd37f37aebbabae502bbb3",
+    "bytes": 459
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb03J716FColorPolicyOverlay/res/values/config.xml",
+    "sha256": "fa15df8850da70447a1719886ef83dd4f168616f1a26b7a6dbcc831a047d5aed",
+    "bytes": 853
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb03WifiRegEventsOverlay/Android.bp",
+    "sha256": "c03001319e71408713c64b355a7fd555a24ee85a9c8b7078f9cf597d97e8aec4",
+    "bytes": 123
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb03WifiRegEventsOverlay/AndroidManifest.xml",
+    "sha256": "516446caed45d92c5e2b20d5f2b596bea6d52d8cc5839b460e314eb1f43d61c8",
+    "bytes": 522
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb03WifiRegEventsOverlay/res/values/config.xml",
+    "sha256": "9e6ce4253cdd1e97794bc0f8c85d545b1b30417ec3400d0d39c90ab6e755b486",
+    "bytes": 295
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb24WallpaperHome/Android.mk",
+    "sha256": "abbe45baa2463d4a261afd642da613032135837e64d16a696fff16663fd309e4",
+    "bytes": 885
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb24WallpaperHome/AndroidManifest.xml",
+    "sha256": "790e0c481c906da6dd2209a248602d9a556e764b8a06e89d7926be1cdff47d45",
+    "bytes": 435
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_clock.xml",
+    "sha256": "68cee1b4b82a253b61df90c243f061c163434ec6f37b42b2ce697d15ac35ceec",
+    "bytes": 2727
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_keyguard_quick_affordance.xml",
+    "sha256": "a8edc776d41166b3018bebf1f95b5c7cfb01e150384d523b1969f59694b98446",
+    "bytes": 4215
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_lock_screen_notifications.xml",
+    "sha256": "a866546d75fd0174e72b5f572ff71f6e525cdc4ebbf9ab41d46801b5e05f34c6",
+    "bytes": 2271
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_more_lock_settings.xml",
+    "sha256": "e9c60990ced8572ba935822e1b43759a28e7dcb2f8503aa0df76adf2ee42f1e9",
+    "bytes": 2315
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/Tb24WallpaperHome/res/xml/overlays.xml",
+    "sha256": "bb9e266165b8f886b4c5e16c595096345ea014fc9d650615e76aaf30b1546f74",
+    "bytes": 553
+  },
+  {
+    "path": "sources/device/tb03/gsi/overlay/product/frameworks/base/packages/SettingsProvider/res/values/defaults.xml",
+    "sha256": "11f07eb574b08b1d27cc23e00748e5ee8d50fc02369ac2680513586058f4874b",
+    "bytes": 239
+  },
+  {
+    "path": "sources/device/tb03/gsi/pixelos_tb03_arm64_ext4.mk",
+    "sha256": "ae1d426f00845853158ecf23d2b70e38b01ae37d9900e2e48206a36cbdcb1682",
+    "bytes": 4656
+  },
+  {
+    "path": "sources/device/tb03/gsi/product.prop",
+    "sha256": "dd59b59f91e0f2d8bb05cce6f2b1c1a58d854507b2c45c61e2251fcbba845fa9",
+    "bytes": 191
+  },
+  {
+    "path": "sources/device/tb03/gsi/signing/.gitignore",
+    "sha256": "94d75c525bb31d494d9c08ce8f59acc2e1d132e2827edf7e7700181a3c8b8a6e",
+    "bytes": 13
+  },
+  {
+    "path": "sources/device/tb03/gsi/signing/Android.bp",
+    "sha256": "ac632b37c71243b3d964c2609212940566e59464eb082e52dbb13041916184c5",
+    "bytes": 7532
+  },
+  {
+    "path": "sources/device/tb03/gsi/signing/BoardConfigRelease.mk",
+    "sha256": "273a38ede9050513308b40979af90f8d17dd3b6dae8de9a46b44bb0ea0b22a3c",
+    "bytes": 215
+  },
+  {
+    "path": "sources/device/tb03/gsi/signing/README.md",
+    "sha256": "05c04af416be13ea9a4a78d8f7379646d8877a0d43b24913968bd530c348b769",
+    "bytes": 312
+  },
+  {
+    "path": "sources/device/tb03/gsi/signing/product-release.mk",
+    "sha256": "f042b78991ada466f749c2f0033568dbaf73bfbbe5006eced1da0fab8fe3e231",
+    "bytes": 11485
+  },
+  {
+    "path": "sources/device/tb03/gsi/system.prop",
+    "sha256": "c1910d53f3ca85df288b03f15880e21ae098a928efefadefc2f708c9ae257c2e",
+    "bytes": 1748
+  },
+  {
+    "path": "sources/device/tb03/gsi/system_ext.prop",
+    "sha256": "8576302042f82beaa7448a016004adcca72470c921ec9e612c929638ec8c5424",
+    "bytes": 468
+  },
+  {
+    "path": "sources/device/tb03/tb03_arm64/BoardConfig.mk",
+    "sha256": "74899c1a14f7e6ed17c2acba6cdc0c229f1b3dc9e738a7bfa2bbe45c2d151b5a",
+    "bytes": 45
+  },
+  {
+    "path": "sources/frameworks/base/services/core/java/com/android/server/display/LegacyHdrBrightnessController.java",
+    "sha256": "956db60ee88fadac8c8826dda28e76a89fad5481bbe65032444adbda6d7479d9",
+    "bytes": 9297
+  },
+  {
+    "path": "sources/frameworks/base/services/core/java/com/android/server/display/LegacyHdrBrightnessPolicy.java",
+    "sha256": "5e50d1ddf806f40b7c1bd0398b2ff61fd418ab0263d932970df98f685435710e",
+    "bytes": 2987
+  },
+  {
+    "path": "sources/frameworks/native/services/surfaceflinger/CompositionEngine/include/compositionengine/impl/LegacyHdrDimming.h",
+    "sha256": "d283ad5d0da963008bec6a8c4f0273bcf6be638412eca3bfc78f173b6a22f9cc",
+    "bytes": 1421
+  },
+  {
+    "path": "sources/packages/apps/Settings/res/values/j716f_input.xml",
+    "sha256": "9f64d1dc088209d7e03f32f339a273ca3fd62761cd831272fd50ac83e12666b4",
+    "bytes": 537
+  },
+  {
+    "path": "sources/packages/apps/Settings/res/values-zh-rCN/custom_plurals.xml",
+    "sha256": "fafcac7d734b9d34b661ec8d6e004e28c80042760dca63afaefcbe8178b2f5d8",
+    "bytes": 410
+  },
+  {
+    "path": "sources/packages/apps/Settings/res/values-zh-rCN/custom_strings.xml",
+    "sha256": "5f6a2f29ff989bea8404e78761e61cb839388a8d5634dd1677f4d1458f54e618",
+    "bytes": 19932
+  },
+  {
+    "path": "sources/packages/apps/Settings/res/values-zh-rCN/j716f_input.xml",
+    "sha256": "813e153145607b24ecff5e23076668a1944640a1590aff9f4e0da121cb460ef1",
+    "bytes": 360
+  },
+  {
+    "path": "sources/packages/apps/Settings/src/com/android/settings/deviceinfo/RadioInfoPreferenceController.java",
+    "sha256": "5954a4b4d5a3129dbbfaa70fde7defae104228c768e68b969f27c0eef5b8ebbd",
+    "bytes": 1256
+  },
+  {
+    "path": "sources/packages/apps/Settings/src/com/android/settings/inputmethod/J716fPointerStylePreferenceController.java",
+    "sha256": "a8a7d811e5cf8e183e4c6e9984fcb8dd4c73fd870644568c4aa2c5a13ab9af56",
+    "bytes": 2419
+  }
+]

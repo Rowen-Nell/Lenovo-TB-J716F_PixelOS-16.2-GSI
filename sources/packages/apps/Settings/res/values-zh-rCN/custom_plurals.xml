@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="wifi_hotspot_client_limit_summary">
+        <item quantity="other">此热点最多可连接 <xliff:g id="device_num">%1$d</xliff:g> 台设备</item>
+        <item quantity="one">此热点最多可连接 <xliff:g id="device_num">%1$d</xliff:g> 台设备</item>
+    </plurals>
+</resources>

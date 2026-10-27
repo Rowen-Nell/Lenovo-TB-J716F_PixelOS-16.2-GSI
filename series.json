@@ -1,0 +1,104 @@
+[
+  {
+    "repo": "bionic",
+    "patch": "patches/bionic.patch",
+    "baseline": "47a3399b192c412a1fead87b1d60a2acebd6c7d2",
+    "sha256": "a4a6c9984799c4007273e1cbc51010cd9757b4b9b19d84af2e05778621bd8912"
+  },
+  {
+    "repo": "build/soong",
+    "patch": "patches/build__soong.patch",
+    "baseline": "60ab37a736d1df23417af2590a9f18b7ef7330a8",
+    "sha256": "256da1cf2faafdd77f18d003e1fec20bd94971b2978e409e23ac8eb29c49e984"
+  },
+  {
+    "repo": "frameworks/av",
+    "patch": "patches/frameworks__av.patch",
+    "baseline": "026b81291cd883612060a57803d49accf485f030",
+    "sha256": "c1c0fff71f524c0180fd459f1bbaefff5a81c44a9d1b5fcf0508f1b56cd2602c"
+  },
+  {
+    "repo": "frameworks/base",
+    "patch": "patches/frameworks__base.patch",
+    "baseline": "8879d54025db0492b418a5da72754fefd9fef63c",
+    "sha256": "8fbe3f48c63e31f5b5a34b2da099b1bb9991ddefdd0c016ea4b5b74e0799aa3c"
+  },
+  {
+    "repo": "frameworks/native",
+    "patch": "patches/frameworks__native.patch",
+    "baseline": "fb17c8f51d386717b0b934c5f823490eb840f8cc",
+    "sha256": "b077fa1f34fc9f1de05e7fd839727ae980d1792c746b05e8d4a346ae55dbd87e"
+  },
+  {
+    "repo": "hardware/interfaces",
+    "patch": "patches/hardware__interfaces.patch",
+    "baseline": "e83cd09a6ff6acbd39c56fbe06b192813eda5d95",
+    "sha256": "362656344f2190b1b84d968f52787eb97490213c918ed736290fd53b93da3f30"
+  },
+  {
+    "repo": "packages/apps/Settings",
+    "patch": "patches/packages__apps__Settings.patch",
+    "baseline": "f7cec281cb969ea0a8e615c42144820bbff871fd",
+    "sha256": "e74a739197bcce063bbffb2a7ba2feb636ae3c141462bb545b5cc6ede8d6efdf"
+  },
+  {
+    "repo": "packages/modules/Bluetooth",
+    "patch": "patches/packages__modules__Bluetooth.patch",
+    "baseline": "91a5765762467ad0aaae48e8db5bc28053978c9d",
+    "sha256": "a4e143a4a8fa70c7f42d0bd58fe492574601c43791c4f09d2c88d08244f9e096"
+  },
+  {
+    "repo": "packages/modules/Connectivity",
+    "patch": "patches/packages__modules__Connectivity.patch",
+    "baseline": "9b92b7850f4a36f5f19d11875bf5acd06f25ed15",
+    "sha256": "cc6bad3a514be05e9fc70362dd509651e9725956051aa89cb516c6ab3667b17d"
+  },
+  {
+    "repo": "packages/modules/Virtualization",
+    "patch": "patches/packages__modules__Virtualization.patch",
+    "baseline": "e492d736eabfba591e4e98e5cb7859f0d954f925",
+    "sha256": "153c1a3c12e629a3db52f3299dfc1e29b33d26dfaf22b74f20b481114705eac7"
+  },
+  {
+    "repo": "system/core",
+    "patch": "patches/system__core.patch",
+    "baseline": "6f7c247deaf6babab0d216c113625e8c30d0c177",
+    "sha256": "8f6aad31ff10adbf5b4e0e32370619abb8be663af3b84e5bbf6ba7c7b0baac0f"
+  },
+  {
+    "repo": "vendor/custom",
+    "patch": "patches/vendor__custom.patch",
+    "baseline": "1e0f3ae679d78c6af3fe41d0c157fde834d0cddf",
+    "sha256": "4bd9ff2e236a1ee004c72e1eced169bb788a5e1ad415046efefacfc5c24f3c2d"
+  },
+  {
+    "repo": "vendor/lineage",
+    "patch": "patches/vendor__lineage.patch",
+    "baseline": "b4946e6647a4725fafda8e154f038ff797ec8920",
+    "sha256": "122904038fd24dc0c0bea401289f3e81a264129ee29ffaf4e9eb0ad822afc341"
+  },
+  {
+    "repo": "device/phh/treble",
+    "patch": "patches/device__phh__treble.patch",
+    "baseline": "91031960bf9f5ccf4e0af412db12138b7e26bd5b",
+    "sha256": "b962e1901bc9b416e78d5e7f025e0fddc83402b5faff4aaf86ca29d60d734581"
+  },
+  {
+    "repo": "vendor/hardware_overlay",
+    "patch": "patches/vendor__hardware_overlay.patch",
+    "baseline": "bb0bbb9e1314e5312f718ca1d3ea320137d14370",
+    "sha256": "e2fde823e3f533f9b9e0c4778d12212eb89b844bb0d8d853f4ee2043cd92801b"
+  },
+  {
+    "repo": "build/blueprint",
+    "patch": "patches/build__blueprint.patch",
+    "baseline": "c39c8a4c103f1393f015a5befa7726f0c14c9bc2",
+    "sha256": "24440600de090d8a756f02fd46f3de7cc5693d02ffd9249c6d86066f8c52ff0a"
+  },
+  {
+    "repo": "packages/modules/vndk",
+    "patch": "patches/packages__modules__vndk.patch",
+    "baseline": "f2caada6c9378ba37879c5b952fab07cf0f46e16",
+    "sha256": "a7892844141068585b5d589e25b2cd216971e8be333c1faefd96c074daaae671"
+  }
+]

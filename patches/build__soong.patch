@@ -1,0 +1,17 @@
+diff --git a/ui/build/soong.go b/ui/build/soong.go
+index c9b303c..88976aa 100644
+--- a/ui/build/soong.go
++++ b/ui/build/soong.go
+@@ -226,6 +226,12 @@ func (pb PrimaryBuilderFactory) primaryBuilderInvocation(config Config) bootstra
+ 
+ 	commonArgs = append(commonArgs, "-l", filepath.Join(pb.config.FileListDir(), "Android.bp.list"))
+ 	invocationEnv := make(map[string]string)
++	// TB03: preserve caller-selected Go resource controls across the hermetic launcher.
++	for _, key := range []string{"GOGC", "GOMEMLIMIT", "GOMAXPROCS"} {
++		if value := os.Getenv(key); value != "" {
++			invocationEnv[key] = value
++		}
++	}
+ 	if pb.debugPort != "" {
+ 		//debug mode
+ 		commonArgs = append(commonArgs, "--delve_listen", pb.debugPort,

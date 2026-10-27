@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="j716f_pointer_style_title">Pointer style</string>
+    <string name="j716f_pointer_style_summary">%s (takes effect after restart)</string>
+    <string-array name="j716f_pointer_style_entries">
+        <item>Mouse cursor</item><item>Pen pointer</item><item>Transparent</item>
+    </string-array>
+    <string-array name="j716f_pointer_style_values" translatable="false">
+        <item>mouse</item><item>pen</item><item>transparent</item>
+    </string-array>
+</resources>

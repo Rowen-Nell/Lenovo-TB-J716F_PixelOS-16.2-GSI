@@ -1,0 +1,99 @@
+diff --git a/pixelos_tb03_arm64_ext4.mk b/pixelos_tb03_arm64_ext4.mk
+--- a/pixelos_tb03_arm64_ext4.mk
++++ b/pixelos_tb03_arm64_ext4.mk
+@@ -77,3 +77,6 @@
+ # J716F uses the stock non-GKI 4.19 kernel and runtime CC, not UFFD/CMC.
+ # Match dexpreopt artifacts to this device; do not replace libart or the kernel.
+ PRODUCT_ENABLE_UFFD_GC := false
++
++# Scoped Google wallpaper homepage titles; no shared style or subpage override.
++PRODUCT_PACKAGES += Tb24WallpaperHomeTypographyOverlay
+diff --git a/overlay/Tb24WallpaperHome/Android.mk b/overlay/Tb24WallpaperHome/Android.mk
+new file mode 100644
+--- /dev/null
++++ b/overlay/Tb24WallpaperHome/Android.mk
+@@ -0,0 +1,15 @@
++# SPDX-License-Identifier: Apache-2.0
++LOCAL_PATH := $(call my-dir)
++include $(CLEAR_VARS)
++LOCAL_PACKAGE_NAME := Tb24WallpaperHomeTypographyOverlay
++LOCAL_PRODUCT_MODULE := true
++LOCAL_SDK_VERSION := current
++LOCAL_CERTIFICATE := platform
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++# Use the unchanged Google prebuilt as an actual aapt include, not a fake resource stub.
++tb24_wallpaper_apk := vendor/pixel/themepicker/common/proprietary/system_ext/priv-app/WallpaperPickerGoogleRelease/WallpaperPickerGoogleRelease.apk
++LOCAL_AAPT_FLAGS += -I $(tb24_wallpaper_apk)
++LOCAL_ADDITIONAL_DEPENDENCIES := $(tb24_wallpaper_apk)
++include $(BUILD_RRO_PACKAGE)
++# Track the private resource ABI on the real link edge as well as the signed APK.
++$(call intermediates-dir-for,APPS,Tb24WallpaperHomeTypographyOverlay,,COMMON)/package-res.apk: $(tb24_wallpaper_apk)
+diff --git a/overlay/Tb24WallpaperHome/AndroidManifest.xml b/overlay/Tb24WallpaperHome/AndroidManifest.xml
+new file mode 100644
+--- /dev/null
++++ b/overlay/Tb24WallpaperHome/AndroidManifest.xml
+@@ -0,0 +1,4 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.j716f.overlay.wallpaper.home">
++ <application android:hasCode="false" />
++ <overlay android:targetPackage="com.google.android.apps.wallpaper" android:isStatic="true" android:priority="30" android:resourcesMap="@xml/overlays" android:requiredSystemPropertyName="ro.product.vendor.device" android:requiredSystemPropertyValue="p11_pro_plus" />
++</manifest>
+diff --git a/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_clock.xml b/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_clock.xml
+new file mode 100644
+--- /dev/null
++++ b/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_clock.xml
+@@ -0,0 +1,10 @@
++<?xml version='1.0' encoding='utf-8'?>
++<!-- Copyright (C) 2024 The Android Open Source Project.
++     SPDX-License-Identifier: Apache-2.0
++     Product-local overlay preserves the installed Google layout ABI. -->
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:target="http://schemas.android.com/apk/prv/res/com.google.android.apps.wallpaper" android:clickable="true" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingHorizontal="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_horizontal_padding" android:paddingVertical="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_vertical_padding">
++  <TextView android:id="@*com.google.android.apps.wallpaper:id/option_entry_title" android:layout_width="0.000000dp" android:layout_height="wrap_content" android:text="@*com.google.android.apps.wallpaper:string/clock_title" android:layout_marginEnd="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_text_margin_end" target:layout_constraintBottom_toBottomOf="parent" target:layout_constraintEnd_toStartOf="@*com.google.android.apps.wallpaper:id/option_entry_icon_container" target:layout_constraintStart_toStartOf="parent" target:layout_constraintTop_toTopOf="parent" target:layout_constraintVertical_chainStyle="packed" style="@*com.google.android.apps.wallpaper:style/CustomizationOptionEntryTitleTextStyle" android:textSize="16sp" />
++  <FrameLayout android:id="@*com.google.android.apps.wallpaper:id/option_entry_icon_container" android:background="@*com.google.android.apps.wallpaper:drawable/customization_option_entry_icon_background" android:layout_width="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_icon_size" android:layout_height="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_icon_size" target:layout_constraintBottom_toBottomOf="parent" target:layout_constraintEnd_toEndOf="parent" target:layout_constraintTop_toTopOf="parent">
++    <ImageView android:layout_gravity="center" android:id="@*com.google.android.apps.wallpaper:id/option_entry_icon" android:layout_width="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_clock_icon_size" android:layout_height="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_clock_icon_size" />
++  </FrameLayout>
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+diff --git a/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_keyguard_quick_affordance.xml b/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_keyguard_quick_affordance.xml
+new file mode 100644
+--- /dev/null
++++ b/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_keyguard_quick_affordance.xml
+@@ -0,0 +1,12 @@
++<?xml version='1.0' encoding='utf-8'?>
++<!-- Copyright (C) 2024 The Android Open Source Project.
++     SPDX-License-Identifier: Apache-2.0
++     Product-local overlay preserves the installed Google layout ABI. -->
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:target="http://schemas.android.com/apk/prv/res/com.google.android.apps.wallpaper" android:clickable="true" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingHorizontal="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_horizontal_padding" android:paddingVertical="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_vertical_padding">
++  <TextView android:id="@*com.google.android.apps.wallpaper:id/option_entry_title" android:layout_width="0.000000dp" android:layout_height="wrap_content" android:text="@*com.google.android.apps.wallpaper:string/keyguard_quick_affordance_title" android:layout_marginEnd="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_text_margin_end" target:layout_constraintBottom_toTopOf="@*com.google.android.apps.wallpaper:id/option_entry_description" target:layout_constraintEnd_toStartOf="@*com.google.android.apps.wallpaper:id/option_entry_icon_container" target:layout_constraintStart_toStartOf="parent" target:layout_constraintTop_toTopOf="parent" target:layout_constraintVertical_chainStyle="packed" style="@*com.google.android.apps.wallpaper:style/CustomizationOptionEntryTitleTextStyle" android:textSize="16sp" />
++  <TextView android:id="@*com.google.android.apps.wallpaper:id/option_entry_description" android:layout_width="0.000000dp" android:layout_height="wrap_content" android:text="None" android:layout_marginEnd="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_text_margin_end" target:layout_constraintBottom_toBottomOf="parent" target:layout_constraintEnd_toStartOf="@*com.google.android.apps.wallpaper:id/option_entry_icon_container" target:layout_constraintStart_toStartOf="parent" target:layout_constraintTop_toBottomOf="@*com.google.android.apps.wallpaper:id/option_entry_title" style="@*com.google.android.apps.wallpaper:style/CustomizationOptionEntrySubtitleTextStyle" />
++  <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@*com.google.android.apps.wallpaper:id/option_entry_icon_container" android:background="@*com.google.android.apps.wallpaper:drawable/customization_option_entry_icon_background" android:layout_width="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_icon_size" android:layout_height="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_icon_size" android:divider="@*com.google.android.apps.wallpaper:drawable/horizontal_divider_4dp" android:showDividers="middle" android:importantForAccessibility="noHideDescendants" target:layout_constraintBottom_toBottomOf="parent" target:layout_constraintEnd_toEndOf="parent" target:layout_constraintTop_toTopOf="parent">
++    <ImageView android:id="@*com.google.android.apps.wallpaper:id/option_entry_icon_1" android:visibility="gone" android:layout_width="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_shortcut_icon_size" android:layout_height="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_shortcut_icon_size" android:tint="@*com.google.android.apps.wallpaper:color/system_on_surface" />
++    <ImageView android:id="@*com.google.android.apps.wallpaper:id/option_entry_icon_2" android:visibility="gone" android:layout_width="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_shortcut_icon_size" android:layout_height="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_shortcut_icon_size" android:tint="@*com.google.android.apps.wallpaper:color/system_on_surface" />
++  </LinearLayout>
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+diff --git a/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_more_lock_settings.xml b/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_more_lock_settings.xml
+new file mode 100644
+--- /dev/null
++++ b/overlay/Tb24WallpaperHome/res/layout/tb24_wallpaper_more_lock_settings.xml
+@@ -0,0 +1,8 @@
++<?xml version='1.0' encoding='utf-8'?>
++<!-- Copyright (C) 2024 The Android Open Source Project.
++     SPDX-License-Identifier: Apache-2.0
++     Product-local overlay preserves the installed Google layout ABI. -->
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:target="http://schemas.android.com/apk/prv/res/com.google.android.apps.wallpaper" android:clickable="true" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingHorizontal="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_horizontal_padding" android:paddingVertical="@*com.google.android.apps.wallpaper:dimen/customization_option_entry_vertical_padding_large">
++  <TextView android:id="@*com.google.android.apps.wallpaper:id/option_entry_title" android:layout_width="0.000000dp" android:layout_height="wrap_content" android:text="@*com.google.android.apps.wallpaper:string/more_settings_section_title" target:layout_constraintBottom_toTopOf="@*com.google.android.apps.wallpaper:id/option_entry_description" target:layout_constraintEnd_toEndOf="parent" target:layout_constraintStart_toStartOf="parent" target:layout_constraintTop_toTopOf="parent" target:layout_constraintVertical_chainStyle="packed" style="@*com.google.android.apps.wallpaper:style/CustomizationOptionEntryTitleTextStyle" android:textSize="16sp" />
++  <TextView android:id="@*com.google.android.apps.wallpaper:id/option_entry_description" android:layout_width="0.000000dp" android:layout_height="wrap_content" android:text="@*com.google.android.apps.wallpaper:string/more_settings_section_description" target:layout_constraintBottom_toBottomOf="parent" target:layout_constraintEnd_toEndOf="parent" target:layout_constraintStart_toStartOf="parent" target:layout_constraintTop_toBottomOf="@*com.google.android.apps.wallpaper:id/option_entry_title" style="@*com.google.android.apps.wallpaper:style/CustomizationOptionEntrySubtitleTextStyle" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+diff --git a/overlay/Tb24WallpaperHome/res/xml/overlays.xml b/overlay/Tb24WallpaperHome/res/xml/overlays.xml
+new file mode 100644
+--- /dev/null
++++ b/overlay/Tb24WallpaperHome/res/xml/overlays.xml
+@@ -0,0 +1,6 @@
++<?xml version='1.0' encoding='utf-8'?>
++<overlay>
++  <item target="layout/customization_option_entry_clock" value="@layout/tb24_wallpaper_clock" />
++  <item target="layout/customization_option_entry_keyguard_quick_affordance" value="@layout/tb24_wallpaper_keyguard_quick_affordance" />
++  <item target="layout/customization_option_entry_more_lock_settings" value="@layout/tb24_wallpaper_more_lock_settings" />
++</overlay>
+\ No newline at end of file

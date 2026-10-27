@@ -1,0 +1,13 @@
+{
+  "revision": "r28-beta",
+  "stamp": "20261027-1618",
+  "incremental": 1793089111,
+  "identity": "PixelOS-16.2_arm64_20261027.028 (Beta)",
+  "variant": "userdebug",
+  "product": "pixelos_tb03_arm64_ext4",
+  "runtime_device": "J716F",
+  "output_device": "tb03_arm64",
+  "vendor_device": "p11_pro_plus",
+  "stage": "PENDING_RELEASE_CANDIDATE",
+  "signing_profile": "j716f-beta-release-v1"
+}

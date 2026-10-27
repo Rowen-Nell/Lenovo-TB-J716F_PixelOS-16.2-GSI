@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.tb03.overlay.wifi.regevents"
+    android:versionCode="1" android:versionName="1.0">
+    <application android:hasCode="false" />
+    <overlay android:targetPackage="com.android.wifi.resources"
+        android:targetName="WifiCustomization"
+        android:requiredSystemPropertyName="ro.product.vendor.device"
+        android:requiredSystemPropertyValue="p11_pro_plus"
+        android:priority="1" android:isStatic="true" />
+</manifest>

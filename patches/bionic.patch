@@ -1,0 +1,65 @@
+diff --git a/libc/bionic/spawn.cpp b/libc/bionic/spawn.cpp
+index f1b8eb0..80f318c 100644
+--- a/libc/bionic/spawn.cpp
++++ b/libc/bionic/spawn.cpp
+@@ -28,6 +28,7 @@
+ 
+ #include <spawn.h>
+ 
++#include <dirent.h>
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <linux/close_range.h>
+@@ -42,6 +43,41 @@
+ 
+ #include "private/ScopedSignalBlocker.h"
+ 
++// Used only when the kernel lacks close_range. Keep this vfork-child path
++// allocation-free; procfs enumerates open fds even above a lowered RLIMIT_NOFILE.
++static int MarkOpenFdsCloseOnExec() {
++  int dir_fd = open("/proc/self/fd", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
++  if (dir_fd == -1) return -1;
++  alignas(struct dirent) char buffer[1024];
++  for (;;) {
++    long count = TEMP_FAILURE_RETRY(syscall(SYS_getdents64, dir_fd, buffer, sizeof(buffer)));
++    if (count == 0) break;
++    if (count == -1) {
++      int saved_errno = errno;
++      close(dir_fd);
++      errno = saved_errno;
++      return -1;
++    }
++    for (long offset = 0; offset < count;) {
++      auto* entry = reinterpret_cast<struct dirent*>(buffer + offset);
++      offset += entry->d_reclen;
++      if (entry->d_name[0] == '.') continue;
++      // /proc/self/fd names are decimal file descriptors.
++      int fd = 0;
++      for (const char* p = entry->d_name; *p; ++p) fd = fd * 10 + (*p - '0');
++      if (fd < 3 || fd == dir_fd) continue;
++      if (fcntl(fd, F_SETFD, FD_CLOEXEC) == -1) {
++        int saved_errno = errno;
++        close(dir_fd);
++        errno = saved_errno;
++        return -1;
++      }
++    }
++  }
++  close(dir_fd);
++  return 0;
++}
++
+ enum Action {
+   kOpen,
+   kClose,
+@@ -154,7 +190,9 @@ static void ApplyAttrs(short flags, const posix_spawnattr_t* attr) {
+ 
+   if ((flags & POSIX_SPAWN_CLOEXEC_DEFAULT) != 0) {
+     // mark all open fds except stdin/out/err as close-on-exec
+-    if (close_range(3, ~0U, CLOSE_RANGE_CLOEXEC)) _exit(127);
++    if (close_range(3, ~0U, CLOSE_RANGE_CLOEXEC) == -1) {
++      if (errno != ENOSYS || MarkOpenFdsCloseOnExec() == -1) _exit(127);
++    }
+   }
+ }
+ 

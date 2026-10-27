@@ -1,0 +1,11 @@
+out/
+*.img
+*.apk
+*.dex
+*.pk8
+*.pem
+!*.x509.pem
+*.keystore
+*.jks
+private/
+logs/

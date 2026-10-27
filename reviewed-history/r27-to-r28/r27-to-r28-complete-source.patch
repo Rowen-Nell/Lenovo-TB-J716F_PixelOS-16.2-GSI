@@ -1,0 +1,977 @@
+diff --git a/device/tb03/gsi/BoardConfigCommon.mk b/device/tb03/gsi/BoardConfigCommon.mk
+old mode 100755
+new mode 100644
+index 4fc9bd9..cad0000
+--- a/device/tb03/gsi/BoardConfigCommon.mk
++++ b/device/tb03/gsi/BoardConfigCommon.mk
+@@ -11,3 +11,6 @@ BUILD_MANIFEST_XML_INPUT := device/tb03/gsi/manifest-pinned.xml
+ 
+ # Product values with spaces are parsed from the file without Make word splitting.
+ TARGET_PRODUCT_PROP += device/tb03/gsi/product.prop
++
++# Fixed release authority for this product only.
++include device/tb03/gsi/signing/BoardConfigRelease.mk
+diff --git a/device/tb03/gsi/pixelos_tb03_arm64_ext4.mk b/device/tb03/gsi/pixelos_tb03_arm64_ext4.mk
+old mode 100755
+new mode 100644
+index 831740a..77dc38c
+--- a/device/tb03/gsi/pixelos_tb03_arm64_ext4.mk
++++ b/device/tb03/gsi/pixelos_tb03_arm64_ext4.mk
+@@ -80,3 +80,6 @@ PRODUCT_ENABLE_UFFD_GC := false
+ 
+ # Scoped Google wallpaper homepage titles; no shared style or subpage override.
+ PRODUCT_PACKAGES += Tb24WallpaperHomeTypographyOverlay
++
++# r28 Beta: real local project release signing; PRESIGNED dependencies stay original.
++include device/tb03/gsi/signing/product-release.mk
+diff --git a/device/tb03/gsi/product.prop b/device/tb03/gsi/product.prop
+old mode 100755
+new mode 100644
+index 2f544e9..e0a4830
+--- a/device/tb03/gsi/product.prop
++++ b/device/tb03/gsi/product.prop
+@@ -1,3 +1,3 @@
+-# r27 Alpha release identity; update the date for a new release build.
+-ro.custom.version=PixelOS-16.2_arm64_20261027.027 (Alpha)
++# r28 Beta pending-release candidate release identity; update the date for a new release build.
++ro.custom.version=PixelOS-16.2_arm64_20261027.028 (Beta)
+ ro.product.marketname=Lenovo TB-J716F
+diff --git a/device/tb03/gsi/signing/.gitignore b/device/tb03/gsi/signing/.gitignore
+new file mode 100644
+index 0000000..fe9a5fa
+--- /dev/null
++++ b/device/tb03/gsi/signing/.gitignore
+@@ -0,0 +1 @@
++keys-private
+diff --git a/device/tb03/gsi/signing/Android.bp b/device/tb03/gsi/signing/Android.bp
+new file mode 100644
+index 0000000..077cb05
+--- /dev/null
++++ b/device/tb03/gsi/signing/Android.bp
+@@ -0,0 +1,289 @@
++// Copyright 2026 TB-J716F Project
++// SPDX-License-Identifier: Apache-2.0
++package { default_applicable_licenses: ["Android-Apache-2.0"], default_visibility: ["//visibility:public"], }
++
++android_app_certificate {
++    name: "tb28_cert_bluetooth",
++    certificate: "keys-private/bluetooth",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_adbd",
++    certificate: "keys-private/com.android.adbd",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_adservices",
++    certificate: "keys-private/com.android.adservices",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_adservices_api",
++    certificate: "keys-private/com.android.adservices.api",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_appsearch",
++    certificate: "keys-private/com.android.appsearch",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_appsearch_apk",
++    certificate: "keys-private/com.android.appsearch.apk",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_art",
++    certificate: "keys-private/com.android.art",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_bt",
++    certificate: "keys-private/com.android.bt",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_cellbroadcast",
++    certificate: "keys-private/com.android.cellbroadcast",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_compos",
++    certificate: "keys-private/com.android.compos",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_configinfrastructure",
++    certificate: "keys-private/com.android.configinfrastructure",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_connectivity_resources",
++    certificate: "keys-private/com.android.connectivity.resources",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_conscrypt",
++    certificate: "keys-private/com.android.conscrypt",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_crashrecovery",
++    certificate: "keys-private/com.android.crashrecovery",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_devicelock",
++    certificate: "keys-private/com.android.devicelock",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_extservices",
++    certificate: "keys-private/com.android.extservices",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_federatedcompute",
++    certificate: "keys-private/com.android.federatedcompute",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_health_connect_backuprestore",
++    certificate: "keys-private/com.android.health.connect.backuprestore",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_healthconnect_controller",
++    certificate: "keys-private/com.android.healthconnect.controller",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_healthfitness",
++    certificate: "keys-private/com.android.healthfitness",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_hotspot2_osulogin",
++    certificate: "keys-private/com.android.hotspot2.osulogin",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_i18n",
++    certificate: "keys-private/com.android.i18n",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_ipsec",
++    certificate: "keys-private/com.android.ipsec",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_media",
++    certificate: "keys-private/com.android.media",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_media_swcodec",
++    certificate: "keys-private/com.android.media.swcodec",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_mediaprovider",
++    certificate: "keys-private/com.android.mediaprovider",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_neuralnetworks",
++    certificate: "keys-private/com.android.neuralnetworks",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_nfcservices",
++    certificate: "keys-private/com.android.nfcservices",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_ondevicepersonalization",
++    certificate: "keys-private/com.android.ondevicepersonalization",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_os_statsd",
++    certificate: "keys-private/com.android.os.statsd",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_permission",
++    certificate: "keys-private/com.android.permission",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_profiling",
++    certificate: "keys-private/com.android.profiling",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_ranging_rangingtestapp",
++    certificate: "keys-private/com.android.ranging.rangingtestapp",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_resolv",
++    certificate: "keys-private/com.android.resolv",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_rkpd",
++    certificate: "keys-private/com.android.rkpd",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_runtime",
++    certificate: "keys-private/com.android.runtime",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_safetycenter_resources",
++    certificate: "keys-private/com.android.safetycenter.resources",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_scheduling",
++    certificate: "keys-private/com.android.scheduling",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_sdkext",
++    certificate: "keys-private/com.android.sdkext",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_telephonycore",
++    certificate: "keys-private/com.android.telephonycore",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_tethering",
++    certificate: "keys-private/com.android.tethering",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_tzdata",
++    certificate: "keys-private/com.android.tzdata",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_uprobestats",
++    certificate: "keys-private/com.android.uprobestats",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_uwb",
++    certificate: "keys-private/com.android.uwb",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_uwb_resources",
++    certificate: "keys-private/com.android.uwb.resources",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_virt",
++    certificate: "keys-private/com.android.virt",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_vndk",
++    certificate: "keys-private/com.android.vndk",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_wifi",
++    certificate: "keys-private/com.android.wifi",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_wifi_dialog",
++    certificate: "keys-private/com.android.wifi.dialog",
++}
++
++android_app_certificate {
++    name: "tb28_cert_com_android_wifi_resources",
++    certificate: "keys-private/com.android.wifi.resources",
++}
++
++android_app_certificate {
++    name: "tb28_cert_media",
++    certificate: "keys-private/media",
++}
++
++android_app_certificate {
++    name: "tb28_cert_networkstack",
++    certificate: "keys-private/networkstack",
++}
++
++android_app_certificate {
++    name: "tb28_cert_nfc",
++    certificate: "keys-private/nfc",
++}
++
++android_app_certificate {
++    name: "tb28_cert_platform",
++    certificate: "keys-private/platform",
++}
++
++android_app_certificate {
++    name: "tb28_cert_releasekey",
++    certificate: "keys-private/releasekey",
++}
++
++android_app_certificate {
++    name: "tb28_cert_sdk_sandbox",
++    certificate: "keys-private/sdk_sandbox",
++}
++
++android_app_certificate {
++    name: "tb28_cert_shared",
++    certificate: "keys-private/shared",
++}
++
+diff --git a/device/tb03/gsi/signing/BoardConfigRelease.mk b/device/tb03/gsi/signing/BoardConfigRelease.mk
+new file mode 100644
+index 0000000..58a5475
+--- /dev/null
++++ b/device/tb03/gsi/signing/BoardConfigRelease.mk
+@@ -0,0 +1,3 @@
++# System-only GSI AVB: retain algorithm, rollback and flags; replace only the authority.
++BOARD_AVB_SYSTEM_KEY_PATH := device/tb03/gsi/signing/keys-private/system-avb.pem
++BOARD_AVB_SYSTEM_ALGORITHM := SHA256_RSA2048
+diff --git a/device/tb03/gsi/signing/README.md b/device/tb03/gsi/signing/README.md
+new file mode 100644
+index 0000000..611cb18
+--- /dev/null
++++ b/device/tb03/gsi/signing/README.md
+@@ -0,0 +1 @@
++Project signing binding for J716F Beta v1. keys-private is a local-only directory symlink, never publish it or private key files. The public signing profile is in the release source candidate. Maintainers must restore the same fixed private authority for Beta updates; never regenerate keys as a build fallback.
+diff --git a/device/tb03/gsi/signing/product-release.mk b/device/tb03/gsi/signing/product-release.mk
+new file mode 100644
+index 0000000..67dfc0f
+--- /dev/null
++++ b/device/tb03/gsi/signing/product-release.mk
+@@ -0,0 +1,233 @@
++# Fixed project release v1 authority; private inputs are never checked in.
++PRODUCT_DEFAULT_DEV_CERTIFICATE := device/tb03/gsi/signing/keys-private/releasekey
++PRODUCT_MAINLINE_SEPOLICY_DEV_CERTIFICATES := device/tb03/gsi/signing/keys-private
++PRODUCT_MAINLINE_BLUETOOTH_SEPOLICY_DEV_CERTIFICATES := device/tb03/gsi/signing/keys-private
++# Project mappings take precedence over inherited defaults.
++PRODUCT_CERTIFICATE_OVERRIDES := \
++    AccessibilityMenu:tb28_cert_platform \
++    AdIdApp:tb28_cert_platform \
++    AdServicesApk:tb28_cert_com_android_adservices_api \
++    Aperture:tb28_cert_releasekey \
++    ApertureFrameworksBaseOverlay:tb28_cert_releasekey \
++    ApertureLensLauncher:tb28_cert_releasekey \
++    AppSetIdApp:tb28_cert_platform \
++    AvatarPicker:tb28_cert_platform \
++    BackupRestoreConfirmation:tb28_cert_platform \
++    BasicDreams:tb28_cert_releasekey \
++    BlockedNumberProvider:tb28_cert_shared \
++    Bluetooth:tb28_cert_bluetooth \
++    BluetoothLegacyMigration:tb28_cert_bluetooth \
++    BluetoothMidiService:tb28_cert_releasekey \
++    BookmarkProvider:tb28_cert_releasekey \
++    BuiltInPrintService:tb28_cert_platform \
++    CalendarProvider:tb28_cert_releasekey \
++    CallLogBackup:tb28_cert_shared \
++    CameraExtensionsProxy:tb28_cert_platform \
++    CaptivePortalLogin:tb28_cert_networkstack \
++    CarrierConfig:tb28_cert_platform \
++    CarrierDefaultApp:tb28_cert_platform \
++    CellBroadcastApp:tb28_cert_networkstack \
++    CellBroadcastAppPlatform:tb28_cert_platform \
++    CellBroadcastLegacyApp:tb28_cert_platform \
++    CertInstaller:tb28_cert_platform \
++    ChannelSoundingTestApp:tb28_cert_platform \
++    CompanionDeviceManager:tb28_cert_platform \
++    ContactsProvider:tb28_cert_shared \
++    ContactsProviderOverlay_GMS:tb28_cert_releasekey \
++    CredentialManager:tb28_cert_platform \
++    DeviceAsWebcam:tb28_cert_platform \
++    DeviceConfigServiceResources:tb28_cert_platform \
++    DeviceLockController:tb28_cert_platform \
++    DeviceLockControllerDebug:tb28_cert_platform \
++    DisplayCutoutEmulationCornerOverlay:tb28_cert_releasekey \
++    DisplayCutoutEmulationDoubleOverlay:tb28_cert_releasekey \
++    DisplayCutoutEmulationHoleOverlay:tb28_cert_releasekey \
++    DisplayCutoutEmulationTallOverlay:tb28_cert_releasekey \
++    DisplayCutoutEmulationWaterfallOverlay:tb28_cert_releasekey \
++    DocumentsUIOverlay:tb28_cert_releasekey \
++    DownloadProvider:tb28_cert_media \
++    DownloadProviderUi:tb28_cert_media \
++    DynamicSystemInstallationService:tb28_cert_platform \
++    E2eeContactKeysProvider:tb28_cert_shared \
++    EasterEgg:tb28_cert_platform \
++    EmergencyInfoGoogleNoUi:tb28_cert_platform \
++    ExternalStorageProvider:tb28_cert_platform \
++    FederatedCompute:tb28_cert_com_android_federatedcompute \
++    Flipendo:tb28_cert_platform \
++    FontNotoSerifSourceOverlay:tb28_cert_releasekey \
++    FrameworkOverlayCustom:tb28_cert_releasekey \
++    FrameworkOverlayThemePicker:tb28_cert_releasekey \
++    FrameworkPixelSounds:tb28_cert_releasekey \
++    FrameworkPixellauncher:tb28_cert_releasekey \
++    FusedLocation:tb28_cert_platform \
++    GoogleConfigOverlay_GMS:tb28_cert_releasekey \
++    GoogleSettingsOverlay:tb28_cert_releasekey \
++    GoogleWebViewOverlay_GMS:tb28_cert_releasekey \
++    HTMLViewer:tb28_cert_releasekey \
++    HealthConnectBackupRestore:tb28_cert_com_android_health_connect_backuprestore \
++    HealthConnectController:tb28_cert_com_android_healthconnect_controller \
++    HealthConnectToolbox:tb28_cert_platform \
++    HealthConnectToolbox2:tb28_cert_platform \
++    HealthConnectToolbox3:tb28_cert_platform \
++    ImsServiceEntitlement:tb28_cert_releasekey \
++    InputDevices:tb28_cert_platform \
++    IntentResolver:tb28_cert_platform \
++    Iwlan:tb28_cert_platform \
++    J716fInputBackend:tb28_cert_platform \
++    KeyChain:tb28_cert_platform \
++    Launcher3Overlay:tb28_cert_releasekey \
++    LeAudioTestApp:tb28_cert_platform \
++    LineageBlackTheme:tb28_cert_releasekey \
++    LiveWallpapersPicker:tb28_cert_releasekey \
++    LocalTransport:tb28_cert_platform \
++    ManagedProvisioning:tb28_cert_platform \
++    MediaProvider:tb28_cert_media \
++    MediaProviderLegacy:tb28_cert_media \
++    MmsService:tb28_cert_platform \
++    ModuleMetadata:tb28_cert_releasekey \
++    MtkInCallService:tb28_cert_platform \
++    MtpService:tb28_cert_media \
++    Music:tb28_cert_releasekey \
++    MusicFX:tb28_cert_releasekey \
++    NavigationBarMode2ButtonOverlay:tb28_cert_releasekey \
++    NavigationBarMode3ButtonOverlay:tb28_cert_releasekey \
++    NavigationBarModeGesturalOverlay:tb28_cert_releasekey \
++    NetworkStack:tb28_cert_networkstack \
++    NetworkStackOverlay:tb28_cert_releasekey \
++    NfcNci:tb28_cert_platform \
++    NfcNciApex:tb28_cert_nfc \
++    NfcNciApexMigration:tb28_cert_nfc \
++    NoCutoutOverlay:tb28_cert_releasekey \
++    NotesRoleEnabledOverlay:tb28_cert_platform \
++    ONS:tb28_cert_platform \
++    OnDevicePersonalization:tb28_cert_platform \
++    OsuLogin:tb28_cert_com_android_hotspot2_osulogin \
++    PacProcessor:tb28_cert_platform \
++    PackageInstaller:tb28_cert_platform \
++    ParanoidSense:tb28_cert_platform \
++    ParanoidSenseOverlay:tb28_cert_releasekey \
++    PartnerBookmarksProvider:tb28_cert_releasekey \
++    PermissionController:tb28_cert_platform \
++    PermissionControllerOverlay:tb28_cert_releasekey \
++    PhotoTable:tb28_cert_releasekey \
++    Photopicker:tb28_cert_media \
++    PixelConfigOverlay2018_GMS:tb28_cert_releasekey \
++    PixelConfigOverlay2019Midyear_GMS:tb28_cert_releasekey \
++    PixelConfigOverlay2021_GMS:tb28_cert_releasekey \
++    PixelConfigOverlayCommon_GMS:tb28_cert_releasekey \
++    PixelDocumentsUIGoogleOverlay_GMS:tb28_cert_releasekey \
++    PixelLauncherOverlay:tb28_cert_releasekey \
++    PixelLauncherOverlayThemePicker:tb28_cert_releasekey \
++    PixelSetupWizardOverlay2024_GMS:tb28_cert_releasekey \
++    PixelSetupWizardOverlayExpressive_GMS:tb28_cert_releasekey \
++    PixelThemesStub2022_and_newer:tb28_cert_platform \
++    PrintSpooler:tb28_cert_releasekey \
++    PrivateSpace:tb28_cert_platform \
++    ProxyHandler:tb28_cert_platform \
++    QcRilAm:tb28_cert_platform \
++    QualifiedNetworksService:tb28_cert_platform \
++    QuickAccessWallet:tb28_cert_platform \
++    RangingTestApp:tb28_cert_com_android_ranging_rangingtestapp \
++    SafetyCenterResources:tb28_cert_com_android_safetycenter_resources \
++    SampleTopicsApp1:tb28_cert_platform \
++    SampleTopicsApp2:tb28_cert_platform \
++    SampleTopicsApp3:tb28_cert_platform \
++    SampleTopicsApp4:tb28_cert_platform \
++    SampleTopicsApp5:tb28_cert_platform \
++    SampleTopicsApp6:tb28_cert_platform \
++    SampleTopicsAppWithNoPerm:tb28_cert_platform \
++    SampleTopicsAppWithOptOutAll:tb28_cert_platform \
++    SdkSandbox:tb28_cert_sdk_sandbox \
++    SecureElement:tb28_cert_platform \
++    ServiceConnectivityResources:tb28_cert_com_android_connectivity_resources \
++    ServiceUwbResources:tb28_cert_com_android_uwb_resources \
++    ServiceWifiResources:tb28_cert_com_android_wifi_resources \
++    Settings:tb28_cert_platform \
++    SettingsIntelligence:tb28_cert_releasekey \
++    SettingsOverlayCustom:tb28_cert_releasekey \
++    SettingsOverlayThemePicker:tb28_cert_releasekey \
++    SettingsOverlay_GMS:tb28_cert_releasekey \
++    SettingsPixelSounds:tb28_cert_releasekey \
++    SettingsProvider:tb28_cert_platform \
++    SettingsProviderOverlay_GMS:tb28_cert_releasekey \
++    SharedStorageBackup:tb28_cert_platform \
++    Shell:tb28_cert_platform \
++    SimAppDialog:tb28_cert_releasekey \
++    SoundPicker:tb28_cert_media \
++    StatementService:tb28_cert_platform \
++    SystemUI:tb28_cert_platform \
++    SystemUIClocks-BigNum:tb28_cert_platform \
++    SystemUIClocks-Calligraphy:tb28_cert_platform \
++    SystemUIClocks-Growth:tb28_cert_platform \
++    SystemUIClocks-Inflate:tb28_cert_platform \
++    SystemUIClocks-Metro:tb28_cert_platform \
++    SystemUIClocks-NumOverlap:tb28_cert_platform \
++    SystemUIClocks-Weather:tb28_cert_platform \
++    SystemUIGXOverlay_GMS:tb28_cert_releasekey \
++    SystemUIOverlayThemePicker:tb28_cert_releasekey \
++    SystemUIOverlay_GMS:tb28_cert_releasekey \
++    SystemUIPixellauncher:tb28_cert_releasekey \
++    SystemUIResPixelClocks:tb28_cert_releasekey \
++    Tb03J716FColorPolicyOverlay:tb28_cert_releasekey \
++    Tb03WifiRegEventsOverlay:tb28_cert_releasekey \
++    TeleService:tb28_cert_platform \
++    TeleServiceOverlay_GMS:tb28_cert_releasekey \
++    Telecom:tb28_cert_platform \
++    TelecomOverlay_GMS:tb28_cert_releasekey \
++    TelephonyProvider:tb28_cert_platform \
++    Tethering:tb28_cert_networkstack \
++    TetheringNext:tb28_cert_networkstack \
++    ThemesStub:tb28_cert_releasekey \
++    ThreadNetworkDemoApp:tb28_cert_platform \
++    TouchGestures:tb28_cert_platform \
++    TransparentNavigationBarOverlay:tb28_cert_releasekey \
++    TurboAdapter_NoBatt:tb28_cert_platform \
++    UserDictionaryProvider:tb28_cert_shared \
++    VpnDialogs:tb28_cert_platform \
++    WAPPushManager:tb28_cert_releasekey \
++    WallpaperBackup:tb28_cert_platform \
++    WifiDialog:tb28_cert_com_android_wifi_dialog \
++    com.android.adbd:tb28_cert_com_android_adbd \
++    com.android.adservices:tb28_cert_com_android_adservices \
++    com.android.appsearch:tb28_cert_com_android_appsearch \
++    com.android.appsearch.apk:tb28_cert_com_android_appsearch_apk \
++    com.android.art:tb28_cert_com_android_art \
++    com.android.bt:tb28_cert_com_android_bt \
++    com.android.cellbroadcast:tb28_cert_com_android_cellbroadcast \
++    com.android.compos:tb28_cert_com_android_compos \
++    com.android.configinfrastructure:tb28_cert_com_android_configinfrastructure \
++    com.android.conscrypt:tb28_cert_com_android_conscrypt \
++    com.android.crashrecovery:tb28_cert_com_android_crashrecovery \
++    com.android.devicelock:tb28_cert_com_android_devicelock \
++    com.android.extservices:tb28_cert_com_android_extservices \
++    com.android.healthfitness:tb28_cert_com_android_healthfitness \
++    com.android.i18n:tb28_cert_com_android_i18n \
++    com.android.ipsec:tb28_cert_com_android_ipsec \
++    com.android.media:tb28_cert_com_android_media \
++    com.android.media.swcodec:tb28_cert_com_android_media_swcodec \
++    com.android.mediaprovider:tb28_cert_com_android_mediaprovider \
++    com.android.neuralnetworks:tb28_cert_com_android_neuralnetworks \
++    com.android.nfcservices:tb28_cert_com_android_nfcservices \
++    com.android.ondevicepersonalization:tb28_cert_releasekey \
++    com.android.os.statsd:tb28_cert_com_android_os_statsd \
++    com.android.permission:tb28_cert_com_android_permission \
++    com.android.profiling:tb28_cert_com_android_profiling \
++    com.android.resolv:tb28_cert_com_android_resolv \
++    com.android.rkpd:tb28_cert_com_android_rkpd \
++    com.android.runtime:tb28_cert_com_android_runtime \
++    com.android.scheduling:tb28_cert_com_android_scheduling \
++    com.android.sdkext:tb28_cert_com_android_sdkext \
++    com.android.telephonycore:tb28_cert_com_android_telephonycore \
++    com.android.tethering:tb28_cert_releasekey \
++    com.android.tzdata:tb28_cert_com_android_tzdata \
++    com.android.uprobestats:tb28_cert_com_android_uprobestats \
++    com.android.uwb:tb28_cert_com_android_uwb \
++    com.android.virt:tb28_cert_com_android_virt \
++    com.android.vndk:tb28_cert_com_android_vndk \
++    com.android.wifi:tb28_cert_com_android_wifi \
++    framework-res:tb28_cert_platform \
++    framework-resOverlay_GMS:tb28_cert_releasekey \
++    gsi_overlay_framework:tb28_cert_releasekey \
++    gsi_overlay_systemui:tb28_cert_releasekey \
++    uwb_androidx_backend_app:tb28_cert_platform \
++    $(PRODUCT_CERTIFICATE_OVERRIDES)
+diff --git a/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java b/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java
+new file mode 100644
+index 0000000..d35a60d
+--- /dev/null
++++ b/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java
+@@ -0,0 +1,176 @@
++/*
++ * Copyright (C) 2016 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
++ * except in compliance with the License. You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software distributed under the
++ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied. See the License for the specific language governing
++ * permissions and limitations under the License.
++ */
++
++package com.android.systemui.qs.tiles;
++
++import android.content.Intent;
++import android.os.Handler;
++import android.os.Looper;
++import android.os.SystemProperties;
++import android.provider.Settings;
++import android.service.quicksettings.Tile;
++import android.widget.Switch;
++
++import androidx.annotation.Nullable;
++
++import com.android.internal.jank.InteractionJankMonitor;
++import com.android.internal.logging.MetricsLogger;
++import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
++import com.android.systemui.Prefs;
++import com.android.systemui.animation.DialogCuj;
++import com.android.systemui.animation.DialogTransitionAnimator;
++import com.android.systemui.animation.Expandable;
++import com.android.systemui.dagger.qualifiers.Background;
++import com.android.systemui.dagger.qualifiers.Main;
++import com.android.systemui.plugins.ActivityStarter;
++import com.android.systemui.plugins.FalsingManager;
++import com.android.systemui.plugins.qs.QSTile.BooleanState;
++import com.android.systemui.plugins.statusbar.StatusBarStateController;
++import com.android.systemui.qs.QSHost;
++import com.android.systemui.qs.QsEventLogger;
++import com.android.systemui.qs.logging.QSLogger;
++import com.android.systemui.qs.tileimpl.QSTileImpl;
++import com.android.systemui.res.R;
++import com.android.systemui.shade.domain.interactor.ShadeDialogContextInteractor;
++import com.android.systemui.statusbar.phone.SystemUIDialog;
++import com.android.systemui.statusbar.policy.DataSaverController;
++
++import javax.inject.Inject;
++
++public class DataSaverTile extends QSTileImpl<BooleanState> implements
++        DataSaverController.Listener {
++
++    public static final String TILE_SPEC = "saver";
++
++    private static final String INTERACTION_JANK_TAG = "start_data_saver";
++
++    private final DataSaverController mDataSaverController;
++    private final DialogTransitionAnimator mDialogTransitionAnimator;
++    private final SystemUIDialog.Factory mSystemUIDialogFactory;
++    private final ShadeDialogContextInteractor mShadeDialogContextInteractor;
++
++    @Inject
++    public DataSaverTile(
++            QSHost host,
++            QsEventLogger uiEventLogger,
++            @Background Looper backgroundLooper,
++            @Main Handler mainHandler,
++            FalsingManager falsingManager,
++            MetricsLogger metricsLogger,
++            StatusBarStateController statusBarStateController,
++            ActivityStarter activityStarter,
++            QSLogger qsLogger,
++            DataSaverController dataSaverController,
++            DialogTransitionAnimator dialogTransitionAnimator,
++            SystemUIDialog.Factory systemUIDialogFactory,
++            ShadeDialogContextInteractor shadeDialogContextInteractor
++    ) {
++        super(host, uiEventLogger, backgroundLooper, mainHandler, falsingManager, metricsLogger,
++                statusBarStateController, activityStarter, qsLogger);
++        mDataSaverController = dataSaverController;
++        mDialogTransitionAnimator = dialogTransitionAnimator;
++        mSystemUIDialogFactory = systemUIDialogFactory;
++        mShadeDialogContextInteractor = shadeDialogContextInteractor;
++        mDataSaverController.observe(getLifecycle(), this);
++    }
++
++    @Override
++    public BooleanState newTileState() {
++        return new BooleanState();
++    }
++
++    @Override
++    public boolean isAvailable() {
++        // J716F is Wi-Fi-only; do not expose its unsupported cellular settings entry.
++        return !"p11_pro_plus".equals(SystemProperties.get("ro.product.vendor.device"));
++    }
++
++    @Override
++    public Intent getLongClickIntent() {
++        return new Intent(Settings.ACTION_DATA_SAVER_SETTINGS);
++    }
++
++    @Override
++    protected void handleClick(@Nullable Expandable expandable) {
++        if (mState.value
++                || Prefs.getBoolean(mContext, Prefs.Key.QS_DATA_SAVER_DIALOG_SHOWN, false)) {
++            // Do it right away.
++            toggleDataSaver();
++            return;
++        }
++
++        // Show a dialog to confirm first. Dialogs shown by the DialogTransitionAnimator must be
++        // created and shown on the main thread, so we post it to the UI handler.
++        mUiHandler.post(() -> {
++            SystemUIDialog dialog = mSystemUIDialogFactory.create(
++                    mShadeDialogContextInteractor.getContext());
++            dialog.setTitle(com.android.internal.R.string.data_saver_enable_title);
++            dialog.setMessage(com.android.internal.R.string.data_saver_description);
++            dialog.setPositiveButton(com.android.internal.R.string.data_saver_enable_button,
++                    (dialogInterface, which) -> {
++                        toggleDataSaver();
++                        Prefs.putBoolean(mContext, Prefs.Key.QS_DATA_SAVER_DIALOG_SHOWN, true);
++                    });
++            dialog.setNeutralButton(com.android.internal.R.string.cancel, null);
++            dialog.setShowForAllUsers(true);
++
++            if (expandable != null) {
++                DialogTransitionAnimator.Controller controller =
++                        expandable.dialogTransitionController(new DialogCuj(
++                                InteractionJankMonitor.CUJ_SHADE_DIALOG_OPEN,
++                                INTERACTION_JANK_TAG));
++                if (controller != null) {
++                    mDialogTransitionAnimator.show(dialog, controller);
++                } else {
++                    dialog.show();
++                }
++            } else {
++                dialog.show();
++            }
++        });
++    }
++
++    private void toggleDataSaver() {
++        mState.value = !mDataSaverController.isDataSaverEnabled();
++        mDataSaverController.setDataSaverEnabled(mState.value);
++        refreshState(mState.value);
++    }
++
++    @Override
++    public CharSequence getTileLabel() {
++        return mContext.getString(R.string.data_saver);
++    }
++
++    @Override
++    protected void handleUpdateState(BooleanState state, Object arg) {
++        state.value = arg instanceof Boolean ? ((Boolean) arg).booleanValue()
++                : mDataSaverController.isDataSaverEnabled();
++        state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
++        state.label = mContext.getString(R.string.data_saver);
++        state.contentDescription = state.label;
++        state.icon = maybeLoadResourceIcon(state.value ? R.drawable.qs_data_saver_icon_on
++                : R.drawable.qs_data_saver_icon_off);
++        state.expandedAccessibilityClassName = Switch.class.getName();
++    }
++
++    @Override
++    public int getMetricsCategory() {
++        return MetricsEvent.QS_DATA_SAVER;
++    }
++
++    @Override
++    public void onDataSaverChanged(boolean isDataSaving) {
++        refreshState(isDataSaving);
++    }
++}
+diff --git a/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt b/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt
+new file mode 100644
+index 0000000..c20ee68
+--- /dev/null
++++ b/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt
+@@ -0,0 +1,134 @@
++/*
++ * Copyright (C) 2025 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.systemui.qs.tiles.impl.cell.domain.interactor
++
++import android.content.Context
++import android.os.SystemProperties
++import android.os.UserHandle
++import com.android.settingslib.graph.SignalDrawable
++import com.android.systemui.Flags as AconfigFlags
++import com.android.systemui.common.shared.model.ContentDescription
++import com.android.systemui.common.shared.model.Icon
++import com.android.systemui.dagger.qualifiers.Application
++import com.android.systemui.qs.pipeline.shared.QSPipelineFlagsRepository
++import com.android.systemui.qs.tiles.base.domain.interactor.QSTileDataInteractor
++import com.android.systemui.qs.tiles.base.domain.model.DataUpdateTrigger
++import com.android.systemui.qs.tiles.impl.cell.domain.model.MobileDataTileIcon
++import com.android.systemui.qs.tiles.impl.cell.domain.model.MobileDataTileModel
++import com.android.systemui.res.R
++import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconsInteractor
++import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
++import javax.inject.Inject
++import kotlinx.coroutines.flow.Flow
++import kotlinx.coroutines.flow.combine
++import kotlinx.coroutines.flow.flatMapLatest
++import kotlinx.coroutines.flow.flowOf
++import kotlinx.coroutines.flow.onStart
++
++class MobileDataTileDataInteractor
++@Inject
++constructor(
++    @Application private val context: Context,
++    private val mobileIconsInteractor: MobileIconsInteractor,
++    private val qsPipelineFlagsRepository: QSPipelineFlagsRepository,
++) : QSTileDataInteractor<MobileDataTileModel> {
++    private val mobileDataLabel: String =
++        context.getString(R.string.quick_settings_cellular_detail_title)
++
++    override fun tileData(
++        user: UserHandle,
++        triggers: Flow<DataUpdateTrigger>,
++    ): Flow<MobileDataTileModel> = tileData()
++
++    fun tileData(): Flow<MobileDataTileModel> =
++        mobileIconsInteractor.activeDataIconInteractor.flatMapLatest {
++            if (it == null) {
++                    flowOf(
++                        MobileDataTileModel(
++                            isSimActive = false,
++                            isEnabled = false,
++                            icon =
++                                MobileDataTileIcon.ResourceIcon(
++                                    Icon.Resource(
++                                        com.android.settingslib.R.drawable.ic_mobile_4_4_bar,
++                                        ContentDescription.Loaded(mobileDataLabel),
++                                    )
++                                ),
++                        )
++                    )
++                } else {
++                    combine(it.isDataEnabled, it.signalLevelIcon) { isDataEnabled, signalLevelIcon
++                        ->
++                        val icon =
++                            if (isDataEnabled) {
++                                when (signalLevelIcon) {
++                                    is SignalIconModel.Cellular -> {
++                                        val signalState =
++                                            SignalDrawable.getState(
++                                                signalLevelIcon.level,
++                                                signalLevelIcon.numberOfLevels,
++                                                signalLevelIcon.showExclamationMark,
++                                            )
++                                        MobileDataTileIcon.SignalIcon(signalState)
++                                    }
++
++                                    is SignalIconModel.Satellite -> {
++                                        MobileDataTileIcon.ResourceIcon(
++                                            Icon.Resource(
++                                                signalLevelIcon.icon.resId,
++                                                signalLevelIcon.icon.contentDescription,
++                                            )
++                                        )
++                                    }
++                                }
++                            } else {
++                                MobileDataTileIcon.ResourceIcon(
++                                    Icon.Resource(
++                                        R.drawable.ic_signal_mobile_data_off,
++                                        ContentDescription.Loaded(mobileDataLabel),
++                                    )
++                                )
++                            }
++                        MobileDataTileModel(
++                            isSimActive = true,
++                            isEnabled = isDataEnabled,
++                            icon = icon,
++                        )
++                    }
++                }
++                .onStart {
++                    MobileDataTileModel(
++                        isSimActive = false,
++                        isEnabled = false,
++                        icon =
++                            MobileDataTileIcon.ResourceIcon(
++                                Icon.Resource(
++                                    R.drawable.ic_signal_mobile_data_off,
++                                    ContentDescription.Loaded(mobileDataLabel),
++                                )
++                            ),
++                    )
++                }
++        }
++
++    override fun availability(user: UserHandle): Flow<Boolean> = flowOf(isAvailable())
++
++    fun isAvailable(): Boolean {
++        return AconfigFlags.qsSplitInternetTile() &&
++            SystemProperties.get("ro.product.vendor.device") != "p11_pro_plus"
++    }
++}
+diff --git a/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt b/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt
+new file mode 100644
+index 0000000..7ba72ae
+--- /dev/null
++++ b/frameworks/base/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt
+@@ -0,0 +1,54 @@
++/*
++ * Copyright (C) 2023 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.systemui.qs.tiles.impl.saver.domain.interactor
++
++import android.os.SystemProperties
++import android.os.UserHandle
++import com.android.systemui.common.coroutine.ConflatedCallbackFlow
++import com.android.systemui.qs.tiles.base.domain.interactor.QSTileDataInteractor
++import com.android.systemui.qs.tiles.base.domain.model.DataUpdateTrigger
++import com.android.systemui.qs.tiles.impl.saver.domain.model.DataSaverTileModel
++import com.android.systemui.statusbar.policy.DataSaverController
++import javax.inject.Inject
++import kotlinx.coroutines.channels.awaitClose
++import kotlinx.coroutines.flow.Flow
++import kotlinx.coroutines.flow.flowOf
++
++/** Observes data saver state changes providing the [DataSaverTileModel]. */
++class DataSaverTileDataInteractor
++@Inject
++constructor(private val dataSaverController: DataSaverController) :
++    QSTileDataInteractor<DataSaverTileModel> {
++
++    override fun tileData(
++        user: UserHandle,
++        triggers: Flow<DataUpdateTrigger>,
++    ): Flow<DataSaverTileModel> =
++        ConflatedCallbackFlow.conflatedCallbackFlow {
++            val initialValue = dataSaverController.isDataSaverEnabled
++            trySend(DataSaverTileModel(initialValue))
++
++            val callback = DataSaverController.Listener { trySend(DataSaverTileModel(it)) }
++
++            dataSaverController.addCallback(callback)
++            awaitClose { dataSaverController.removeCallback(callback) }
++        }
++
++    // Keep the underlying metered-network policy; hide only this product's QS entry.
++    override fun availability(user: UserHandle): Flow<Boolean> =
++        flowOf(SystemProperties.get("ro.product.vendor.device") != "p11_pro_plus")
++}

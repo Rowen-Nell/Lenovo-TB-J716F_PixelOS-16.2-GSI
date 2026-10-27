@@ -1,0 +1,1 @@
+Project signing binding for J716F Beta v1. keys-private is a local-only directory symlink, never publish it or private key files. The public signing profile is in the release source candidate. Maintainers must restore the same fixed private authority for Beta updates; never regenerate keys as a build fallback.

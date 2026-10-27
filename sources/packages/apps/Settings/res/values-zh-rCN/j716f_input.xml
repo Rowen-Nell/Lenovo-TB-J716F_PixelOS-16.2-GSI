@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="j716f_pointer_style_title">指针样式</string>
+    <string name="j716f_pointer_style_summary">%s（重启后生效）</string>
+    <string-array name="j716f_pointer_style_entries">
+        <item>鼠标指针</item><item>笔指针</item><item>透明</item>
+    </string-array>
+</resources>

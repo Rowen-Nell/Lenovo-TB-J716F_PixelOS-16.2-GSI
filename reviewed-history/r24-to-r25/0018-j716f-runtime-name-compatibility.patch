@@ -1,0 +1,34 @@
+--- a/packages/modules/Connectivity/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
++++ b/packages/modules/Connectivity/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
+@@ -93,7 +93,8 @@
+     bool knownPath = false;
+     for (const char* candidate : paths) knownPath |= !strcmp(path, candidate);
+     if (!knownPath) return false;
+-    if (android::base::GetProperty("ro.product.device", "") != "tb03_arm64" ||
++    const std::string device = android::base::GetProperty("ro.product.device", "");
++    if ((device != "tb03_arm64" && device != "J716F") ||
+         android::base::GetProperty("ro.product.vendor.device", "") != "p11_pro_plus" ||
+         android::base::GetProperty("ro.vendor.build.version.sdk", "") != "30") return false;
+     struct utsname kernel = {};
+--- a/device/tb03/gsi/audio/tb03-audio-policy.sh
++++ b/device/tb03/gsi/audio/tb03-audio-policy.sh
+@@ -1,7 +1,10 @@
+ #!/system/bin/sh
+ # Exact ZUI15: preserve wired routes; use standard mixed output for communication.
+ # This HAL downmixes non-enhanced VoIP writes after configuring stereo PCM.
+-[ "$(getprop ro.product.device)" = "tb03_arm64" ] || exit 0
++case "$(getprop ro.product.device)" in
++    tb03_arm64|J716F) ;;
++    *) exit 0 ;;
++esac
+ [ "$(getprop ro.product.vendor.device)" = "p11_pro_plus" ] || exit 0
+ [ "$(getprop ro.vendor.build.version.sdk)" = "30" ] || exit 0
+ [ "$(getprop persist.sys.phh.caf.audio_policy)" != "1" ] || exit 0
+--- a/device/tb03/gsi/product.prop
++++ b/device/tb03/gsi/product.prop
+@@ -1,3 +1,3 @@
+-# r24 Alpha release identity; update the date for a new release build.
+-ro.custom.version=PixelOS-16.2_arm64_20261026.024 (Alpha)
++# r25 Alpha release identity; update the date for a new release build.
++ro.custom.version=PixelOS-16.2_arm64_20261026.025 (Alpha)
+ ro.product.marketname=Lenovo TB-J716F

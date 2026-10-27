@@ -1,0 +1,245 @@
+diff --git a/libs/gui/BLASTBufferQueue.cpp b/libs/gui/BLASTBufferQueue.cpp
+index 05fbc14..a3fca36 100644
+--- a/libs/gui/BLASTBufferQueue.cpp
++++ b/libs/gui/BLASTBufferQueue.cpp
+@@ -28,6 +28,8 @@
+ #include <gui/BufferQueueConsumer.h>
+ #include <gui/BufferQueueCore.h>
+ #include <gui/BufferQueueProducer.h>
++#include <algorithm>
++#include <climits>
+ #include <sys/epoll.h>
+ #include <sys/eventfd.h>
+ 
+@@ -1469,6 +1471,13 @@ status_t BufferReleaseReader::readBlocking(ReleaseCallbackId& outId, sp<Fence>&
+     do {
+         eventCount = epoll_pwait2(mEpollFd.get(), &event, 1 /*maxevents*/,
+                                   timespec ? &(*timespec) : nullptr, nullptr /*sigmask*/);
++        if (eventCount == -1 && errno == ENOSYS) {
++            // Older kernels lack epoll_pwait2. Round up to avoid an early timeout.
++            const nsecs_t timeoutMillis = timeout / 1'000'000 + (timeout % 1'000'000 != 0);
++            const int legacyTimeout = timeout < 0 ? -1
++                    : static_cast<int>(std::min<nsecs_t>(timeoutMillis, INT_MAX));
++            eventCount = epoll_wait(mEpollFd.get(), &event, 1 /*maxevents*/, legacyTimeout);
++        }
+     } while (eventCount == -1 && errno == EINTR);
+ 
+     if (eventCount == -1) {
+diff --git a/libs/shaders/shaders.cpp b/libs/shaders/shaders.cpp
+index 3ced616..2fa798d 100644
+--- a/libs/shaders/shaders.cpp
++++ b/libs/shaders/shaders.cpp
+@@ -302,7 +302,7 @@ std::vector<tonemap::ShaderUniform> buildLinearEffectUniforms(
+     // When there is no custom OETF, the wrapped working color space shader declares the output
+     // space to be `inputColorSpace` with a linear gamma. This allows Skia to optimally transform
+     // to the output space depending on its GPU backend.
+-    const bool needsCustomOETF = (linearEffect.fakeOutputDataspace & HAL_DATASPACE_TRANSFER_MASK) !=
++    const bool needsCustomOETF = (linearEffect.fakeOutputDataspace & HAL_DATASPACE_TRANSFER_MASK) ==
+             HAL_DATASPACE_TRANSFER_GAMMA2_2;
+ 
+     auto gamutTransform = mat3();
+diff --git a/services/surfaceflinger/CompositionEngine/include/compositionengine/impl/OutputCompositionState.h b/services/surfaceflinger/CompositionEngine/include/compositionengine/impl/OutputCompositionState.h
+old mode 100644
+new mode 100755
+index c7f6a9c..67e1ff1
+--- a/services/surfaceflinger/CompositionEngine/include/compositionengine/impl/OutputCompositionState.h
++++ b/services/surfaceflinger/CompositionEngine/include/compositionengine/impl/OutputCompositionState.h
+@@ -136,6 +136,9 @@ struct OutputCompositionState {
+     // Current display brightness
+     float displayBrightnessNits{-1.f};
+ 
++    // Opt-in legacy HWC bridge; does not claim per-layer HWC brightness support.
++    bool legacyHdrGpuDimming{false};
++
+     // SDR white point
+     float sdrWhitePointNits{-1.f};
+ 
+diff --git a/services/surfaceflinger/CompositionEngine/src/Output.cpp b/services/surfaceflinger/CompositionEngine/src/Output.cpp
+old mode 100644
+new mode 100755
+index 6809295..f9bd7b9
+--- a/services/surfaceflinger/CompositionEngine/src/Output.cpp
++++ b/services/surfaceflinger/CompositionEngine/src/Output.cpp
+@@ -1085,6 +1085,13 @@ ui::Dataspace Output::getBestDataspace(ui::Dataspace* outHdrDataSpace,
+                 }
+                 break;
+             default:
++                // Match extended P3 without changing the source layer's range.
++                if (layer->getLayerFE().getCompositionState()->dataspace ==
++                    static_cast<ui::Dataspace>(HAL_DATASPACE_STANDARD_DCI_P3 |
++                                              HAL_DATASPACE_TRANSFER_SRGB |
++                                              HAL_DATASPACE_RANGE_EXTENDED)) {
++                    bestDataSpace = ui::Dataspace::DISPLAY_P3;
++                }
+                 break;
+         }
+     }
+@@ -1879,7 +1886,10 @@ float Output::getHdrSdrRatio(const std::shared_ptr<renderengine::ExternalTexture
+         return 1.0f;
+     }
+ 
+-    if (!FlagManager::getInstance().fp16_client_target()) {
++    // The HIDL client target cannot apply the missing SDR-white-point multiplier.
++    // RenderEngine must finish dimming into the physical display's luminance here,
++    // even when an extended-range FP16 target is enabled.
++    if (getState().legacyHdrGpuDimming || !FlagManager::getInstance().fp16_client_target()) {
+         return 1.0f;
+     }
+ 
+diff --git a/services/surfaceflinger/CompositionEngine/src/OutputLayer.cpp b/services/surfaceflinger/CompositionEngine/src/OutputLayer.cpp
+old mode 100644
+new mode 100755
+index cc3a94c..ed4e391
+--- a/services/surfaceflinger/CompositionEngine/src/OutputLayer.cpp
++++ b/services/surfaceflinger/CompositionEngine/src/OutputLayer.cpp
+@@ -23,6 +23,7 @@
+ #include <compositionengine/impl/HwcBufferCache.h>
+ #include <compositionengine/impl/OutputCompositionState.h>
+ #include <compositionengine/impl/OutputLayer.h>
++#include <compositionengine/impl/LegacyHdrDimming.h>
+ #include <compositionengine/impl/OutputLayerCompositionState.h>
+ #include <ui/FloatRect.h>
+ #include <ui/HdrRenderTypeUtils.h>
+@@ -977,7 +978,14 @@ void OutputLayer::detectDisallowedCompositionTypeChange(Composition from, Compos
+ }
+ 
+ bool OutputLayer::isClientCompositionForced(bool isPeekingThrough) const {
+-    return getState().forceClientComposition ||
++    const auto& output = getOutput().getState();
++    const auto* layer = getLayerFE().getCompositionState();
++    // Evaluate per frame rather than latching forceClientComposition until geometry changes.
++    // Protected buffers and sideband streams retain their existing secure/HWC handling.
++    const bool legacyDimming = output.legacyHdrGpuDimming && layer &&
++            legacy_hdr::forceClient(output.sdrWhitePointNits, output.displayBrightnessNits,
++                                    layer->hasProtectedContent, layer->sidebandStream != nullptr);
++    return legacyDimming || getState().forceClientComposition ||
+             (!isPeekingThrough && getLayerFE().hasRoundedCorners());
+ }
+ 
+diff --git a/services/surfaceflinger/SurfaceFlinger.cpp b/services/surfaceflinger/SurfaceFlinger.cpp
+old mode 100644
+new mode 100755
+index e0f63fb..0ab5a54
+--- a/services/surfaceflinger/SurfaceFlinger.cpp
++++ b/services/surfaceflinger/SurfaceFlinger.cpp
+@@ -57,6 +57,7 @@
+ #include <compositionengine/RenderSurface.h>
+ #include <compositionengine/impl/DisplayColorProfile.h>
+ #include <compositionengine/impl/OutputCompositionState.h>
++#include <compositionengine/impl/LegacyHdrDimming.h>
+ #include <compositionengine/impl/OutputLayerCompositionState.h>
+ #include <configstore/Utils.h>
+ #include <cutils/compiler.h>
+@@ -2330,14 +2331,37 @@ status_t SurfaceFlinger::setDisplayBrightness(const sp<IBinder>& displayToken,
+                            scheduleCommit(FrameHint::kNone);
+                        }
+                        return ftl::yield<status_t>(OK);
+-                   } else {
+-                       return getHwComposer()
+-                               .setDisplayBrightness(display->getPhysicalId(),
+-                                                     brightness.displayBrightness,
+-                                                     brightness.displayBrightnessNits,
+-                                                     Hwc2::Composer::DisplayBrightnessOptions{
+-                                                             .applyImmediately = true});
+-                   }
++                    } else {
++                        // Experimental J716F bridge: keep the real HIDL capability unchanged.
++                        // This is not an HDR policy or a brightness calibration.
++                        const bool legacyHdrGpu = display->isPrimary() &&
++                                base::GetProperty("ro.product.vendor.device", "") == "p11_pro_plus" &&
++                                base::GetBoolProperty("ro.surface_flinger.tb04_legacy_hdr_gpu", false);
++                        auto result = getHwComposer().setDisplayBrightness(
++                                display->getPhysicalId(), brightness.displayBrightness,
++                                brightness.displayBrightnessNits,
++                                Hwc2::Composer::DisplayBrightnessOptions{.applyImmediately = true});
++                        if (!legacyHdrGpu) {
++                            return result;
++                        }
++                        // HIDL brightness is immediate, not synchronized with the client target.
++                        // Publish white points only after that call succeeds, on the SF thread.
++                        const status_t status = result.get();
++                        if (status == OK) {
++                            auto compositionDisplay = display->getCompositionDisplay();
++                            compositionDisplay->editState().legacyHdrGpuDimming = true;
++                            // Cached sets expect per-layer HWC dimming, a HIDL no-op.
++                            compositionDisplay->setLayerCachingEnabled(false);
++                            const bool valid = compositionengine::impl::legacy_hdr::validWhitePoints(
++                                    brightness.sdrWhitePointNits, brightness.displayBrightnessNits);
++                            compositionDisplay->setDisplayBrightness(
++                                    valid ? brightness.sdrWhitePointNits : -1.f,
++                                    valid ? brightness.displayBrightnessNits : -1.f);
++                            // Also recompose on equal-ratio brightness changes and on exit/off.
++                            scheduleComposite(FrameHint::kNone);
++                        }
++                        return ftl::yield<status_t>(status);
++                    }
+                } else {
+                    ALOGE("%s: Invalid display token %p", whence, displayToken.get());
+                    return ftl::yield<status_t>(NAME_NOT_FOUND);
+@@ -3504,6 +3528,36 @@ void SurfaceFlinger::setForcedClientCompositionLayerStacks(
+     }
+ }
+ 
++static bool legacyHdrProtocolEnabled() {
++    return base::GetProperty("ro.product.vendor.device", "") == "p11_pro_plus" &&
++            base::GetBoolProperty("ro.surface_flinger.tb04_legacy_hdr_gpu", false);
++}
++
++static int32_t getLegacyHdrFrameFlags(frontend::LayerSnapshotBuilder& snapshots,
++                                      compositionengine::Display* display) {
++    using namespace compositionengine::impl::legacy_hdr;
++    if (!legacyHdrProtocolEnabled()) return 0;
++    int32_t flags = kFrameAnnotated;
++    snapshots.forEachVisibleSnapshot(
++            [&](const std::unique_ptr<frontend::LayerSnapshot>& snapshot)
++                    FTL_FAKE_GUARD(kMainThreadContext) {
++                if (!snapshot->isVisible || !display->includesLayer(snapshot->outputFilter)) return;
++                if (snapshot->hasProtectedContent || snapshot->sidebandStream != nullptr ||
++                    !snapshot->dimmingEnabled) {
++                    flags |= kUnsupportedMix;
++                }
++                const auto format = snapshot->buffer
++                        ? std::make_optional(static_cast<ui::PixelFormat>(
++                                  snapshot->buffer->getPixelFormat()))
++                        : std::nullopt;
++                if (getHdrRenderType(snapshot->dataspace, format, snapshot->desiredHdrSdrRatio) !=
++                    HdrRenderType::SDR) {
++                    flags |= kRealHdrContent;
++                }
++            });
++    return flags;
++}
++
+ bool SurfaceFlinger::isHdrLayer(const frontend::LayerSnapshot& snapshot) const {
+     // Even though the camera layer may be using an HDR transfer function or otherwise be "HDR"
+     // the device may need to avoid boosting the brightness as a result of these layers to
+@@ -3710,7 +3764,9 @@ void SurfaceFlinger::onCompositionPresented(PhysicalDisplayId pacesetterId,
+         std::swap(activePictureListenersToRemove, mActivePictureListenersToRemove);
+     }
+ 
+-    if (haveNewHdrInfoListeners || mHdrLayerInfoChanged) {
++    // Private experiment flags also observe buffer-only protected/sideband changes.
++    // HdrLayerInfoReporter still deduplicates unchanged notifications.
++    if (haveNewHdrInfoListeners || mHdrLayerInfoChanged || legacyHdrProtocolEnabled()) {
+         if (FlagManager::getInstance().md_degrade_hdr()) {
+             updateHdrInfos(hdrInfoListeners);
+         } else {
+@@ -3765,6 +3821,7 @@ void SurfaceFlinger::onCompositionPresented(PhysicalDisplayId pacesetterId,
+ 
+                             updateInfoFn(compositionDisplay, *snapshot, layerFe);
+                         });
++                info.flags |= getLegacyHdrFrameFlags(mLayerSnapshotBuilder, compositionDisplay);
+                 listener->dispatchHdrLayerInfo(info);
+             }
+         }
+@@ -10678,7 +10735,9 @@ void SurfaceFlinger::updateHdrInfos(
+     for (const auto& [display, reporter] : listeners) {
+         const auto hdrInfoOpt = hdrInfosForDisplay.get(display->getId());
+         if (hdrInfoOpt) {
+-            reporter->dispatchHdrLayerInfo(hdrInfoOpt->get().layerInfo);
++            auto layerInfo = hdrInfoOpt->get().layerInfo;
++            layerInfo.flags |= getLegacyHdrFrameFlags(mLayerSnapshotBuilder, display);
++            reporter->dispatchHdrLayerInfo(layerInfo);
+         }
+     }
+ }

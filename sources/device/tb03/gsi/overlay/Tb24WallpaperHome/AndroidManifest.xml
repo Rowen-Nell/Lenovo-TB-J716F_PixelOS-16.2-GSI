@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.j716f.overlay.wallpaper.home">
+ <application android:hasCode="false" />
+ <overlay android:targetPackage="com.google.android.apps.wallpaper" android:isStatic="true" android:priority="30" android:resourcesMap="@xml/overlays" android:requiredSystemPropertyName="ro.product.vendor.device" android:requiredSystemPropertyValue="p11_pro_plus" />
+</manifest>

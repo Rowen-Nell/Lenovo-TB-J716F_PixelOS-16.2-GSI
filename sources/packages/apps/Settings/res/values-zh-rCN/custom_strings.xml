@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="keyboard_extras_title">附加选项</string>
+    <string name="advanced_keyboard_settings_title">高级设置</string>
+    <string name="adb_enable_root">Root 调试</string>
+    <string name="adb_enable_summary_root">允许以 root 身份运行 Android 调试</string>
+    <string name="show_dev_countdown_cm">{count, plural, =1 {再操作 # 次即可开启开发者选项。} other {再操作 # 次即可开启开发者选项。}}</string>
+    <string name="show_dev_on_cm">您已开启开发者选项！</string>
+    <string name="show_dev_already_cm">无需重复操作，您已开启开发者选项。</string>
+    <string name="status_bar_double_tap_to_sleep_title">双击休眠</string>
+    <string name="status_bar_double_tap_to_sleep_summary">双击状态栏或锁屏界面以关闭屏幕</string>
+    <string name="tethering_allow_vpn_upstreams_title">为已连接的设备使用 VPN</string>
+    <string name="tethering_allow_vpn_upstreams_summary">当本设备使用 VPN 时，连接到热点的所有设备也将使用同一 VPN</string>
+    <string name="unlock_scramble_pin_layout_title">打乱键盘布局</string>
+    <string name="unlock_scramble_pin_layout_summary">解锁设备时随机排列 PIN 码键盘</string>
+    <string name="berry_black_theme_title">纯黑</string>
+    <string name="berry_black_theme_summary">为深色主题使用纯黑背景</string>
+    <string name="assisted_gps">使用辅助 GPS</string>
+    <string name="assisted_gps_summary">从互联网下载卫星辅助数据，可显著加快 GPS 定位。拨打紧急电话时，始终允许使用辅助 GPS。</string>
+    <string name="battery_technology">电池技术</string>
+    <string name="battery_health">健康状况</string>
+    <string name="battery_health_good">良好</string>
+    <string name="battery_health_overheat">过热</string>
+    <string name="battery_health_dead">失效</string>
+    <string name="battery_health_over_voltage">电压过高</string>
+    <string name="battery_health_unspecified_failure">未指定的故障</string>
+    <string name="battery_health_cold">温度过低</string>
+    <string name="battery_health_unknown">未知</string>
+    <string name="battery_temperature">温度</string>
+    <string name="battery_voltage">电压</string>
+    <string name="battery_design_capacity">设计容量</string>
+    <string name="battery_maximum_capacity">最大容量</string>
+    <string name="storage_warning_internal">警告：此选项可能无法正常工作或导致数据丢失，因此不建议使用！</string>
+    <string name="copied_to_clipboard">已复制到剪贴板</string>
+    <string name="longpress_to_clipboard">长按可复制</string>
+    <string name="radio_info_title">无线通信信息</string>
+    <string name="heads_up_notifications_enabled_title">悬浮通知</string>
+    <string name="heads_up_notifications_enabled_summary">在小型悬浮窗口中显示高优先级通知</string>
+    <string name="live_display_summary">根据时间和环境条件优化屏幕显示，提高可读性并减轻眼睛疲劳</string>
+    <string name="live_display_mode">显示模式</string>
+    <string name="live_display_color_temperature_title">色温</string>
+    <string name="live_display_color_temperature_summary">白天：<xliff:g id="day_temperature">%1$d</xliff:g> K  夜间：<xliff:g id="night_temperature">%2$d</xliff:g> K</string>
+    <string name="live_display_day">白天</string>
+    <string name="live_display_night">夜间</string>
+    <string name="live_display_outdoor_mode_title">自动户外模式</string>
+    <string name="live_display_outdoor_mode_summary">在强光下自动提高亮度和饱和度</string>
+    <string name="live_display_anti_flicker_title">防闪烁</string>
+    <string name="live_display_anti_flicker_summary">减少低亮度下的明显闪烁，减轻眼睛疲劳。此功能可能降低色彩准确度，并影响部分内容的显示效果。</string>
+    <string name="live_display_low_power_title">降低功耗</string>
+    <string name="live_display_low_power_summary">调整显示设置，在不降低显示效果的情况下降低功耗</string>
+    <string name="live_display_enhance_color_title">增强色彩</string>
+    <string name="live_display_enhance_color_summary">增强肤色、风景和其他图像的色彩鲜艳度</string>
+    <string name="live_display_color_profile_title">色彩配置</string>
+    <string name="live_display_color_profile_standard_title">标准</string>
+    <string name="live_display_color_profile_standard_summary">准确的色彩和明亮的白色</string>
+    <string name="live_display_color_profile_natural_title">自然</string>
+    <string name="live_display_color_profile_natural_summary">真实的色彩和肤色</string>
+    <string name="live_display_color_profile_dynamic_title">鲜艳</string>
+    <string name="live_display_color_profile_dynamic_summary">增强的色彩和明亮的白色</string>
+    <string name="live_display_color_profile_cinema_title">影院</string>
+    <string name="live_display_color_profile_cinema_summary">准确还原视频色彩</string>
+    <string name="live_display_color_profile_astronomy_title">天文</string>
+    <string name="live_display_color_profile_astronomy_summary">使用深红色以保持暗处视力</string>
+    <string name="live_display_color_profile_photography_title">摄影</string>
+    <string name="live_display_color_profile_photography_summary">准确还原照片色彩</string>
+    <string name="live_display_color_profile_basic_title">基本</string>
+    <string name="live_display_color_profile_basic_summary">不对显示屏进行色彩校准</string>
+    <string name="live_display_color_profile_adaptive_title">自适应</string>
+    <string name="live_display_color_profile_adaptive_summary">根据环境条件调整色彩</string>
+    <string name="live_display_color_profile_reading_title">阅读</string>
+    <string name="live_display_color_profile_reading_summary">使用较暖的色彩以减轻眼睛疲劳</string>
+    <string name="live_display_color_profile_srgb_summary">准确呈现 sRGB 色彩空间的色彩</string>
+    <string name="live_display_color_profile_dci_p3_summary">准确呈现 DCI-P3 色彩空间的色彩</string>
+    <string name="live_display_reading_mode_title">阅读模式</string>
+    <string name="live_display_reading_mode_summary">适合长时间阅读的灰度模式</string>
+    <string name="color_calibration_title">色彩校准</string>
+    <string name="color_calibration_summary">校准屏幕色彩</string>
+    <string name="color_red_title">红色</string>
+    <string name="color_green_title">绿色</string>
+    <string name="color_blue_title">蓝色</string>
+    <string name="picture_adjustment_title">画面调整</string>
+    <string name="picture_adjustment_summary">调整色调、饱和度、强度和对比度</string>
+    <string name="adj_hue_title">色调</string>
+    <string name="adj_saturation_title">饱和度</string>
+    <string name="adj_intensity_title">强度</string>
+    <string name="adj_contrast_title">对比度</string>
+    <string name="high_touch_sensitivity_title">高触控灵敏度</string>
+    <string name="high_touch_sensitivity_summary">提高触摸屏灵敏度，以便戴手套时使用</string>
+    <string name="touchscreen_hovering_title">悬浮触控</string>
+    <string name="touchscreen_hovering_summary">允许在浏览器、远程桌面等应用中通过手指悬停操作，类似使用鼠标</string>
+    <string name="high_touch_polling_rate_title">高触控采样率</string>
+    <string name="high_touch_polling_rate_summary">提高触摸屏采样率</string>
+    <string name="charging_control_title">充电控制</string>
+    <string name="charging_control_summary">自定义电池充电计划和上限</string>
+    <string name="charging_control_enable_title">启用充电控制</string>
+    <string name="charging_control_mode_title">充电模式</string>
+    <string name="charging_control_mode_auto_title">自动计划</string>
+    <string name="charging_control_mode_auto_summary">根据已设定的闹钟自动决定何时开始充电</string>
+    <string name="charging_control_mode_custom_title">自定义计划</string>
+    <string name="charging_control_mode_custom_summary">设置充满电的目标时间</string>
+    <string name="charging_control_mode_limit_title">限制充电</string>
+    <string name="charging_control_mode_limit_summary">将电量限制在指定百分比</string>
+    <string name="charging_control_start_time_title">开始时间</string>
+    <string name="charging_control_start_time_summary">在 %s 之后接入电源时启用充电控制</string>
+    <string name="charging_control_target_time_title">充满电的目标时间</string>
+    <string name="charging_control_target_time_summary">电池将在 %s 前充满</string>
+    <string name="charging_control_limit_title">上限</string>
+    <string name="charging_control_limit_summary">当前上限：%d%%</string>
+    <string name="reset">重置</string>
+    <string name="fingerprint_enroll_find_sensor_message_front" product="tablet">请找到平板电脑正面的指纹传感器。</string>
+    <string name="fingerprint_enroll_find_sensor_message_front" product="device">请找到设备正面的指纹传感器。</string>
+    <string name="fingerprint_enroll_find_sensor_message_front" product="default">请找到手机正面的指纹传感器。</string>
+    <string name="fingerprint_enroll_find_sensor_message_rear" product="tablet">请找到平板电脑背面的指纹传感器。</string>
+    <string name="fingerprint_enroll_find_sensor_message_rear" product="device">请找到设备背面的指纹传感器。</string>
+    <string name="fingerprint_enroll_find_sensor_message_rear" product="default">请找到手机背面的指纹传感器。</string>
+    <string name="fingerprint_enroll_find_sensor_message_side" product="tablet">请找到平板电脑侧面的指纹传感器。</string>
+    <string name="fingerprint_enroll_find_sensor_message_side" product="device">请找到设备侧面的指纹传感器。</string>
+    <string name="fingerprint_enroll_find_sensor_message_side" product="default">请找到手机侧面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_front" product="tablet">请触摸平板电脑正面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_front" product="device">请触摸设备正面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_front" product="default">请触摸手机正面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_rear" product="tablet">请触摸平板电脑背面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_rear" product="device">请触摸设备背面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_rear" product="default">请触摸手机背面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_side" product="tablet">请触摸平板电脑侧面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_side" product="device">请触摸设备侧面的指纹传感器。</string>
+    <string name="fingerprint_enroll_touch_dialog_message_side" product="default">请触摸手机侧面的指纹传感器。</string>
+    <string name="lock_settings_picker_pattern_size_message">选择图案大小</string>
+    <string name="lockpattern_settings_enable_error_path_title">显示错误图案</string>
+    <string name="lockpattern_settings_enable_dots_title">显示图案圆点</string>
+    <string name="display_rotation_title">旋转设置</string>
+    <string name="display_rotation_enabled">已开启自动旋转</string>
+    <string name="display_rotation_disabled">已关闭自动旋转</string>
+    <string name="display_rotation_unit">度</string>
+    <string name="display_rotation_category_title">旋转方向</string>
+    <string name="display_rotation_0_title">0 度</string>
+    <string name="display_rotation_90_title">90 度</string>
+    <string name="display_rotation_180_title">180 度</string>
+    <string name="display_rotation_270_title">270 度</string>
+    <string name="auto_brightness_one_shot_title">单次自动亮度</string>
+    <string name="auto_brightness_one_shot_summary">仅在屏幕点亮时调整亮度</string>
+    <string name="smart_5g_title">智能 5G</string>
+    <string name="smart_5g_summary">自动在 5G 和 4G 之间切换，以降低电量消耗</string>
+    <string name="lockscreen_enable_power_menu_title">电源菜单</string>
+    <string name="lockscreen_enable_power_menu_summary">允许在安全锁屏界面访问电源菜单</string>
+    <string name="power_button_torch_title">快速开启手电筒</string>
+    <string name="power_button_torch_summary">屏幕关闭时，长按电源键开启手电筒</string>
+    <string name="volume_button_music_control_title">播放控制</string>
+    <string name="volume_button_music_control_summary">屏幕关闭时，长按音量键切换歌曲</string>
+    <string name="prevent_ringing_option_cycle">循环切换模式</string>
+    <string name="prevent_ringing_option_cycle_summary">开启（循环切换模式）</string>
+    <string name="wake_when_plugged_or_unplugged_title">插拔电源时唤醒</string>
+    <string name="wake_when_plugged_or_unplugged_summary">连接或断开电源时点亮屏幕</string>
+    <string name="ignore_window_secure_title">忽略窗口安全标志</string>
+    <string name="ignore_window_secure_summary">移除所有应用的截屏和录屏限制。某些情况下使用更方便，但可能导致隐私泄露。</string>
+    <string name="incall_vibration_category">通话振动选项</string>
+    <string name="incall_vibrate_connect_title">接通时振动</string>
+    <string name="incall_vibrate_call_wait_title">呼叫等待时振动</string>
+    <string name="incall_vibrate_disconnect_title">挂断时振动</string>
+    <string name="doze_gesture_ambient_title">显示息屏信息</string>
+    <string name="doze_gesture_ambient_summary">显示息屏信息，而不完全唤醒屏幕</string>
+    <string name="gesture_wake_ambient">显示息屏信息</string>
+    <string name="gesture_wake">完全唤醒</string>
+    <string name="doze_enabled_title">息屏显示</string>
+    <string name="doze_enabled_summary">是否启用息屏显示组件的功能</string>
+    <string name="refresh_rate_title">刷新率</string>
+    <string name="refresh_rate_summary_vrr_on">%d Hz（自适应）</string>
+    <string name="refresh_rate_vrr_title">自适应刷新率</string>
+    <string name="refresh_rate_vrr_summary">屏幕空闲时自动降低刷新率以节省电量。部分显示屏可能会出现闪烁或色偏。</string>
+    <string name="refresh_rate_footer">更高的刷新率可让显示效果更流畅，但也会增加耗电量</string>
+    <string name="keywords_refresh_rate">刷新率, 刷新, 平滑, 最高, 60hz, 90hz, 120hz, 144hz, 165hz</string>
+    <string name="battery_saver_refresh_rate_title">降低刷新率</string>
+    <string name="battery_saver_refresh_rate_summary">省电模式开启时使用 60 Hz 刷新率</string>
+    <string name="ambient_display_screen_off_udfps_title">息屏指纹解锁</string>
+    <string name="ambient_display_screen_off_udfps_summary">允许在息屏时解锁。\n启用后可能意外唤醒屏幕。</string>
+    <string name="wifi_hotspot_hidden_ssid_title">隐藏的网络</string>
+    <string name="wifi_hotspot_hidden_ssid_summary">您的移动热点名称不会显示在可用 WLAN 网络列表中。</string>
+    <string name="wifi_hotspot_client_manager_title">已连接的设备</string>
+    <string name="wifi_hotspot_client_manager_summary">查看和管理连接到热点的设备</string>
+    <string name="wifi_hotspot_client_manager_list_only_summary">查看连接到热点的设备</string>
+    <string name="wifi_hotspot_client_limit_title">已连接设备数量上限</string>
+    <string name="wifi_hotspot_blocked_clients_list_title">已屏蔽的设备</string>
+    <string name="wifi_hotspot_connected_clients_list_title">已连接的设备</string>
+    <string name="wifi_hotspot_block_client_dialog_title">屏蔽设备</string>
+    <string name="wifi_hotspot_block_client_dialog_text">此操作会断开“<xliff:g id="device_name">%1$s</xliff:g>”与本设备的连接，并将其加入屏蔽列表</string>
+    <string name="wifi_hotspot_unblock_client_dialog_title">取消屏蔽设备</string>
+    <string name="wifi_hotspot_unblock_client_dialog_text">允许设备“<xliff:g id="device_name">%1$s</xliff:g>”连接到此热点</string>
+    <string name="wifi_hotspot_client_manager_footer_text">目前没有可显示的设备。已连接和已屏蔽的设备将在此处显示。</string>
+    <string name="icon_manager_title">状态栏图标管理</string>
+    <string name="icon_manager_summary">控制状态栏图标的显示与隐藏</string>
+    <string name="display_cutout_force_fullscreen_title">全屏应用</string>
+    <string name="display_cutout_force_fullscreen_summary">强制应用忽略刘海区域</string>
+    <string name="app_list_search">搜索</string>
+    <string name="app_list_search_apps">搜索应用</string>
+    <string name="app_list_loading">正在加载应用\u2026</string>
+    <string name="keybox_data_title">配置 keybox XML</string>
+    <string name="keybox_data_summary">配置系统范围的密钥证明伪装。点按“删除”可恢复默认设置。</string>
+    <string name="pif_data_title">配置 PIF JSON</string>
+    <string name="pif_data_summary">配置用于向 GMS 和 Play 商店伪装属性的 PIF JSON。点按“删除”可恢复动态默认值。</string>
+    <string name="screenshot_shutter_sound_title">截屏提示音</string>
+    <string name="global_actions_advanced_reboot_title">启用高级重启</string>
+    <string name="global_actions_advanced_reboot_summary">在电源菜单中显示恢复模式和引导加载程序选项</string>
+    <string name="three_finger_gesture">滑动截屏</string>
+    <string name="three_finger_gesture_summary">三指下滑即可截屏</string>
+    <string name="network_traffic_settings_title">网络流量监控</string>
+    <string name="network_traffic_settings_summary">在状态栏中显示当前网络流量</string>
+    <string name="network_traffic_mode_title">显示模式</string>
+    <string name="network_traffic_mode_disable">已停用</string>
+    <string name="network_traffic_mode_up">仅上传</string>
+    <string name="network_traffic_mode_down">仅下载</string>
+    <string name="network_traffic_mode_all">上传和下载</string>
+    <string name="network_traffic_autohide">自动隐藏</string>
+    <string name="network_traffic_autohide_summary">无网络活动时隐藏流量监控</string>
+    <string name="network_traffic_units_title">流量计量单位</string>
+    <string name="network_traffic_units_kilobits">千比特每秒（kb/s）</string>
+    <string name="network_traffic_units_megabits">兆比特每秒（Mb/s）</string>
+    <string name="network_traffic_units_kilobytes">千字节每秒（kB/s）</string>
+    <string name="network_traffic_units_megabytes">兆字节每秒（MB/s）</string>
+    <string name="network_traffic_units_auto">自动（kB/s 或 MB/s）</string>
+    <string name="clear_search_query_description">清除查询</string>
+    <string name="language_picker_page">语言选择页面</string>
+    <string name="search_region">搜索地区</string>
+    <string name="search_region_page">地区搜索页面</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<overlay>
+  <item target="layout/customization_option_entry_clock" value="@layout/tb24_wallpaper_clock" />
+  <item target="layout/customization_option_entry_keyguard_quick_affordance" value="@layout/tb24_wallpaper_keyguard_quick_affordance" />
+  <item target="layout/customization_option_entry_more_lock_settings" value="@layout/tb24_wallpaper_more_lock_settings" />
+  <item target="layout/customization_option_entry_lock_screen_notifications" value="@layout/tb24_wallpaper_lock_screen_notifications" />
+</overlay>

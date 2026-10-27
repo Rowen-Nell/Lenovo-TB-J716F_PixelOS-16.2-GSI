@@ -1,0 +1,3 @@
+# Privacy scope
+
+This directory is a newly assembled source-only candidate. It does not copy original .git directories, host logs/history, backups, local ADB keys, serial numbers, Google identifiers/accounts/tokens or private signing keys. A clean local single-root Git history will be scanned before delivery. Original private evidence and backups remain in their existing locations. Standalone GPU probes and GSF diagnostic helpers/bindings are excluded. The delivered image is scanned separately; scans do not grant proprietary binary redistribution rights. Device /data test leftovers require a separately authorized inventory/cleanup; this build does not access the device or delete user data.

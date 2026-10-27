@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- r11 wificond observes NL80211 regulatory events on TB-J716F.
+         Consume the driver's reported code; do not set a country or channels. -->
+    <bool name="config_wifiDriverSupportedNl80211RegChangedEvent">true</bool>
+</resources>

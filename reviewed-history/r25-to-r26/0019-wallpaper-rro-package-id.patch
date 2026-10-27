@@ -1,0 +1,11 @@
+--- a/device/tb03/gsi/overlay/Tb24WallpaperHome/Android.mk
++++ b/device/tb03/gsi/overlay/Tb24WallpaperHome/Android.mk
+@@ -8,7 +8,7 @@
+ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+ # Use the unchanged Google prebuilt as an actual aapt include, not a fake resource stub.
+ tb24_wallpaper_apk := vendor/pixel/themepicker/common/proprietary/system_ext/priv-app/WallpaperPickerGoogleRelease/WallpaperPickerGoogleRelease.apk
+-LOCAL_AAPT_FLAGS += -I $(tb24_wallpaper_apk)
++LOCAL_AAPT_FLAGS += --package-id 0x7e --allow-reserved-package-id -I $(tb24_wallpaper_apk)
+ LOCAL_ADDITIONAL_DEPENDENCIES := $(tb24_wallpaper_apk)
+ include $(BUILD_RRO_PACKAGE)
+ # Track the private resource ABI on the real link edge as well as the signed APK.

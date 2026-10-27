@@ -1,0 +1,3 @@
+# r28 Beta pending-release candidate release identity; update the date for a new release build.
+ro.custom.version=PixelOS-16.2_arm64_20261027.028 (Beta)
+ro.product.marketname=Lenovo TB-J716F

@@ -1,0 +1,21 @@
+diff --git a/build/tasks/build-manifest_xml.mk b/build/tasks/build-manifest_xml.mk
+index 54a6f1b..559ee5b 100644
+--- a/build/tasks/build-manifest_xml.mk
++++ b/build/tasks/build-manifest_xml.mk
+@@ -16,9 +16,16 @@ ifdef MANIFEST_EXCLUDES
+ MANIFEST_EXCLUDES := |$(MANIFEST_EXCLUDES)
+ endif
+ 
++# A pre-exported fixed manifest allows hermetic builds without Repo cache writes.
++ifneq ($(strip $(BUILD_MANIFEST_XML_INPUT)),)
++$(INSTALLED_BUILD_MANIFEST_XML_TARGET): $(BUILD_MANIFEST_XML_INPUT)
++	mkdir -p $(dir $@)
++	grep -Ev "proprietary_$(MANIFEST_EXCLUDES)" $< > $@
++else
+ $(INSTALLED_BUILD_MANIFEST_XML_TARGET):
+ 	mkdir -p $(dir $@)
+ 	python3 .repo/repo/repo manifest -o - -r | grep -Ev "proprietary_$(MANIFEST_EXCLUDES)" > $@
++endif
+ 
+ .PHONY: build-manifest.xml
+ build-manifest.xml: $(INSTALLED_BUILD_MANIFEST_XML_TARGET)

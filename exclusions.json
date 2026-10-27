@@ -1,0 +1,34 @@
+[
+  {
+    "path": "frameworks/native/libs/renderengine/tests/tb04_materials/Android.bp",
+    "reason": "Standalone diagnostic target/binding not installed in ROM"
+  },
+  {
+    "path": "frameworks/native/libs/renderengine/tests/tb04_materials/ShaderGpuProbe.cpp",
+    "reason": "Standalone diagnostic target/binding not installed in ROM"
+  },
+  {
+    "path": "frameworks/native/libs/renderengine/tests/tb04_materials/binding.cpp",
+    "reason": "Standalone diagnostic target/binding not installed in ROM"
+  },
+  {
+    "path": "frameworks/native/libs/renderengine/tests/tb04_materials/binding.h",
+    "reason": "Standalone diagnostic target/binding not installed in ROM"
+  },
+  {
+    "path": "frameworks/native/libs/renderengine/tests/tb04_materials/product-binding.json",
+    "reason": "Standalone diagnostic target/binding not installed in ROM"
+  },
+  {
+    "path": "frameworks/native/libs/renderengine/tests/tb04_materials/vectors.h",
+    "reason": "Standalone diagnostic target/binding not installed in ROM"
+  },
+  {
+    "path": "treble_app",
+    "reason": "Retired package is not a production input; original private history and built APK not copied"
+  },
+  {
+    "path": "device/tb03/gsi/diagnostic/adb_keys",
+    "reason": "Private host key excluded"
+  }
+]

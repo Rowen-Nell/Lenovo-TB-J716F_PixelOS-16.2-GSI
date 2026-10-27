@@ -1,0 +1,37 @@
+--- a/src/com/android/settings/deviceinfo/HardwareInfoPreferenceController.java
++++ b/src/com/android/settings/deviceinfo/HardwareInfoPreferenceController.java
+@@ -17,6 +17,7 @@
+ 
+ import android.content.Context;
+ import android.os.Build;
++import android.os.SystemProperties;
+ import android.util.Log;
+ 
+ import androidx.preference.PreferenceScreen;
+@@ -53,13 +54,17 @@
+     }
+ 
+     public static String getDeviceModel() {
++        final boolean isJ716f = "p11_pro_plus".equals(
++                SystemProperties.get("ro.product.vendor.device"));
++        final String model = isJ716f && "Lenovo TB-J716F".equals(Build.MODEL)
++                ? "TB-J716F" : Build.MODEL;
+         FutureTask<String> msvSuffixTask = new FutureTask<>(() -> DeviceInfoUtils.getMsvSuffix());
+ 
+         msvSuffixTask.run();
+         try {
+             // Wait for msv suffix value.
+             final String msvSuffix = msvSuffixTask.get();
+-            return Build.MODEL + msvSuffix;
++            return model + msvSuffix;
+         } catch (ExecutionException e) {
+             Log.e(TAG, "Execution error, so we only show model name");
+         } catch (InterruptedException e) {
+@@ -67,6 +72,6 @@
+         }
+         // If we can't get an msv suffix value successfully,
+         // it's better to return model name.
+-        return Build.MODEL;
++        return model;
+     }
+ }

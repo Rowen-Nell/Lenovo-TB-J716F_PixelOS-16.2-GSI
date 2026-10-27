@@ -1,0 +1,229 @@
+diff --git a/bpf/headers/include/bpf/KernelUtils.h b/bpf/headers/include/bpf/KernelUtils.h
+index 970a329..24e43a7 100644
+--- a/bpf/headers/include/bpf/KernelUtils.h
++++ b/bpf/headers/include/bpf/KernelUtils.h
+@@ -85,9 +85,19 @@ static constexpr unsigned minSupportedKernelVer =
+     #error "__ANDROID_API__ is pre-R"
+ #endif
+ 
++// TB03 GSI retains the real API30 vendor and 4.19 kernel. Platform callers
++// must not constant-fold 5.4 support on this combination. Keep actual version
++// selection and all map/program/attach failures; this is not a BPF-less fallback.
++static inline bool isLegacyApi30Kernel419() {
++    if (kernelVer < KVER(4, 19, 0) || kernelVer >= KVER(4, 20, 0)) return false;
++    char sdk[PROP_VALUE_MAX] = {};
++    return __system_property_get("ro.vendor.build.version.sdk", sdk) > 0 &&
++            !strcmp(sdk, "30");
++}
++
+ static inline bool isAtLeastKernelVersion(unsigned major, unsigned minor, unsigned sub = 0) {
+     unsigned k = KVER(major, minor, sub);
+-    if (k <= minSupportedKernelVer) return true;
++    if (k <= minSupportedKernelVer && !isLegacyApi30Kernel419()) return true;
+     return kernelVer >= k;
+ }
+ 
+diff --git a/bpf/loader/NetBpfLoad.cpp b/bpf/loader/NetBpfLoad.cpp
+index 2388647..0c59530 100644
+--- a/bpf/loader/NetBpfLoad.cpp
++++ b/bpf/loader/NetBpfLoad.cpp
+@@ -1627,8 +1627,19 @@ static int doLoad(char** argv, char * const envp[]) {
+     // 25Q2 bumps the kernel requirement up to 5.4
+     // see also: //system/netd/tests/kernel_test.cpp TestKernel54
+     if (isAtLeast25Q2 && !isAtLeastKernelVersion(5, 4)) {
+-        ALOGE("Android 25Q2 requires kernel 5.4.");
+-        return 6;
++        // TB03 keeps the stock API30 vendor/4.19 kernel for its GSI control.
++        // Attempt the real version-selected BPF objects; all map/program load,
++        // ABI and self-test failures below remain fatal. Never fake kernelVer.
++        const bool legacyVendor419 =
++                GetIntProperty("ro.vendor.build.version.sdk", 0) == 30 &&
++                isKernelVersion(4, 19);
++        if (legacyVendor419) {
++            ALOGW("TB03 API30 vendor/4.19 compatibility: attempting actual BPF load; "
++                  "kernel capability validation remains required.");
++        } else {
++            ALOGE("Android 25Q2 requires kernel 5.4.");
++            return 6;
++        }
+     }
+ 
+     // 25Q4 bumps the kernel requirement up to 5.10
+diff --git a/bpf/netd/BpfHandler.cpp b/bpf/netd/BpfHandler.cpp
+index 7367ec5..8f04d15 100644
+--- a/bpf/netd/BpfHandler.cpp
++++ b/bpf/netd/BpfHandler.cpp
+@@ -103,7 +103,11 @@ static Status initPrograms(const char* cg2_path) {
+ 
+     // 25Q2 bumps the kernel requirement up to 5.4
+     if (isAtLeast25Q2 && !isAtLeastKernelVersion(5, 4)) {
+-        return Status("25Q2+ platform with kernel version < 5.4.0 is unsupported");
++        if (!bpf::isLegacyApi30Kernel419()) {
++            return Status("25Q2+ platform with kernel version < 5.4.0 is unsupported");
++        }
++        ALOGW("TB03 API30 vendor/4.19 compatibility: attaching real BPF programs; "
++              "all map, attach and query checks remain enforced.");
+     }
+ 
+     unique_fd cg_fd(open(cg2_path, O_DIRECTORY | O_RDONLY | O_CLOEXEC));
+diff --git a/bpf/progs/netd.c b/bpf/progs/netd.c
+index 0c0e75e..f793212 100644
+--- a/bpf/progs/netd.c
++++ b/bpf/progs/netd.c
+@@ -634,10 +634,20 @@ DEFINE_NETD_BPF_PROG_KVER_RANGE(cgroupskb, ingress_stats, 5_4, 5_4, INF)
+     return bpf_traffic_account(skb, INGRESS, KVER_5_4, SDK_LEVEL_T);
+ }
+ 
++// TB03: 25Q2+ on retained 4.19 must enforce local network permissions too.
++// This path uses the existing KVER_4_19 packet-read helpers and LPM/HASH maps;
++// ringbuf/sk_storage paths remain excluded by their real 5.10 minimum.
++DEFINE_NETD_BPF_PROG_RANGES(cgroupskb, ingress_stats, 4_19_25q2, 4_19, 5_4,
++                            BPFLOADER_MAINLINE_25Q2_VERSION, BPFLOADER_MAX_VER)
++(struct __sk_buff* skb) {
++    return bpf_traffic_account(skb, INGRESS, KVER_4_19, SDK_LEVEL_25Q2);
++}
++
+ // Android T/U/V 4.19
+-DEFINE_NETD_BPF_PROG_KVER_RANGE(cgroupskb, ingress_stats, 4_19, 4_19, 5_4)
++DEFINE_NETD_BPF_PROG_RANGES(cgroupskb, ingress_stats, 4_19, 4_19, 5_4,
++                            BPFLOADER_MIN_VER, BPFLOADER_MAINLINE_25Q2_VERSION)
+ (struct __sk_buff* skb) {
+-return bpf_traffic_account(skb, INGRESS, KVER_4_19, SDK_LEVEL_T);
++    return bpf_traffic_account(skb, INGRESS, KVER_4_19, SDK_LEVEL_T);
+ }
+ 
+ // Android T 4.9 & T/U 4.14
+@@ -675,10 +685,20 @@ DEFINE_NETD_BPF_PROG_KVER_RANGE(cgroupskb, egress_stats, 5_4, 5_4, INF)
+     return bpf_traffic_account(skb, EGRESS, KVER_5_4, SDK_LEVEL_T);
+ }
+ 
++// TB03: 25Q2+ on retained 4.19 must enforce local network permissions too.
++// This path uses the existing KVER_4_19 packet-read helpers and LPM/HASH maps;
++// ringbuf/sk_storage paths remain excluded by their real 5.10 minimum.
++DEFINE_NETD_BPF_PROG_RANGES(cgroupskb, egress_stats, 4_19_25q2, 4_19, 5_4,
++                            BPFLOADER_MAINLINE_25Q2_VERSION, BPFLOADER_MAX_VER)
++(struct __sk_buff* skb) {
++    return bpf_traffic_account(skb, EGRESS, KVER_4_19, SDK_LEVEL_25Q2);
++}
++
+ // Android T/U/V 4.19
+-DEFINE_NETD_BPF_PROG_KVER_RANGE(cgroupskb, egress_stats, 4_19, 4_19, 5_4)
++DEFINE_NETD_BPF_PROG_RANGES(cgroupskb, egress_stats, 4_19, 4_19, 5_4,
++                            BPFLOADER_MIN_VER, BPFLOADER_MAINLINE_25Q2_VERSION)
+ (struct __sk_buff* skb) {
+-return bpf_traffic_account(skb, EGRESS, KVER_4_19, SDK_LEVEL_T);
++    return bpf_traffic_account(skb, EGRESS, KVER_4_19, SDK_LEVEL_T);
+ }
+ 
+ // Android T 4.9 & T/U 4.14
+diff --git a/service/jni/com_android_server_connectivity_ClatCoordinator.cpp b/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
+index 70991eb..4dc5175 100644
+--- a/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
++++ b/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
+@@ -15,7 +15,13 @@
+  */
+ #define LOG_TAG "jniClatCoordinator"
+ 
++#include <android/set_abort_message.h>
++#include <android-base/properties.h>
+ #include <arpa/inet.h>
++#include <linux/magic.h>
++#include <stdarg.h>
++#include <sys/utsname.h>
++#include <sys/vfs.h>
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <inttypes.h>
+@@ -52,8 +58,52 @@
+ namespace android {
+ 
+ static bool fatal = false;
++static char fatalDiagnostics[4096] = {};
++static bool fatalDiagnosticsTruncated = false;
++
++static void recordClatFailure(const char* format, ...) {
++    fatal = true;
++    char detail[768];
++    va_list args;
++    va_start(args, format);
++    const int length = vsnprintf(detail, sizeof(detail), format, args);
++    va_end(args);
++    ALOGE("%s", detail);
++    const size_t used = strlen(fatalDiagnostics);
++    const size_t available = sizeof(fatalDiagnostics) - used;
++    const int written = snprintf(fatalDiagnostics + used, available, "%s%s",
++                                 used ? "; " : "CLAT validation failed: ", detail);
++    if (length >= static_cast<int>(sizeof(detail)) ||
++        written >= static_cast<int>(available)) fatalDiagnosticsTruncated = true;
++}
++
++// TB03 stock ZUI15 lacks per-path bpffs genfs labels. Do not generalize this
++// to other kernels/devices or labels: ownership, modes and BPF_OBJ_GET stay strict.
++static bool allowLegacyClatContext(const char* path, const char* expected, const char* actual) {
++    if (strcmp(expected, "u:object_r:fs_bpf_net_shared:s0") ||
++        strcmp(actual, "u:object_r:fs_bpf:s0")) return false;
++    static const char* const paths[] = {
++        "/sys/fs/bpf/net_shared",
++        "/sys/fs/bpf/net_shared/prog_clatd_schedcls_egress4_clat_rawip",
++        "/sys/fs/bpf/net_shared/prog_clatd_schedcls_ingress6_clat_rawip",
++        "/sys/fs/bpf/net_shared/prog_clatd_schedcls_ingress6_clat_ether",
++        "/sys/fs/bpf/net_shared/map_clatd_clat_egress4_map",
++        "/sys/fs/bpf/net_shared/map_clatd_clat_ingress6_map",
++    };
++    bool knownPath = false;
++    for (const char* candidate : paths) knownPath |= !strcmp(path, candidate);
++    if (!knownPath) return false;
++    const std::string device = android::base::GetProperty("ro.product.device", "");
++    if ((device != "tb03_arm64" && device != "J716F") ||
++        android::base::GetProperty("ro.product.vendor.device", "") != "p11_pro_plus" ||
++        android::base::GetProperty("ro.vendor.build.version.sdk", "") != "30") return false;
++    struct utsname kernel = {};
++    if (uname(&kernel) || strcmp(kernel.release, "4.19.157-perf+")) return false;
++    struct statfs fs = {};
++    return !statfs(path, &fs) && fs.f_type == BPF_FS_MAGIC;
++}
+ 
+-#define ALOGF(s ...) do { ALOGE(s); fatal = true; } while(0)
++#define ALOGF(...) recordClatFailure(__VA_ARGS__)
+ 
+ enum verify { VERIFY_DIR, VERIFY_BIN, VERIFY_PROG, VERIFY_MAP_RO, VERIFY_MAP_RW };
+ 
+@@ -68,10 +118,17 @@ static void verifyPerms(const char * const path,
+     if (s.st_uid != uid) ALOGF("'%s' uid is %d != %d", path, s.st_uid, uid);
+     if (s.st_gid != gid) ALOGF("'%s' gid is %d != %d", path, s.st_gid, gid);
+ 
+-    char b[255] = {};
+-    int v = lgetxattr(path, "security.selinux", &b, sizeof(b));
++    char b[256] = {};
++    int v = lgetxattr(path, "security.selinux", &b, sizeof(b) - 1);
+     if (v < 0) ALOGF("lgetxattr '%s' errno=%d", path, errno);
+-    if (strncmp(ctxt, b, sizeof(b))) ALOGF("context of '%s' is '%s' != '%s'", path, b, ctxt);
++    if (strcmp(ctxt, b)) {
++        if (v >= 0 && allowLegacyClatContext(path, ctxt, b)) {
++            ALOGW("TB03 stock bpffs legacy label: '%s' uses '%s'; retaining DAC and BPF checks",
++                  path, b);
++        } else {
++            ALOGF("context of '%s' is '%s' != '%s'", path, b, ctxt);
++        }
++    }
+ 
+     int fd = -1;
+ 
+@@ -132,7 +189,16 @@ static void verifyClatPerms() {
+ 
+ #undef V2
+ 
+-    if (fatal) abort();
++    if (fatal) {
++        if (fatalDiagnosticsTruncated) {
++            static const char suffix[] = " [truncated]";
++            const size_t end = strlen(fatalDiagnostics);
++            const size_t last = sizeof(fatalDiagnostics) - sizeof(suffix);
++            memcpy(fatalDiagnostics + (end < last ? end : last), suffix, sizeof(suffix));
++        }
++        android_set_abort_message(fatalDiagnostics);
++        abort();
++    }
+ }
+ 
+ #undef V

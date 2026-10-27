@@ -1,0 +1,19 @@
+diff --git a/config/version.mk b/config/version.mk
+index 2b43e32..ae33498 100644
+--- a/config/version.mk
++++ b/config/version.mk
+@@ -1,4 +1,4 @@
+-CUSTOM_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
++CUSTOM_BUILD_DATE ?= $(shell date -u +%Y%m%d-%H%M)
+ 
+ CUSTOM_PLATFORM_VERSION := 16.2
+ 
+@@ -9,7 +9,7 @@ CUSTOM_VERSION_PROP := sixteen
+ PRODUCT_PRODUCT_PROPERTIES += \
+     ro.custom.build.date=$(CUSTOM_BUILD_DATE) \
+     ro.custom.device=$(CUSTOM_BUILD) \
+-    ro.custom.version=PixelOS_$(CUSTOM_VERSION)
++    $(if $(filter pixelos_tb03_arm64_ext4,$(TARGET_PRODUCT)),,ro.custom.version=PixelOS_$(CUSTOM_VERSION))
+ 
+ # Updater
+ ifeq ($(IS_OFFICIAL),true)

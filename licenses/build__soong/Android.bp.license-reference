@@ -1,0 +1,321 @@
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+    default_visibility: [
+        "//build/soong:__subpackages__",
+    ],
+    default_team: "trendy_team_build",
+}
+
+subdirs = [
+    "androidmk",
+    "bpfix",
+    "cmd/*",
+    "fs",
+    "finder",
+    "jar",
+    "zip",
+    "third_party/zip",
+    "ui/*",
+]
+
+bootstrap_go_package {
+    name: "soong",
+    pkgPath: "android/soong",
+    deps: [
+        "blueprint",
+    ],
+    srcs: [
+        "doc.go",
+    ],
+    // Used by plugins, though probably shouldn't be.
+    visibility: ["//visibility:public"],
+}
+
+//
+// Defaults to enable various configurations of host bionic
+//
+
+cc_defaults {
+    name: "linux_bionic_supported",
+    host_supported: true,
+    target: {
+        host: {
+            enabled: false,
+        },
+        linux_bionic: {
+            enabled: true,
+        },
+    },
+    defaults_visibility: ["//visibility:public"],
+}
+
+//
+// C static libraries extracted from the gcc toolchain
+//
+
+kernel_headers {
+    name: "device_kernel_headers",
+    vendor: true,
+    recovery_available: true,
+    min_sdk_version: "apex_inherit",
+    visibility: ["//visibility:public"],
+}
+
+cc_genrule {
+    name: "host_bionic_linker_asm",
+    host_supported: true,
+    device_supported: false,
+    target: {
+        linux_bionic: {
+            enabled: true,
+        },
+        linux_musl: {
+            enabled: false,
+        },
+        linux_glibc: {
+            enabled: false,
+        },
+        darwin: {
+            enabled: false,
+        },
+    },
+    tools: ["extract_linker"],
+    cmd: "$(location) -s $(out) $(in)",
+    srcs: [":linker"],
+    out: ["linker.s"],
+    visibility: ["//bionic/libc"],
+}
+
+cc_genrule {
+    name: "host_bionic_linker_script",
+    host_supported: true,
+    device_supported: false,
+    target: {
+        linux_bionic: {
+            enabled: true,
+        },
+        linux_musl: {
+            enabled: false,
+        },
+        linux_glibc: {
+            enabled: false,
+        },
+        darwin: {
+            enabled: false,
+        },
+    },
+    tools: ["extract_linker"],
+    cmd: "$(location) -T $(out) $(in)",
+    srcs: [":linker"],
+    out: ["linker.script"],
+    visibility: ["//visibility:public"],
+}
+
+// Instantiate the dex_bootjars singleton module.
+dex_bootjars {
+    name: "dex_bootjars",
+    visibility: ["//visibility:public"],
+}
+
+art_boot_images {
+    name: "art_boot_images",
+    visibility: ["//art:__subpackages__"],
+}
+
+// Pseudo-test that's run on checkbuilds to ensure that get_clang_version can
+// parse cc/config/global.go.
+genrule {
+    name: "get_clang_version_test",
+    cmd: "$(location get_clang_version) > $(out)",
+    tools: ["get_clang_version"],
+    srcs: ["cc/config/global.go"],
+    out: ["clang-prebuilts-version.txt"],
+}
+
+dexpreopt_systemserver_check {
+    name: "dexpreopt_systemserver_check",
+}
+
+// container for apex_contributions selected using build flags
+all_apex_contributions {
+    name: "all_apex_contributions",
+    visibility: ["//visibility:public"],
+}
+
+// Defaults to share configs between "baremetal" Soong modules, currently only
+// used for code running in kernel context within Android Virtualization
+// Framework guests.
+cc_defaults {
+    name: "cc_baremetal_defaults",
+    arch: {
+        arm64: {
+            cflags: [
+                // Override the global -march= flag (as set by TARGET_ARCH_VARIANT)
+                // and explicitly use the baseline architecture (ARMv8-A is the first
+                // version with 64-bit support) to avoid emitting potentially
+                // unsupported instructions.
+                "-march=armv8-a",
+            ],
+        },
+    },
+    defaults_visibility: ["//visibility:public"],
+}
+
+rust_defaults {
+    name: "rust_baremetal_defaults",
+    arch: {
+        arm64: {
+            flags: [
+                // There is no Rust flag that says "use baseline instruction set",
+                // so we disable SVE specifically. This can be extended with more
+                // problematic target features from rust/config/arm64_device.go
+                // as needed.
+                "-C target-feature=-sve2",
+            ],
+        },
+    },
+    defaults_visibility: ["//visibility:public"],
+}
+
+product_config {
+    name: "product_config",
+    visibility: [
+        "//build/make/target/product/generic",
+        "//build/soong/fsgen",
+    ],
+}
+
+build_prop {
+    name: "system-build.prop",
+    stem: "build.prop",
+    product_config: ":product_config",
+    footer_files: [
+        ":applied_backported_fixes",
+    ],
+    dist: {
+        targets: [
+            "droidcore-unbundled",
+            "sdk",
+        ],
+    },
+    // Currently, only microdroid, Ravenwood, and cf system image can refer to system-build.prop
+    visibility: [
+        "//build/soong/fsgen",
+        "//packages/modules/Virtualization/build/microdroid",
+        "//frameworks/base/ravenwood",
+        "//visibility:any_system_partition",
+    ],
+}
+
+build_prop {
+    name: "system_ext-build.prop",
+    stem: "build.prop",
+    system_ext_specific: true,
+    product_config: ":product_config",
+    relative_install_path: "etc", // system_ext/etc/build.prop
+    dist: {
+        targets: ["droidcore-unbundled"],
+        dest: "build.prop-system_ext",
+    },
+    visibility: [
+        "//build/make/target/product/gsi",
+        "//build/soong/fsgen",
+    ],
+}
+
+build_prop {
+    name: "product-build.prop",
+    stem: "build.prop",
+    product_specific: true,
+    product_config: ":product_config",
+    relative_install_path: "etc", // product/etc/build.prop
+    dist: {
+        targets: ["droidcore-unbundled"],
+        dest: "build.prop-product",
+    },
+    visibility: [
+        "//build/make/target/product/gsi",
+        "//build/soong/fsgen",
+        "//bootable/recovery/tests/ota",
+    ],
+}
+
+build_prop {
+    name: "odm-build.prop",
+    stem: "build.prop",
+    device_specific: true,
+    product_config: ":product_config",
+    relative_install_path: "etc", // odm/etc/build.prop
+    dist: {
+        targets: ["droidcore-unbundled"],
+        dest: "build.prop-odm",
+    },
+    visibility: ["//build/soong/fsgen"],
+}
+
+build_prop {
+    name: "system_dlkm-build.prop",
+    stem: "build.prop",
+    system_dlkm_specific: true,
+    product_config: ":product_config",
+    relative_install_path: "etc", // system_dlkm/etc/build.prop
+    visibility: ["//visibility:private"],
+}
+
+build_prop {
+    name: "vendor_dlkm-build.prop",
+    stem: "build.prop",
+    vendor_dlkm_specific: true,
+    product_config: ":product_config",
+    relative_install_path: "etc", // vendor_dlkm/etc/build.prop
+    visibility: ["//visibility:private"],
+}
+
+build_prop {
+    name: "odm_dlkm-build.prop",
+    stem: "build.prop",
+    odm_dlkm_specific: true,
+    product_config: ":product_config",
+    relative_install_path: "etc", // odm_dlkm/etc/build.prop
+    visibility: ["//visibility:private"],
+}
+
+build_prop {
+    name: "ramdisk-build.prop",
+    stem: "build.prop",
+    ramdisk: true,
+    product_config: ":product_config",
+    relative_install_path: "etc/ramdisk", // ramdisk/system/etc/ramdisk/build.prop
+    dist: {
+        targets: ["droidcore-unbundled"],
+        dest: "build.prop-ramdisk",
+    },
+    visibility: ["//visibility:private"],
+}
+
+all_apex_certs {
+    name: "all_apex_certs",
+    visibility: [
+        "//cts/tests/tests/security",
+        "//cts/hostsidetests/appsecurity",
+    ],
+}
+
+system_dev_certificate {
+    name: "system_dev_certificate",
+    visibility: [
+        "//bootable/recovery:__subpackages__",
+    ],
+}
+
+prebuilt_root {
+    name: "force_debuggable",
+    src: ":force_debuggable_empty_file",
+    debug_ramdisk: true,
+}
+
+genrule {
+    name: "force_debuggable_empty_file",
+    out: ["force_debuggable"],
+    cmd: "touch $(out)",
+}

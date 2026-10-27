@@ -1,0 +1,178 @@
+diff --git a/res/values/custom_strings.xml b/res/values/custom_strings.xml
+index 36420fd..dfd1530 100644
+--- a/res/values/custom_strings.xml
++++ b/res/values/custom_strings.xml
+@@ -301,9 +301,9 @@
+     <string name="ambient_display_screen_off_udfps_summary">Allows unlocking with the screen off.\nEnabling may cause accidental wake-ups.</string>
+ 
+     <!-- Hotspot -->
+-    <string name="wifi_hotspot_hidden_ssid_title">Hidden network</string>
++    <string name="wifi_hotspot_hidden_ssid_title">@string/wifi_hidden_network</string>
+     <string name="wifi_hotspot_hidden_ssid_summary">Your mobile hotspot\'s name won\'t appear in the list of available WLAN networks.</string>
+-    <string name="wifi_hotspot_client_manager_title">Connected devices</string>
++    <string name="wifi_hotspot_client_manager_title">@string/connected_devices_dashboard_title</string>
+     <string name="wifi_hotspot_client_manager_summary">List and manage devices connected to the hotspot</string>
+     <string name="wifi_hotspot_client_manager_list_only_summary">List devices connected to the hotspot</string>
+     <string name="wifi_hotspot_client_limit_title">Limit of connected devices</string>
+diff --git a/res/xml/keyboard_settings.xml b/res/xml/keyboard_settings.xml
+index 4341b83..c98e889 100644
+--- a/res/xml/keyboard_settings.xml
++++ b/res/xml/keyboard_settings.xml
+@@ -54,6 +54,15 @@
+             settings:controller="com.android.settings.language.UserDictionaryPreferenceController" />
+     </PreferenceCategory>
+ 
++    <ListPreference
++        android:key="j716f_pointer_style"
++        android:title="@string/j716f_pointer_style_title"
++        android:summary="@string/j716f_pointer_style_summary"
++        android:entries="@array/j716f_pointer_style_entries"
++        android:entryValues="@array/j716f_pointer_style_values"
++        android:persistent="false"
++        settings:controller="com.android.settings.inputmethod.J716fPointerStylePreferenceController" />
++
+     <SwitchPreferenceCompat
+         android:key="vibrate_input_devices"
+         android:title="@string/vibrate_input_devices"
+diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
+index 54ab570..4f6a314 100644
+--- a/res/xml/my_device_info.xml
++++ b/res/xml/my_device_info.xml
+@@ -90,6 +90,7 @@
+         <Preference
+             android:title="@string/radio_info_title"
+             android:key="radio_info_settings"
++            settings:controller="com.android.settings.deviceinfo.RadioInfoPreferenceController"
+             android:order="6">
+             <intent android:action="android.intent.action.MAIN"
+                     android:targetPackage="com.android.phone"
+diff --git a/src/com/android/settings/deviceinfo/DeviceNamePreferenceController.java b/src/com/android/settings/deviceinfo/DeviceNamePreferenceController.java
+index 5734a7b..8dcfd94 100644
+--- a/src/com/android/settings/deviceinfo/DeviceNamePreferenceController.java
++++ b/src/com/android/settings/deviceinfo/DeviceNamePreferenceController.java
+@@ -81,7 +81,7 @@ public class DeviceNamePreferenceController extends BasePreferenceController
+         mDeviceName = Settings.Global.getString(mContext.getContentResolver(),
+                 Settings.Global.DEVICE_NAME);
+         if (mDeviceName == null) {
+-            mDeviceName = Build.MODEL;
++            mDeviceName = android.os.SystemProperties.get("ro.product.marketname", Build.MODEL);
+         }
+     }
+ 
+diff --git a/src/com/android/settings/deviceinfo/HardwareInfoPreferenceController.java b/src/com/android/settings/deviceinfo/HardwareInfoPreferenceController.java
+index 5f760bf..21fd2bb 100644
+--- a/src/com/android/settings/deviceinfo/HardwareInfoPreferenceController.java
++++ b/src/com/android/settings/deviceinfo/HardwareInfoPreferenceController.java
+@@ -17,6 +17,7 @@ package com.android.settings.deviceinfo;
+ 
+ import android.content.Context;
+ import android.os.Build;
++import android.os.SystemProperties;
+ import android.util.Log;
+ 
+ import androidx.preference.PreferenceScreen;
+@@ -53,13 +54,17 @@ public class HardwareInfoPreferenceController extends BasePreferenceController {
+     }
+ 
+     public static String getDeviceModel() {
++        final boolean isJ716f = "p11_pro_plus".equals(
++                SystemProperties.get("ro.product.vendor.device"));
++        final String model = isJ716f && "Lenovo TB-J716F".equals(Build.MODEL)
++                ? "TB-J716F" : Build.MODEL;
+         FutureTask<String> msvSuffixTask = new FutureTask<>(() -> DeviceInfoUtils.getMsvSuffix());
+ 
+         msvSuffixTask.run();
+         try {
+             // Wait for msv suffix value.
+             final String msvSuffix = msvSuffixTask.get();
+-            return Build.MODEL + msvSuffix;
++            return model + msvSuffix;
+         } catch (ExecutionException e) {
+             Log.e(TAG, "Execution error, so we only show model name");
+         } catch (InterruptedException e) {
+@@ -67,6 +72,6 @@ public class HardwareInfoPreferenceController extends BasePreferenceController {
+         }
+         // If we can't get an msv suffix value successfully,
+         // it's better to return model name.
+-        return Build.MODEL;
++        return model;
+     }
+ }
+diff --git a/src/com/android/settings/display/HdrBrightnessSettings.java b/src/com/android/settings/display/HdrBrightnessSettings.java
+index bfc2985..a93dda5 100644
+--- a/src/com/android/settings/display/HdrBrightnessSettings.java
++++ b/src/com/android/settings/display/HdrBrightnessSettings.java
+@@ -82,19 +82,19 @@ public class HdrBrightnessSettings extends DashboardFragment {
+         LayoutPreference preview = findPreference(PREVIEW_KEY);
+ 
+         ImageView standardImage = preview.findViewById(R.id.standard_image);
+-        Bitmap standardBitmap = BitmapFactory.decodeResource(getResources(),
++        // Both crops are narrower than the fixed source, so their gainmaps are independent.
++        Bitmap previewBitmap = BitmapFactory.decodeResource(getResources(),
+                 R.drawable.mountain_lake);
+-        standardBitmap = Bitmap.createBitmap(standardBitmap, 0, 0,
+-                standardBitmap.getHeight() * 3 / 4, standardBitmap.getHeight());
++        Bitmap standardBitmap = Bitmap.createBitmap(previewBitmap, 0, 0,
++                previewBitmap.getHeight() * 3 / 4, previewBitmap.getHeight());
+         standardBitmap.setGainmap(null);
+         standardImage.setImageBitmap(standardBitmap);
+         standardImage.setOutlineProvider(vop);
+         standardImage.setClipToOutline(true);
+ 
+         ImageView hdrImage = preview.findViewById(R.id.hdr_image);
+-        Bitmap hdrBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.mountain_lake);
+-        hdrBitmap = Bitmap.createBitmap(hdrBitmap, 0, 0, standardBitmap.getHeight() * 3 / 4,
+-                standardBitmap.getHeight());
++        Bitmap hdrBitmap = Bitmap.createBitmap(previewBitmap, 0, 0,
++                previewBitmap.getHeight() * 3 / 4, previewBitmap.getHeight());
+         hdrImage.setImageBitmap(hdrBitmap);
+         hdrImage.setOutlineProvider(vop);
+         hdrImage.setClipToOutline(true);
+diff --git a/src/com/android/settings/display/TapToWakePreferenceController.java b/src/com/android/settings/display/TapToWakePreferenceController.java
+index b074d21..0d335c4 100644
+--- a/src/com/android/settings/display/TapToWakePreferenceController.java
++++ b/src/com/android/settings/display/TapToWakePreferenceController.java
+@@ -14,6 +14,8 @@
+ package com.android.settings.display;
+ 
+ import android.content.Context;
++import android.os.SystemProperties;
++import java.io.File;
+ import android.provider.Settings;
+ 
+ import androidx.preference.Preference;
+@@ -38,8 +40,11 @@ public class TapToWakePreferenceController extends AbstractPreferenceController
+ 
+     @Override
+     public boolean isAvailable() {
++        // J716F uses its verified touch-driver bridge rather than an unverified Power HAL mode.
+         return mContext.getResources().getBoolean(
+-                com.android.internal.R.bool.config_supportDoubleTapWake);
++                com.android.internal.R.bool.config_supportDoubleTapWake)
++                || ("p11_pro_plus".equals(SystemProperties.get("ro.product.vendor.device"))
++                        && new File("/sys/devices/virtual/touch/tp_dev/gesture_on").exists());
+     }
+ 
+     @Override
+diff --git a/src/com/android/settings/network/telephony/SimRepository.kt b/src/com/android/settings/network/telephony/SimRepository.kt
+index baff5cb..9316a8f 100644
+--- a/src/com/android/settings/network/telephony/SimRepository.kt
++++ b/src/com/android/settings/network/telephony/SimRepository.kt
+@@ -20,6 +20,7 @@ import android.content.Context
+ import android.content.pm.PackageManager
+ import android.os.UserManager
+ import android.provider.Settings
++import com.android.settings.R
+ import com.android.settingslib.spaprivileged.framework.common.userManager
+ import com.android.settingslib.spaprivileged.settingsprovider.settingsGlobalBoolean
+ 
+@@ -29,7 +30,8 @@ class SimRepository(private val context: Context) {
+ 
+     /** Gets whether show mobile network settings page entrance to the current user. */
+     fun showMobileNetworkPageEntrance(): Boolean =
+-        packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY) && userManager.isAdminUser
++        context.resources.getBoolean(R.bool.config_show_sim_info) &&
++            packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY) && userManager.isAdminUser
+ 
+     /** Gets whether current user can enter mobile network settings page. */
+     fun canEnterMobileNetworkPage(): Boolean {

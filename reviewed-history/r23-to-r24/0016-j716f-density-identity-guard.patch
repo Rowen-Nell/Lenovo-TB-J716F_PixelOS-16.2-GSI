@@ -1,0 +1,12 @@
+--- a/phh-prop-handler.sh
++++ b/phh-prop-handler.sh
+@@ -71,7 +71,8 @@
+ }
+ 
+ if [ "$1" == "ro.sf.lcd_density" ]; then
+-    if [ "$(getprop ro.product.device)" = "tb03_arm64" ] &&
++    if { [ "$(getprop ro.product.device)" = "tb03_arm64" ] ||
++         [ "$(getprop ro.product.device)" = "J716F" ]; } &&
+        [ "$(getprop ro.product.vendor.device)" = "p11_pro_plus" ] &&
+        [ "$(getprop ro.vendor.build.version.sdk)" = "30" ]; then
+         log -t TB03-display "Density established before boot; skip initial property replay restart"

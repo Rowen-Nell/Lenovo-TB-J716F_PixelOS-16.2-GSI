@@ -1,0 +1,402 @@
+diff --git a/core/jni/android_media_AudioProductStrategies.cpp b/core/jni/android_media_AudioProductStrategies.cpp
+index 5708ddc2c..3a46421fb 100644
+--- a/core/jni/android_media_AudioProductStrategies.cpp
++++ b/core/jni/android_media_AudioProductStrategies.cpp
+@@ -258,7 +258,7 @@ android_media_AudioSystem_listAudioProductStrategies(JNIEnv *env, jobject clazz,
+ 
+     status_t status;
+     AudioProductStrategyVector strategies;
+-    jint jStatus;
++    jint jStatus = AUDIO_JAVA_SUCCESS;
+     jobject jStrategy = NULL;
+ 
+     status = AudioSystem::listAudioProductStrategies(strategies);
+diff --git a/media/java/android/mtp/MtpDatabase.java b/media/java/android/mtp/MtpDatabase.java
+index f783ce9c9..d85759535 100644
+--- a/media/java/android/mtp/MtpDatabase.java
++++ b/media/java/android/mtp/MtpDatabase.java
+@@ -687,6 +687,15 @@ public class MtpDatabase implements AutoCloseable {
+             case MtpConstants.DEVICE_PROPERTY_DEVICE_FRIENDLY_NAME:
+                 // writable string properties kept in shared preferences
+                 value = mDeviceProperties.getString(Integer.toString(property), "");
++                if (property == MtpConstants.DEVICE_PROPERTY_DEVICE_FRIENDLY_NAME
++                        && value.isEmpty()
++                        && "p11_pro_plus".equals(SystemProperties.get("ro.product.vendor.device"))) {
++                    value = android.provider.Settings.Global.getString(mContext.getContentResolver(),
++                            android.provider.Settings.Global.DEVICE_NAME);
++                    if (value == null || value.isEmpty()) {
++                        value = SystemProperties.get("ro.product.marketname", "Lenovo TB-J716F");
++                    }
++                }
+                 length = value.length();
+                 if (length > 255) {
+                     length = 255;
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java b/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java
+index b7ff63cdc..d35a60d45 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/DataSaverTile.java
+@@ -17,6 +17,7 @@ package com.android.systemui.qs.tiles;
+ import android.content.Intent;
+ import android.os.Handler;
+ import android.os.Looper;
++import android.os.SystemProperties;
+ import android.provider.Settings;
+ import android.service.quicksettings.Tile;
+ import android.widget.Switch;
+@@ -89,6 +90,12 @@ public class DataSaverTile extends QSTileImpl<BooleanState> implements
+         return new BooleanState();
+     }
+ 
++    @Override
++    public boolean isAvailable() {
++        // J716F is Wi-Fi-only; do not expose its unsupported cellular settings entry.
++        return !"p11_pro_plus".equals(SystemProperties.get("ro.product.vendor.device"));
++    }
++
+     @Override
+     public Intent getLongClickIntent() {
+         return new Intent(Settings.ACTION_DATA_SAVER_SETTINGS);
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt b/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt
+index 509162339..c20ee68ef 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/cell/domain/interactor/MobileDataTileDataInteractor.kt
+@@ -17,6 +17,7 @@
+ package com.android.systemui.qs.tiles.impl.cell.domain.interactor
+ 
+ import android.content.Context
++import android.os.SystemProperties
+ import android.os.UserHandle
+ import com.android.settingslib.graph.SignalDrawable
+ import com.android.systemui.Flags as AconfigFlags
+@@ -127,6 +128,7 @@ constructor(
+     override fun availability(user: UserHandle): Flow<Boolean> = flowOf(isAvailable())
+ 
+     fun isAvailable(): Boolean {
+-        return AconfigFlags.qsSplitInternetTile()
++        return AconfigFlags.qsSplitInternetTile() &&
++            SystemProperties.get("ro.product.vendor.device") != "p11_pro_plus"
+     }
+ }
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt b/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt
+index 1c19444a9..7ba72aef3 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/impl/saver/domain/interactor/DataSaverTileDataInteractor.kt
+@@ -16,6 +16,7 @@
+ 
+ package com.android.systemui.qs.tiles.impl.saver.domain.interactor
+ 
++import android.os.SystemProperties
+ import android.os.UserHandle
+ import com.android.systemui.common.coroutine.ConflatedCallbackFlow
+ import com.android.systemui.qs.tiles.base.domain.interactor.QSTileDataInteractor
+@@ -47,5 +48,7 @@ constructor(private val dataSaverController: DataSaverController) :
+             awaitClose { dataSaverController.removeCallback(callback) }
+         }
+ 
+-    override fun availability(user: UserHandle): Flow<Boolean> = flowOf(true)
++    // Keep the underlying metered-network policy; hide only this product's QS entry.
++    override fun availability(user: UserHandle): Flow<Boolean> =
++        flowOf(SystemProperties.get("ro.product.vendor.device") != "p11_pro_plus")
+ }
+diff --git a/services/core/java/com/android/server/audio/AudioSystemAdapter.java b/services/core/java/com/android/server/audio/AudioSystemAdapter.java
+index 017066790..e1122303c 100644
+--- a/services/core/java/com/android/server/audio/AudioSystemAdapter.java
++++ b/services/core/java/com/android/server/audio/AudioSystemAdapter.java
+@@ -758,8 +758,13 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
+         if (filterInternal) {
+             synchronized (sAudioProductStrategiesLock) {
+                 if (sAudioProductStrategiesWithoutInternal == null) {
++                    List<AudioProductStrategy> strategies = getAllProductStrategies();
++                    // A failed/not-ready native query must not poison the filtered cache.
++                    if (sAudioProductStrategies == null) {
++                        return Collections.emptyList();
++                    }
+                     sAudioProductStrategiesWithoutInternal = AudioProductStrategy
+-                            .filterNonInternalStrategies(getAllProductStrategies());
++                            .filterNonInternalStrategies(strategies);
+                 }
+             }
+             return sAudioProductStrategiesWithoutInternal;
+@@ -782,6 +787,10 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
+                             + AudioSystem.audioSystemErrorToString(status));
+                     return Collections.emptyList();
+                 }
++                if (strategies.isEmpty()) {
++                    Log.w(TAG, "Audio product strategies not ready: empty native list");
++                    return Collections.emptyList();
++                }
+                 sAudioProductStrategies = Collections.unmodifiableList(strategies);
+             }
+         }
+@@ -865,6 +874,17 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
+      */
+     public void dump(PrintWriter pw) {
+         pw.println("\nAudioSystemAdapter:");
++        synchronized (sAudioProductStrategiesLock) {
++            pw.println(" product strategy cache: " + (sAudioProductStrategies == null
++                    ? "not initialized" : sAudioProductStrategies.size()));
++            pw.println(" external strategy cache: " + (sAudioProductStrategiesWithoutInternal == null
++                    ? "not initialized" : sAudioProductStrategiesWithoutInternal.size()));
++            if (sAudioProductStrategies != null) {
++                for (AudioProductStrategy strategy : sAudioProductStrategies) {
++                    pw.println("  " + strategy);
++                }
++            }
++        }
+         final DateTimeFormatter formatter = DateTimeFormatter
+                 .ofPattern("MM-dd HH:mm:ss:SSS")
+                 .withLocale(Locale.US)
+diff --git a/services/core/java/com/android/server/display/DisplayPowerController.java b/services/core/java/com/android/server/display/DisplayPowerController.java
+old mode 100644
+new mode 100755
+index a85eb7eb4..a2e506845
+--- a/services/core/java/com/android/server/display/DisplayPowerController.java
++++ b/services/core/java/com/android/server/display/DisplayPowerController.java
+@@ -435,6 +435,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+     private float[] mNitsRange;
+ 
+     private final BrightnessRangeController mBrightnessRangeController;
++    private final LegacyHdrBrightnessController mLegacyHdrBrightnessController;
+ 
+     private final BrightnessClamperController mBrightnessClamperController;
+ 
+@@ -632,6 +633,10 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+                         mDisplayDeviceConfig, displayDeviceInfo.width, displayDeviceInfo.height,
+                         displayToken, mDisplayId), mContext, flags, mSensorManager, pluginManager,
+                         mDisplayBrightnessController.getCurrentBrightness());
++        mLegacyHdrBrightnessController = new LegacyHdrBrightnessController(
++                mContext, mHandler, this::sendUpdatePowerState, mDisplayId,
++                mFlags.isHdrBrightnessSettingEnabled());
++        mLegacyHdrBrightnessController.onDisplayChanged(mDisplayDeviceConfig, displayToken);
+         // Seed the cached brightness
+         saveBrightnessInfo(getScreenBrightnessSetting());
+         mAutomaticBrightnessStrategy =
+@@ -769,6 +774,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+             mAutomaticBrightnessController.resetShortTermModel();
+         }
+         mBrightnessClamperController.onUserSwitch();
++        mLegacyHdrBrightnessController.onUserSwitch(newUserId);
+         sendUpdatePowerState();
+     }
+ 
+@@ -948,6 +954,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+ 
+             mIsDisplayInternal = isDisplayInternal;
+ 
++            mLegacyHdrBrightnessController.onDisplayChanged(config, token);
+             mBrightnessClamperController.onDisplayChanged(
+                     new BrightnessClamperController.DisplayDeviceData(uniqueId,
+                             thermalBrightnessThrottlingDataId, powerThrottlingDataId,
+@@ -1300,6 +1307,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+         mDisplayPowerProximityStateController.cleanup();
+         mBrightnessRangeController.stop();
+         mBrightnessClamperController.stop();
++        mLegacyHdrBrightnessController.stop();
+         mHandler.removeCallbacksAndMessages(null);
+ 
+         // Release any outstanding wakelocks we're still holding because of pending messages.
+@@ -1703,6 +1711,19 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+                 mBrightnessReasonTemp.addModifier(BrightnessReason.MODIFIER_HDR);
+             }
+ 
++            // Compute after every modifier and the range clamp. Preserve the final SDR white
++            // point; use only the currently permitted ordinary brightness envelope.
++            final float legacyLimit = Math.min(clampedState.getMaxBrightness(), Math.min(
++                    mBrightnessRangeController.getCurrentBrightnessMax(),
++                    mBrightnessRangeController.getNormalBrightnessMax()));
++            final float legacyHdrValue = mLegacyHdrBrightnessController.choose(
++                    sdrAnimateValue, legacyLimit, mPowerRequest, clampedState, state);
++            if (legacyHdrValue > sdrAnimateValue) {
++                animateValue = legacyHdrValue;
++                hdrBrightness = animateValue;
++                mBrightnessReasonTemp.addModifier(BrightnessReason.MODIFIER_HDR);
++            }
++
+             // if doze or suspend state is requested, we want to finish brightnes animation fast
+             // to allow state animation to start
+             if (mPowerRequest.policy == POLICY_DOZE
+@@ -1720,7 +1741,12 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+                     && (animateValue != currentBrightness
+                     || sdrAnimateValue != currentSdrBrightness)) {
+                 boolean skipAnimation = initialRampSkip || hasBrightnessBuckets
+-                        || !isDisplayContentVisible || brightnessIsTemporary;
++                        || !isDisplayContentVisible || brightnessIsTemporary
++                        // Trial pair transitions are steps: independent spline ramps can
++                        // overshoot the calibrated target ratio or a newly reduced cap.
++                        || LegacyHdrBrightnessPolicy.skipHdrRamp(
++                                mLegacyHdrBrightnessController.isRunning(), animateValue,
++                                sdrAnimateValue, currentBrightness, currentSdrBrightness);
+                 final boolean isHdrOnlyChange = BrightnessSynchronizer.floatEquals(
+                         sdrAnimateValue, currentSdrBrightness);
+                 if (mFlags.isFastHdrTransitionsEnabled() && !skipAnimation && isHdrOnlyChange) {
+@@ -2745,6 +2771,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+         pw.println();
+         if (mBrightnessRangeController != null) {
+             mBrightnessRangeController.dump(pw);
++            mLegacyHdrBrightnessController.dump(pw);
+         }
+ 
+         pw.println();
+diff --git a/services/core/java/com/android/server/display/LocalDisplayAdapter.java b/services/core/java/com/android/server/display/LocalDisplayAdapter.java
+old mode 100644
+new mode 100755
+index 3da7874f6..48bc23aa9
+--- a/services/core/java/com/android/server/display/LocalDisplayAdapter.java
++++ b/services/core/java/com/android/server/display/LocalDisplayAdapter.java
+@@ -1037,7 +1037,16 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+                                 applyColorMatrixBasedDimming(brightnessState);
+                             }
+ 
+-                            mBacklightAdapter.setBacklight(sdrBacklight, sdrNits, backlight, nits);
++                            final boolean legacyHdr = LegacyHdrBrightnessController
++                                    .isEnabledForDisplay(mIsFirstDisplay, getDisplayDeviceConfig());
++                            final boolean accepted;
++                            if (legacyHdr) {
++                                accepted = mBacklightAdapter.setBacklightWithStatus(
++                                        sdrBacklight, sdrNits, backlight, nits);
++                            } else {
++                                mBacklightAdapter.setBacklight(sdrBacklight, sdrNits, backlight, nits);
++                                accepted = false; // Unused by the unchanged path.
++                            }
+                             Trace.traceCounter(Trace.TRACE_TAG_POWER,
+                                     "ScreenBrightness",
+                                     BrightnessSynchronizer.brightnessFloatToInt(brightnessState));
+@@ -1046,7 +1055,14 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+                                     BrightnessSynchronizer.brightnessFloatToInt(
+                                             sdrBrightnessState));
+ 
+-                            if (getDisplayDeviceConfig().hasSdrToHdrRatioSpline()) {
++                            if (legacyHdr) {
++                                // Equal real white points bootstrap availability at ratio 1.
++                                // A failed HAL/SF request must not publish the requested ratio.
++                                final float ratio = LegacyHdrBrightnessPolicy.acceptedRatio(
++                                        accepted, nits, sdrNits);
++                                handleHdrSdrNitsChanged(Float.isFinite(ratio) ? nits : INVALID_NITS,
++                                        Float.isFinite(ratio) ? sdrNits : INVALID_NITS);
++                            } else if (getDisplayDeviceConfig().hasSdrToHdrRatioSpline()) {
+                                 handleHdrSdrNitsChanged(nits, sdrNits);
+                             }
+ 
+@@ -1919,17 +1935,24 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+ 
+         // Set backlight within min and max backlight values
+         void setBacklight(float sdrBacklight, float sdrNits, float backlight, float nits) {
++            setBacklightWithStatus(sdrBacklight, sdrNits, backlight, nits);
++        }
++
++        boolean setBacklightWithStatus(float sdrBacklight, float sdrNits,
++                float backlight, float nits) {
+             if (mUseSurfaceControlBrightness || mForceSurfaceControl) {
+                 if (BrightnessSynchronizer.floatEquals(
+                         sdrBacklight, PowerManager.BRIGHTNESS_INVALID_FLOAT)) {
+-                    mSurfaceControlProxy.setDisplayBrightness(mDisplayToken, backlight);
++                    return mSurfaceControlProxy.setDisplayBrightness(mDisplayToken, backlight);
+                 } else {
+-                    mSurfaceControlProxy.setDisplayBrightness(mDisplayToken, sdrBacklight, sdrNits,
+-                            backlight, nits);
++                    return mSurfaceControlProxy.setDisplayBrightness(mDisplayToken,
++                            sdrBacklight, sdrNits, backlight, nits);
+                 }
+             } else if (mBacklight != null) {
+                 mBacklight.setBrightness(backlight);
+             }
++            // The Lights fallback does not transport the paired composition white points.
++            return false;
+         }
+ 
+         void setForceSurfaceControl(boolean forceSurfaceControl) {
+diff --git a/services/core/java/com/android/server/display/feature/DisplayManagerFlags.java b/services/core/java/com/android/server/display/feature/DisplayManagerFlags.java
+index 1f6bce608..29d5e2048 100644
+--- a/services/core/java/com/android/server/display/feature/DisplayManagerFlags.java
++++ b/services/core/java/com/android/server/display/feature/DisplayManagerFlags.java
+@@ -637,12 +637,11 @@ public class DisplayManagerFlags {
+ 
+         @Override
+         public String toString() {
+-            // remove com.android.server.display.feature.flags. from the beginning of the name.
+-            // align all isEnabled() values.
+-            // Adjust lengths if we end up with longer names
+-            final int nameLength = mName.length();
+-            return TextUtils.substring(mName,  41, nameLength) + ": "
+-                    + TextUtils.formatSimple("%" + (93 - nameLength) + "s%s", " " , isEnabled())
++            // Flag names come from multiple packages; align values using the short name.
++            final String name = mName.substring(mName.lastIndexOf('.') + 1);
++            return name + ": "
++                    + TextUtils.formatSimple("%" + Math.max(1, 52 - name.length()) + "s%s",
++                            " ", isEnabled())
+                     + " (def:" + mFlagFunction.get() + ")";
+         }
+     }
+diff --git a/services/core/java/com/android/server/input/InputSettingsObserver.java b/services/core/java/com/android/server/input/InputSettingsObserver.java
+index 9dafe7a60..e48458b8a 100644
+--- a/services/core/java/com/android/server/input/InputSettingsObserver.java
++++ b/services/core/java/com/android/server/input/InputSettingsObserver.java
+@@ -31,12 +31,15 @@ import android.database.ContentObserver;
+ import android.hardware.input.InputSettings;
+ import android.net.Uri;
+ import android.os.Handler;
++import android.os.SystemProperties;
+ import android.os.UserHandle;
+ import android.provider.DeviceConfig;
+ import android.provider.Settings;
+ import android.util.Log;
+ import android.view.ViewConfiguration;
+ 
++import java.io.FileOutputStream;
++import java.io.IOException;
+ import java.util.Map;
+ import java.util.function.Consumer;
+ 
+@@ -61,6 +64,8 @@ class InputSettingsObserver extends ContentObserver {
+         mService = service;
+         mNative = nativeIms;
+         mObservers = Map.ofEntries(
++                Map.entry(Settings.Secure.getUriFor(Settings.Secure.DOUBLE_TAP_TO_WAKE),
++                        (reason) -> updateJ716fDoubleTapToWake()),
+                 Map.entry(Settings.System.getUriFor(Settings.System.POINTER_SPEED),
+                         (reason) -> updateMousePointerSpeed()),
+                 Map.entry(Settings.System.getUriFor(
+@@ -146,14 +151,22 @@ class InputSettingsObserver extends ContentObserver {
+                     uri, true /* notifyForDescendants */, this, UserHandle.USER_ALL);
+         }
+ 
++        IntentFilter userFilter = new IntentFilter(Intent.ACTION_USER_SWITCHED);
++        if ("p11_pro_plus".equals(SystemProperties.get("ro.product.vendor.device"))) {
++            userFilter.addAction(Intent.ACTION_SCREEN_ON);
++        }
+         mContext.registerReceiver(new BroadcastReceiver() {
+             @Override
+             public void onReceive(Context context, Intent intent) {
++                if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
++                    updateJ716fDoubleTapToWake();
++                    return;
++                }
+                 for (Consumer<String> observer : mObservers.values()) {
+                     observer.accept("user switched");
+                 }
+             }
+-        }, new IntentFilter(Intent.ACTION_USER_SWITCHED), null, mHandler);
++        }, userFilter, null, mHandler);
+ 
+         for (Consumer<String> observer : mObservers.values()) {
+             observer.accept("just booted");
+@@ -167,6 +180,19 @@ class InputSettingsObserver extends ContentObserver {
+         mObservers.get(uri).accept("setting changed");
+     }
+ 
++    // The stock J716F vendor policy grants this exact access to system_server, not apps.
++    private void updateJ716fDoubleTapToWake() {
++        if (!"p11_pro_plus".equals(SystemProperties.get("ro.product.vendor.device"))) return;
++        boolean enabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
++                Settings.Secure.DOUBLE_TAP_TO_WAKE, 0, UserHandle.USER_CURRENT) != 0;
++        try (FileOutputStream output = new FileOutputStream(
++                "/sys/devices/virtual/touch/tp_dev/gesture_on")) {
++            output.write(enabled ? new byte[]{'1', '\n'} : new byte[]{'0', '\n'});
++        } catch (IOException failure) {
++            Log.e(TAG, "Could not apply the J716F native double-tap setting", failure);
++        }
++    }
++
+     private boolean getBoolean(String settingName, boolean defaultValue) {
+         final int setting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 settingName, defaultValue ? 1 : 0, UserHandle.USER_CURRENT);

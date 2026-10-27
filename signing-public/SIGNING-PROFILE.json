@@ -1,0 +1,606 @@
+{
+  "profile": "j716f-beta-release-v1",
+  "created_utc": "2026-10-27T08:10:08.696139+00:00",
+  "apk_certificates": {
+    "com.android.art": {
+      "sha256": "22c7231048f635ad053556a01f0856bb23657fdd735f2930d8395fe59ad3c547",
+      "original_sha256": "0dda096be3af77ee9e6b403c2e49ea5c409d5b2aa6ab5c41e32ee4049d448110",
+      "public_file": "com.android.art.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.appsearch.apk": {
+      "sha256": "a4d401ecf78348ef1b459646157d050f3ffdf85c426c763e61fac0838a8d1b93",
+      "original_sha256": "16c54228c4aaaec6e57d1699ed4a4b91928b910e2c4d50fdfbdd54fedb07ad3e",
+      "public_file": "com.android.appsearch.apk.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.adbd": {
+      "sha256": "a5c51abfd01c3ae0d31a47798fbdc7d92a06dd3ce16e8b2cd99079c0fb0edb9f",
+      "original_sha256": "1a5b61bbf8eb851444fcd118518c7ffe9fc99201a85970ef92ff4f77a31f1288",
+      "public_file": "com.android.adbd.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.virt": {
+      "sha256": "392e5a5218e4b6c48c1493ca15bddde561eee551b27c9f627c50b36901e26a94",
+      "original_sha256": "1ce37a0a9d002494ea013ac85ce7ade7fbfab68f6944be79e9f15db1460757ce",
+      "public_file": "com.android.virt.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.profiling": {
+      "sha256": "e4f66b682fe76870fbd418bdb63f1c76396fa8be6d198ece9dfe9ba0be25a054",
+      "original_sha256": "1e8daadb4cd9de9f19122141aa8a3210c00e5e90ec9a5a4ac293fd8d6d175f6c",
+      "public_file": "com.android.profiling.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.health.connect.backuprestore": {
+      "sha256": "c24469c41bb27aef08db162521de883496a79657e0551d9b70d88e8de35a909e",
+      "original_sha256": "228835d76d34c0e7364f8f16b24d8892f92456c0b03d9ad57bb63878939abfb3",
+      "public_file": "com.android.health.connect.backuprestore.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.i18n": {
+      "sha256": "99c2de73dbce7b2b32e90d50469f40aeff17aef5355a7bc9527fb7e23fa8ab9e",
+      "original_sha256": "23afc3fc6944c73f768b77311ceedb94bb77d09f96b05ff9002391bea84f73ac",
+      "public_file": "com.android.i18n.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.configinfrastructure": {
+      "sha256": "b45130ffb34504ec1959ea0d8c713f4faee821cf82208b3daf75aa6ac7e2af03",
+      "original_sha256": "268a7f11be85df124407184dcfeb1661b5c0ce50a037a9575e3ecdbfa0506163",
+      "public_file": "com.android.configinfrastructure.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.media": {
+      "sha256": "ab455ed7d57bc25d0d2265b2e9bbac36b7921018171e5b62ab79095b8df6c659",
+      "original_sha256": "279bcdb9bb447e153ab7611ee70ebee84bf2ecf026f15b91f1fcc615e5811f6d",
+      "public_file": "com.android.media.x509.pem",
+      "rsa_bits": 4096
+    },
+    "shared": {
+      "sha256": "82e7486a997e8e906423f3163cf65f1068476a17d96f7bfbb58004a6e2b3ae30",
+      "original_sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "public_file": "shared.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.ranging.rangingtestapp": {
+      "sha256": "d71cb57ea59ab41b56f25675491fab5c278d55f5f9ef2625dd1c995309166d23",
+      "original_sha256": "2e17e4b10b894cf97bbb93bdc9e271e11863245f99b1c79b693d45fedc85a51c",
+      "public_file": "com.android.ranging.rangingtestapp.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.safetycenter.resources": {
+      "sha256": "be4bbd0f18e18e424c02703e782301a32f7a851233972d6400ccd01593df0997",
+      "original_sha256": "366f75e331af7cd858d44815dfc1e4f403b68093b7592ed71fd682b9f3af4cf7",
+      "public_file": "com.android.safetycenter.resources.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.permission": {
+      "sha256": "d9b30e33e8024b635cfe4730df2f96a18684491147cb1408007443aee2a06403",
+      "original_sha256": "39ebbb8341a47536f06618f7108e6b3a669c8586f84da6e479868766adacb63b",
+      "public_file": "com.android.permission.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.bt": {
+      "sha256": "6d28fb1153e0ea7ea8c8e19aba846ca0024a77dc2e21fca9681ac5c2d4d02924",
+      "original_sha256": "40d363256b805bb119313675100123956be49da04992d84c2f71a18cc9bd9b72",
+      "public_file": "com.android.bt.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.runtime": {
+      "sha256": "059213a5e5e748a30588cd75ce131ed8949f3a8582be9bb80215ea88e2c50717",
+      "original_sha256": "4223b29f1525279fa81d7aedd9e3101d25247c578a7afd0d2e1275be0c48226c",
+      "public_file": "com.android.runtime.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.uwb.resources": {
+      "sha256": "1ed5ec3df8b0cb6b4805345f0caebb7c556bfa1c9aada6d1345502972f08a6a6",
+      "original_sha256": "43ddcf4e8ad93c5b86dfa6911097f22767a3859af9696abfefc0e1fe275b8ad7",
+      "public_file": "com.android.uwb.resources.x509.pem",
+      "rsa_bits": 4096
+    },
+    "media": {
+      "sha256": "4a078c156b30be49731c1ca1846059169a49b1cc0ecb8a13df639e014a96c6e7",
+      "original_sha256": "465983f7791f2abeb43ea2cbdc7f21a8260b72bc08a55c839fc1a43bc741a81e",
+      "public_file": "media.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.extservices": {
+      "sha256": "7aa66a1d6f428379ff191392e16eb8bcd3bc103514a11f71c3268e364bf572b5",
+      "original_sha256": "46c96885e5451a8c4d836d86848e5db1c1036695a8f42bd81fbfc11e8780355b",
+      "public_file": "com.android.extservices.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.conscrypt": {
+      "sha256": "2a8bcc508420d962948c8e5244a32e57661831564a6026b73ec8e196e6579f42",
+      "original_sha256": "46e7e88c2a1bbbd77f1e2cc6d6ff52b3bd478f0d9c95b45a4d988719c76a7e9a",
+      "public_file": "com.android.conscrypt.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.uwb": {
+      "sha256": "8fb19e09d01498c8d91b005d654627275a5810a4fdcb0c16497d4b6224944ecf",
+      "original_sha256": "4a49ead5fe7cfbd01fbfc216ac0fe2a909e0f45dd9c4bdb9dc8d59e6036a6a0a",
+      "public_file": "com.android.uwb.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.federatedcompute": {
+      "sha256": "b139261ffd79de9ca8eebd78ae63801ed136c206f46c4b7278bfd9f28ddd951a",
+      "original_sha256": "4e2c281c185bd3849b3c13976edaa82aa7d0990a891cac907ef6ac197af30ddc",
+      "public_file": "com.android.federatedcompute.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.mediaprovider": {
+      "sha256": "3dac77ad1ff296fd55fedfd7e1653b8e50288d7f853e46343eba22fe52d8dc5b",
+      "original_sha256": "4ec94e0b7c47e4921b60c57f9a1cc0f3d11b28b0e654f03867e08360e53f55d7",
+      "public_file": "com.android.mediaprovider.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.rkpd": {
+      "sha256": "ce10b699a269a7ad7474d28302dce221b23730cced0ec51e4672aae2c2590eb1",
+      "original_sha256": "55fa22ab72646dfea35e648724b0f4e4eb3ccba1b5f1779a986c56f5e3b2d28f",
+      "public_file": "com.android.rkpd.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.tethering": {
+      "sha256": "8e5403e0c014881421f5536d6dfed1560defa1996df589b7fc1f54188aaa787e",
+      "original_sha256": "5b6c2381a7c0a3ea707ecbacd1b9dfe4a34f8ae76ff83a74cbf1a2189e70ae0f",
+      "public_file": "com.android.tethering.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.appsearch": {
+      "sha256": "92fb48c310c6875d464485216c9ac8a3fe11d2369e5269d23a17ff277edef6ca",
+      "original_sha256": "5e3d1cf772cf11a815a47abd8ef8cd59de48d2425dc663e065d5594b52db444d",
+      "public_file": "com.android.appsearch.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.adservices": {
+      "sha256": "e16691215063facbb9bda90e6da9d1bb3d0c6313c77c2b60487190d912164e3e",
+      "original_sha256": "5f75a8d41161e611b73c2aeb583fb1f115cdb0615ce88f4b91bd0d735a7dafce",
+      "public_file": "com.android.adservices.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.telephonycore": {
+      "sha256": "d5fde74bf91e57f4218caed2239e55eda2237333e22290e8e9e67d7adfc8cec1",
+      "original_sha256": "669fd6707ed09e32e8d51056371dbb6b093524e6c022e16e01cbb7734c454282",
+      "public_file": "com.android.telephonycore.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.os.statsd": {
+      "sha256": "db794b03d832ccf015e11bdba42f0330b16473c9b5a333a67217ede20ff58eab",
+      "original_sha256": "6d34fc8da57d5db252ec137a78763edc43829f70f76e0aceccf0b0715795b32e",
+      "public_file": "com.android.os.statsd.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.wifi.resources": {
+      "sha256": "d0adece0b066fdaed41eaa3bac9323d6a4573a1ce145b283b3b31ad5621f3887",
+      "original_sha256": "6ef8a09a1c719adcc9be004ee627a4b37cc7955f2f6e64e6b07d068f7798d384",
+      "public_file": "com.android.wifi.resources.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.ondevicepersonalization": {
+      "sha256": "bdba5a4083c96f295ba1f0432b7323cdd623dbbc54000b00e7292ae756eb987b",
+      "original_sha256": "7cf07947c2f5fbf07ab3956bb5d3120f2a5c30f9a42afae6c95c1ecf6b323068",
+      "public_file": "com.android.ondevicepersonalization.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.cellbroadcast": {
+      "sha256": "cc82bfaf9096b5ef28055f18d4612f70ed12a21dd60c81019fa60c9b40c29f48",
+      "original_sha256": "83d12d888d6b46158c6dbab3fc324fdee408aec6588559e4054c900a4b444d08",
+      "public_file": "com.android.cellbroadcast.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.ipsec": {
+      "sha256": "014a5cb53a684665d05f56889972e96c245a4050edf601fe370a736d6c940a40",
+      "original_sha256": "8535e3451a4fbbd0b30552096875d7b6ecaef6212a2d4f542beb569c3b6232b7",
+      "public_file": "com.android.ipsec.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.healthfitness": {
+      "sha256": "66457ee972fa203962f490ebf5a3ba944532a39f00220a929d3ad6ddd809549d",
+      "original_sha256": "904077105277494dd77046a35c23af1a324fe05d4582c636e09cf8f88d4285d5",
+      "public_file": "com.android.healthfitness.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.hotspot2.osulogin": {
+      "sha256": "a8b41c347a3aba97dcdf832c03dbdec97888ab900aae21580da1bf85a3b1f78a",
+      "original_sha256": "936ef217719fcd1c387ae1f67addfdc53119c6097faec6867bfcbec14a2578de",
+      "public_file": "com.android.hotspot2.osulogin.x509.pem",
+      "rsa_bits": 4096
+    },
+    "releasekey": {
+      "sha256": "5c5e7f0b140979b4cdb0097a75a36405d5ce7fba52031d9faa7de9c2ba96b568",
+      "original_sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "public_file": "releasekey.x509.pem",
+      "rsa_bits": 4096
+    },
+    "bluetooth": {
+      "sha256": "96b5dfb6456d8fe446c9f7841d85838b3d232675081ec34e5ab265e9596c2625",
+      "original_sha256": "a6ccc500ff0e7421200eb66a7fe174ef1b00e52ca91727070cbedf061ff76c35",
+      "public_file": "bluetooth.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.crashrecovery": {
+      "sha256": "910a428601f84ef65bd989a36e51b93ee21c75f6fa4cfc1f9a8249a6d1ca251c",
+      "original_sha256": "a9f62487eb3ee53fba868137a7f31d5b59902beb90cc2c8a85450a7f52c3d683",
+      "public_file": "com.android.crashrecovery.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.compos": {
+      "sha256": "ea9c25875ed55bf477c0c30d7a214458a180e14938daa8a34683593c1f17e0a7",
+      "original_sha256": "abe90fbd47d3dc8fbf93d924c22b3a3de7b7269cf87bbfb43cf092b036eadb0f",
+      "public_file": "com.android.compos.x509.pem",
+      "rsa_bits": 4096
+    },
+    "sdk_sandbox": {
+      "sha256": "9152981b719c525909d54e3aa43d7553ab8a842ccae91aed365847447571b61e",
+      "original_sha256": "abf21f9e2af1d881cc673fddcefa6ed9c269a437bd64b279cf45844cfd589126",
+      "public_file": "sdk_sandbox.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.tzdata": {
+      "sha256": "10eecddf0524c86d16fa07bea72dbc2ecf72d9798af3e02982702e74fce1e8e2",
+      "original_sha256": "ac46d23a3ff846e549bbc21fd1e056e24464fec4a377497b1f319b7949b37214",
+      "public_file": "com.android.tzdata.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.vndk": {
+      "sha256": "80c788f8d754373d483d15be9db3a1ff1fa60a2903c4c3535e3e995a4c2c9c62",
+      "original_sha256": "ae0a71129a4e7ac2e0fe7b8a124732bc01668d5820da8af97f246696dc50752c",
+      "public_file": "com.android.vndk.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.wifi": {
+      "sha256": "6b673e541f2042510f0fffbc4a311d76770c702aa77a2cdafdad681223f49e93",
+      "original_sha256": "b12d03bda8bcca69dae98ba760d3329080c51130d61c7728df0fb70bce826f9a",
+      "public_file": "com.android.wifi.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.scheduling": {
+      "sha256": "0691785ad15b6ebe820111966a2f9790b301a8c381c5d1f7d8e6387874cf6aa0",
+      "original_sha256": "b1480685e73fd827c0fa60502269cd4b0c3444a9a2af0332c4b55678c86d117f",
+      "public_file": "com.android.scheduling.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.uprobestats": {
+      "sha256": "1d063edf6d030fa342d9d0e9e1fa739da041249cb14d2e3847d4caa85f482aad",
+      "original_sha256": "bc98a349fffd1e996cc9c986e7ac7d55692546f3b74977df9425138bb6ff60c9",
+      "public_file": "com.android.uprobestats.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.nfcservices": {
+      "sha256": "44817357ef0d81b8f32ba60447eb7e6c92b0eb2731387b4ddc497561a4210b47",
+      "original_sha256": "c06c0f02838633c9b1d9c53ffe04c7c408c34e644dd36e083e931f0c8fec46d2",
+      "public_file": "com.android.nfcservices.x509.pem",
+      "rsa_bits": 4096
+    },
+    "platform": {
+      "sha256": "bbc1e3eac2c5a1f00e2449f8ccb9754516e306f4f68d3d50e4e39e059a95b18a",
+      "original_sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "public_file": "platform.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.connectivity.resources": {
+      "sha256": "ad134c8e9872c1789d2215edf59c60c9b32c8cbf81f1916337b5f03ceb7ae4d0",
+      "original_sha256": "c97c5176edc415d188eb1f33246e956920f399857ec9112a7c1e9dd9c0793637",
+      "public_file": "com.android.connectivity.resources.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.adservices.api": {
+      "sha256": "01d41873dc66c410885a798b1baa876e72815da983affcbde68e801945a6b498",
+      "original_sha256": "ccc51124be4ab8f81bca7d32f6b3eb1ae04770e5ddfcc73a0108e1f94ec9f5f2",
+      "public_file": "com.android.adservices.api.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.devicelock": {
+      "sha256": "66eac9e3bde5f7d7ff0fa7dc5718beb55a5f97b3b74f8f6c92388b2ebfe54674",
+      "original_sha256": "cf56ad24a273ee26a656cc5cb5de804feb1806543105581ff43c1e1382aad9bd",
+      "public_file": "com.android.devicelock.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.wifi.dialog": {
+      "sha256": "647e054303f17fb0fb930b5bc54e44f45d2d069efc548d9d4c9044ff3153396c",
+      "original_sha256": "dc79bd290055f3d9add62f33a37e42fedfdc2ab10828d3a4d56d638ecebddfce",
+      "public_file": "com.android.wifi.dialog.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.sdkext": {
+      "sha256": "b14c586b0eed3741e22fb0b431661290e5ccea4439aa982e6082af50bf6c2276",
+      "original_sha256": "dd15767b8bfe8c4105317f46bf4ea788e78d441aa90dc3768bb2da4b46c9a50e",
+      "public_file": "com.android.sdkext.x509.pem",
+      "rsa_bits": 4096
+    },
+    "networkstack": {
+      "sha256": "103e622d2c88865fe28ac6a7431da1a1cba2e292d958a2b6c6161b04cbc7d259",
+      "original_sha256": "e1dbadce60dc080d15b58a014b0dcf9400e24de23fa00b287a5a982bfebda2ee",
+      "public_file": "networkstack.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.resolv": {
+      "sha256": "afdb2a75c07c0071fa63b414718f799ecf3a4fb6cc1086a0b290ffe9cddd9d59",
+      "original_sha256": "f377b9b3bda066d041050e771649ad623afaf738bf8ca44f5b9de88e00cc1a89",
+      "public_file": "com.android.resolv.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.healthconnect.controller": {
+      "sha256": "838572b7c77368095a1248ad2b8859ae0c40d9e232cd083affe9eedfed405484",
+      "original_sha256": "f44c79af2f4ee6c96e340e31e6124ad045fa984e0fd79927e125ac06392dd31d",
+      "public_file": "com.android.healthconnect.controller.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.media.swcodec": {
+      "sha256": "b6b2d7b94bfc1b2974d06c97ecbb70f9fe103dd41ad4021afac035548f00159b",
+      "original_sha256": "f7314f4054db4835ecdca3aee08de6bbb32405dbf22bba31b52497c970626605",
+      "public_file": "com.android.media.swcodec.x509.pem",
+      "rsa_bits": 4096
+    },
+    "nfc": {
+      "sha256": "6a0b4e1b38663bb0e0c2fedd7aa5666c2716b001ed80b47f91b26334566a7df0",
+      "original_sha256": "fae9122a8721d6e2a196d2224dffcf773c9127e2bb956cbddb40b009192ffdfd",
+      "public_file": "nfc.x509.pem",
+      "rsa_bits": 4096
+    },
+    "com.android.neuralnetworks": {
+      "sha256": "ab96b9a7b728666dc3630a6c25939a91c76b73e2a3b0c46cc2eff371885f44b5",
+      "original_sha256": "fb6f4cc467c55cc6ef1fce7198c49b5fe16749ee90135b8d593da0431d7f4407",
+      "public_file": "com.android.neuralnetworks.x509.pem",
+      "rsa_bits": 4096
+    }
+  },
+  "apex_payloads": {
+    "com.android.art": {
+      "public_file": "com.android.art.avbpubkey",
+      "sha256": "29545d683d3b1cd51426a029fc0da4ab5d4c3d8843af74c98f4a62e5857962e2",
+      "rsa_bits": 4096
+    },
+    "com.android.runtime": {
+      "public_file": "com.android.runtime.avbpubkey",
+      "sha256": "bfc908f0173d0e4c6a7bfd13d8b4a35dbdd0effb19ce00f5e5232520ca48de8b",
+      "rsa_bits": 4096
+    },
+    "com.android.conscrypt": {
+      "public_file": "com.android.conscrypt.avbpubkey",
+      "sha256": "768aef6ad8a6e999b386c86370aeba86e7101faaf493d9543668d380ceb4b137",
+      "rsa_bits": 4096
+    },
+    "com.android.media": {
+      "public_file": "com.android.media.avbpubkey",
+      "sha256": "2048a09a936f3a55ef7ac79288ffe38bcba3a0bc3476205faba830a218123462",
+      "rsa_bits": 4096
+    },
+    "com.android.media.swcodec": {
+      "public_file": "com.android.media.swcodec.avbpubkey",
+      "sha256": "5bad523e10dabe7405b88105d5a8a5e4a33a147bbc88c02fa14bab26a9462e79",
+      "rsa_bits": 4096
+    },
+    "com.android.cellbroadcast": {
+      "public_file": "com.android.cellbroadcast.avbpubkey",
+      "sha256": "49bb98b4cd103678eaf4a0fa8ce1ac776ae638040f2082a3de43a9fae7d87a6f",
+      "rsa_bits": 4096
+    },
+    "com.android.adservices": {
+      "public_file": "com.android.adservices.avbpubkey",
+      "sha256": "d163a6da20df39f8f1b4bc4601d67ca20c6d78860b762035bf526d84b73cea33",
+      "rsa_bits": 4096
+    },
+    "com.android.appsearch": {
+      "public_file": "com.android.appsearch.avbpubkey",
+      "sha256": "0a1b78f6e0af0d9838b2b116cd29f54da4530ce6d6dd527fd476f52e4a62ac76",
+      "rsa_bits": 4096
+    },
+    "com.android.bt": {
+      "public_file": "com.android.bt.avbpubkey",
+      "sha256": "c052d099a5ef0f7b3ab3b74f90b2f53cf69878913769cbe951fe9cb6a752af80",
+      "rsa_bits": 4096
+    },
+    "com.android.configinfrastructure": {
+      "public_file": "com.android.configinfrastructure.avbpubkey",
+      "sha256": "579804b2a8cd469e9874daa112ef737face2a49c06628555ccf3b6bd80f7cf24",
+      "rsa_bits": 4096
+    },
+    "com.android.tethering": {
+      "public_file": "com.android.tethering.avbpubkey",
+      "sha256": "964fdb95c86844119d39d4e451e59ba155405567e2f7e9281032bcffac78473a",
+      "rsa_bits": 4096
+    },
+    "com.android.crashrecovery": {
+      "public_file": "com.android.crashrecovery.avbpubkey",
+      "sha256": "77574af1e3c0afb14096b0c82fbf9bd1b6014065ace0b2339d7a89d050fae867",
+      "rsa_bits": 4096
+    },
+    "com.android.devicelock": {
+      "public_file": "com.android.devicelock.avbpubkey",
+      "sha256": "1e2574c6fc2c72b8c9378bd43a338b6ba0cc8b792b9454c85a5487219b00095c",
+      "rsa_bits": 4096
+    },
+    "com.android.resolv": {
+      "public_file": "com.android.resolv.avbpubkey",
+      "sha256": "0a07662fe1afdc0135c5517ed2cded0370f6c671fa1eb8473535cc88c7117174",
+      "rsa_bits": 4096
+    },
+    "com.android.extservices": {
+      "public_file": "com.android.extservices.avbpubkey",
+      "sha256": "5775ecfbb1ee1504d52f3a34542c60ae50c366574517a8bbf7b5f75d47a6751b",
+      "rsa_bits": 4096
+    },
+    "com.android.healthfitness": {
+      "public_file": "com.android.healthfitness.avbpubkey",
+      "sha256": "a58362f87d6db2daa88be95189fefea04854a60e038d2ebe2e678b5d3053b0b2",
+      "rsa_bits": 4096
+    },
+    "com.android.ipsec": {
+      "public_file": "com.android.ipsec.avbpubkey",
+      "sha256": "8d6f015c199a547227611d10d08e95daff1ef75fe3644c0389087be4963d88ec",
+      "rsa_bits": 4096
+    },
+    "com.android.neuralnetworks": {
+      "public_file": "com.android.neuralnetworks.avbpubkey",
+      "sha256": "9fbaee0257818b1a4a898b1ba28e44783cd9d9948bc143a01547df7b5bfe2091",
+      "rsa_bits": 4096
+    },
+    "com.android.nfcservices": {
+      "public_file": "com.android.nfcservices.avbpubkey",
+      "sha256": "9e85acfe128b3ebf7087b294994dece7ef9bd2fe7764a82c58f0cace13d16482",
+      "rsa_bits": 4096
+    },
+    "com.android.ondevicepersonalization": {
+      "public_file": "com.android.ondevicepersonalization.avbpubkey",
+      "sha256": "c1a79f0794052badd7e9beafc1ed5143714f348c055fdceb8adb3bab8df7c3be",
+      "rsa_bits": 4096
+    },
+    "com.android.permission": {
+      "public_file": "com.android.permission.avbpubkey",
+      "sha256": "e5b0ed70bb0d2653598a65398fc67b0dc92871565ea5d9b4c689503771604ed7",
+      "rsa_bits": 4096
+    },
+    "com.android.profiling": {
+      "public_file": "com.android.profiling.avbpubkey",
+      "sha256": "ae2b0f9befaed7a530db3bc741ecb585b8ea41759a19ca2b9b8cf8cbfcc4dbd0",
+      "rsa_bits": 4096
+    },
+    "com.android.rkpd": {
+      "public_file": "com.android.rkpd.avbpubkey",
+      "sha256": "a19a45c732a7cd326a166391a0d980843aaa6bde61717cce3eacb6ece9eba124",
+      "rsa_bits": 4096
+    },
+    "com.android.i18n": {
+      "public_file": "com.android.i18n.avbpubkey",
+      "sha256": "bf8601e12df660233165928bb98fd834f767612127288197fdb39b4a78d96cdf",
+      "rsa_bits": 4096
+    },
+    "com.android.scheduling": {
+      "public_file": "com.android.scheduling.avbpubkey",
+      "sha256": "b348ec5af3c6ed903af5a5405f88ffd542dfbea819b0706b3c01250e00d201b5",
+      "rsa_bits": 4096
+    },
+    "com.android.sdkext": {
+      "public_file": "com.android.sdkext.avbpubkey",
+      "sha256": "aac6e7fd419cc75c13ad253bbf0637916aa4bb9cd717acea1a4c4f63eb9e97a2",
+      "rsa_bits": 4096
+    },
+    "com.android.os.statsd": {
+      "public_file": "com.android.os.statsd.avbpubkey",
+      "sha256": "f618ff2b1ce4e1a4d131968e1557a8093f2eb359a5500722e5a68996545a1105",
+      "rsa_bits": 4096
+    },
+    "com.android.telephonycore": {
+      "public_file": "com.android.telephonycore.avbpubkey",
+      "sha256": "9aff61576a27412137e448f7f494a3687cde895a1ba2da4ead596d7873237f5a",
+      "rsa_bits": 4096
+    },
+    "com.android.uprobestats": {
+      "public_file": "com.android.uprobestats.avbpubkey",
+      "sha256": "651aa769560baef93cdc76f8592645f20e1f73777239fd524d69d784767e1a13",
+      "rsa_bits": 4096
+    },
+    "com.android.uwb": {
+      "public_file": "com.android.uwb.avbpubkey",
+      "sha256": "278e79fb55fa2901b29a7a13e534b03caaed7570030ef97219bd15b40004797f",
+      "rsa_bits": 4096
+    },
+    "com.android.virt": {
+      "public_file": "com.android.virt.avbpubkey",
+      "sha256": "ae861d28fd70a0b034bc41ef4839bae0e2982e6b48bce16daac7b0247b87c360",
+      "rsa_bits": 4096
+    },
+    "com.android.compos": {
+      "public_file": "com.android.compos.avbpubkey",
+      "sha256": "f760e1366bc18f18447ded487e19491b94685858de35040dc9fec5d9c25efd59",
+      "rsa_bits": 4096
+    },
+    "com.android.wifi": {
+      "public_file": "com.android.wifi.avbpubkey",
+      "sha256": "6918796e3bff56b45125bd2488af0613088ca109b863507e6487203b3b6925d0",
+      "rsa_bits": 4096
+    },
+    "com.android.adbd": {
+      "public_file": "com.android.adbd.avbpubkey",
+      "sha256": "385806be43d147f974b2c51057b899200f5a376535f940ac8e2b8c7522d1e8c0",
+      "rsa_bits": 4096
+    },
+    "com.android.vndk": {
+      "public_file": "com.android.vndk.pubkey",
+      "sha256": "d2d804813cb5f4838c643786271581b441dc8c4e31eb42a16dc3f73cb581978a",
+      "rsa_bits": 4096
+    },
+    "com.android.mediaprovider": {
+      "public_file": "com.android.mediaprovider.avbpubkey",
+      "sha256": "e7254c3a20a0f87e51a40c09e35055565945db0481a8d1c9d88a1406cd6d8565",
+      "rsa_bits": 4096
+    },
+    "com.android.tzdata": {
+      "public_file": "com.android.tzdata.avbpubkey",
+      "sha256": "51792b7e3224ee0caa56f7f336427bc54205c2d12c51ad5ed0587588300c4827",
+      "rsa_bits": 4096
+    }
+  },
+  "avb_system": {
+    "public_file": "system-avb.avbpubkey",
+    "sha256": "4e1dccaf297e4ab87a51133eb31cd0f0933ed2829263417e1b1db45a5801ce7f",
+    "sha1": "33577407ebb5cfb038ac045d1452565f00f3b62d",
+    "algorithm": "SHA256_RSA2048"
+  },
+  "aliases": {
+    "com.android.art": "com.android.art",
+    "com.android.appsearch.apk": "com.android.appsearch.apk",
+    "com.android.adbd": "com.android.adbd",
+    "com.android.virt": "com.android.virt",
+    "com.android.profiling": "com.android.profiling",
+    "com.android.health.connect.backuprestore": "com.android.health.connect.backuprestore",
+    "com.android.i18n": "com.android.i18n",
+    "com.android.configinfrastructure": "com.android.configinfrastructure",
+    "com.android.media": "com.android.media",
+    "shared": "shared",
+    "com.android.ranging.rangingtestapp": "com.android.ranging.rangingtestapp",
+    "com.android.safetycenter.resources": "com.android.safetycenter.resources",
+    "com.android.permission": "com.android.permission",
+    "com.android.bt": "com.android.bt",
+    "com.android.runtime": "com.android.runtime",
+    "com.android.uwb.resources": "com.android.uwb.resources",
+    "media": "media",
+    "com.android.extservices": "com.android.extservices",
+    "com.android.conscrypt": "com.android.conscrypt",
+    "com.android.uwb": "com.android.uwb",
+    "com.android.federatedcompute": "com.android.federatedcompute",
+    "com.android.mediaprovider": "com.android.mediaprovider",
+    "com.android.rkpd": "com.android.rkpd",
+    "com.android.tethering": "com.android.tethering",
+    "com.android.appsearch": "com.android.appsearch",
+    "com.android.adservices": "com.android.adservices",
+    "com.android.telephonycore": "com.android.telephonycore",
+    "com.android.os.statsd": "com.android.os.statsd",
+    "com.android.wifi.resources": "com.android.wifi.resources",
+    "com.android.ondevicepersonalization": "com.android.ondevicepersonalization",
+    "com.android.cellbroadcast": "com.android.cellbroadcast",
+    "com.android.ipsec": "com.android.ipsec",
+    "com.android.healthfitness": "com.android.healthfitness",
+    "com.android.hotspot2.osulogin": "com.android.hotspot2.osulogin",
+    "testkey": "releasekey",
+    "bluetooth": "bluetooth",
+    "com.android.crashrecovery": "com.android.crashrecovery",
+    "com.android.compos": "com.android.compos",
+    "sdk_sandbox": "sdk_sandbox",
+    "com.android.tzdata": "com.android.tzdata",
+    "com.android.vndk": "com.android.vndk",
+    "com.android.wifi": "com.android.wifi",
+    "com.android.scheduling": "com.android.scheduling",
+    "com.android.uprobestats": "com.android.uprobestats",
+    "com.android.nfcservices": "com.android.nfcservices",
+    "platform": "platform",
+    "com.android.connectivity.resources": "com.android.connectivity.resources",
+    "com.android.adservices.api": "com.android.adservices.api",
+    "com.android.devicelock": "com.android.devicelock",
+    "com.android.wifi.dialog": "com.android.wifi.dialog",
+    "com.android.sdkext": "com.android.sdkext",
+    "networkstack": "networkstack",
+    "com.android.resolv": "com.android.resolv",
+    "com.android.healthconnect.controller": "com.android.healthconnect.controller",
+    "com.android.media.swcodec": "com.android.media.swcodec",
+    "nfc": "nfc",
+    "com.android.neuralnetworks": "com.android.neuralnetworks"
+  },
+  "variant": "userdebug",
+  "status": "FIXED_BEFORE_CLEAN_BUILD",
+  "presigned_exceptions": [
+    "Google/other repository PRESIGNED APKs remain original",
+    "standard com.android.apex.cts.shim remains original compatibility fixture"
+  ]
+}

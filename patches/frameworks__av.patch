@@ -1,0 +1,86 @@
+diff --git a/services/audiopolicy/common/managerdefinitions/include/PolicyAudioPort.h b/services/audiopolicy/common/managerdefinitions/include/PolicyAudioPort.h
+index 6b21e9f..d0761c2 100644
+--- a/services/audiopolicy/common/managerdefinitions/include/PolicyAudioPort.h
++++ b/services/audiopolicy/common/managerdefinitions/include/PolicyAudioPort.h
+@@ -98,6 +98,11 @@ public:
+     sp<HwModule> getModule() const { return mModule; }
+ 
+     void addRoute(const sp<AudioRoute> &route) { mRoutes.add(route); }
++    void removeRoute(const sp<AudioRoute> &route) {
++        for (size_t i = mRoutes.size(); i > 0; --i) {
++            if (mRoutes[i - 1] == route) mRoutes.removeAt(i - 1);
++        }
++    }
+     const AudioRouteVector &getRoutes() const { return mRoutes; }
+ 
+ private:
+diff --git a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
+index 6f19a7a..27b7895 100644
+--- a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
++++ b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
+@@ -23,6 +23,7 @@
+ #include <variant>
+ 
+ #include <libxml/parser.h>
++#include <cutils/properties.h>
+ #include <libxml/xinclude.h>
+ #include <media/convert.h>
+ #include <utils/Log.h>
+@@ -766,6 +767,23 @@ std::variant<status_t, ModuleTraits::Element> PolicySerializer::deserialize<Modu
+             }
+         }
+     }
++    if (name == "primary" &&
++            property_get_bool("persist.bluetooth.system_audio_hal.enabled", false)) {
++        for (size_t i = devicePorts.size(); i > 0; --i) {
++            const auto& device = devicePorts[i - 1];
++            if (!audio_is_a2dp_out_device(device->type())) continue;
++            for (size_t j = routes.size(); j > 0; --j) {
++                const auto& route = routes[j - 1];
++                if (route->getSink() != device) continue;
++                route->getSink()->removeRoute(route);
++                for (const auto& source : route->getSources()) source->removeRoute(route);
++                routes.removeAt(j - 1);
++            }
++            devicePorts.removeAt(i - 1);
++        }
++        module->setDeclaredDevices(devicePorts);
++        module->setRoutes(routes);
++    }
+     return module;
+ }
+ 
+@@ -895,6 +913,33 @@ status_t PolicySerializer::deserialize(const char *configFile, AudioPolicyConfig
+     if (status != NO_ERROR) {
+         return status;
+     }
++    if (property_get_bool("persist.bluetooth.system_audio_hal.enabled", false)) {
++        const char* file = version == "1.0"
++                ? "/system/etc/sysbta_audio_policy_configuration.xml"
++                : "/system/etc/sysbta_audio_policy_configuration_7_0.xml";
++        auto systemDoc = make_xmlUnique(xmlParseFile(file));
++        if (systemDoc == nullptr) return BAD_VALUE;
++        auto systemRoot = xmlDocGetRootElement(systemDoc.get());
++        if (systemRoot == nullptr || xmlStrcmp(systemRoot->name, BAD_CAST "module")) {
++            return BAD_VALUE;
++        }
++        auto systemModule = deserialize<ModuleTraits>(systemRoot, config);
++        if (!std::holds_alternative<ModuleTraits::Element>(systemModule)) {
++            return std::get<status_t>(systemModule);
++        }
++        for (auto it = modules.begin(); it != modules.end();) {
++            const std::string name = (*it)->getName();
++            if (name == "a2dp" || name == "a2dpsink" || name == "bluetooth" ||
++                    name == "bluetooth_qti") {
++                it = modules.erase(it);
++            } else {
++                ++it;
++            }
++        }
++        status = ModuleTraits::addElementToCollection(
++                std::get<ModuleTraits::Element>(systemModule), &modules);
++        if (status != NO_ERROR) return status;
++    }
+     config->setHwModules(modules);
+ 
+     // Global Configuration

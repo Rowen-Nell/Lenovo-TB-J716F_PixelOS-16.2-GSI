@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Clear stale forced composition gamut for all four standard user modes.
+         DEFAULT lets managed/enhanced paths select composition from content.
+         DisplayTransformManager still controls mode-specific saturation and
+         managed/enhanced/unmanaged behavior; Saturated stays unmanaged. -->
+    <integer-array name="config_displayCompositionColorModes">
+        <item>0</item> <!-- Natural -->
+        <item>1</item> <!-- Boosted -->
+        <item>2</item> <!-- Saturated -->
+        <item>3</item> <!-- Automatic -->
+    </integer-array>
+    <integer-array name="config_displayCompositionColorSpaces">
+        <item>0</item> <!-- Display.DEFAULT; not a forced sRGB/P3 mode -->
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+</resources>

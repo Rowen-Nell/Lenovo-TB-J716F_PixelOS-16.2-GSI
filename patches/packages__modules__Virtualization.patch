@@ -1,0 +1,17 @@
+diff --git a/build/apex/product_packages.mk b/build/apex/product_packages.mk
+index cee9548..f54ce12 100644
+--- a/build/apex/product_packages.mk
++++ b/build/apex/product_packages.mk
+@@ -38,7 +38,12 @@ PRODUCT_APEX_SYSTEM_SERVER_JARS := com.android.compos:service-compos
+ PRODUCT_SYSTEM_EXT_PROPERTIES := ro.config.isolated_compilation_enabled=true
+ 
+ # Keep in sync with build/microdroid/build.prop
++# TB03 J716F uses stock vendor/kernel without AF_VSOCK; keep local tracing only.
++ifeq ($(TARGET_PRODUCT),pixelos_tb03_arm64_ext4)
++PRODUCT_PRODUCT_PROPERTIES := traced.relay_producer_port=
++else
+ PRODUCT_PRODUCT_PROPERTIES := traced.relay_producer_port=vsock://-1:2010
++endif
+ 
+ PRODUCT_FSVERITY_GENERATE_METADATA := true
+ 

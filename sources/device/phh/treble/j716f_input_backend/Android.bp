@@ -1,0 +1,29 @@
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+android_app {
+    name: "J716fInputBackend",
+    srcs: ["src/**/*.java"],
+    platform_apis: true,
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    required: ["j716f-input-backend-sysconfig"],
+    // Make inheritance expands after leaf PRODUCT_PACKAGES expressions. These
+    // product-installed apps are retired through Android's install override graph.
+    overrides: [
+        "TrebleApp", "Dialer", "GoogleDialer", "Messaging", "messaging",
+        "GoogleMessages", "GoogleContacts", "Contacts", "Stk",
+        "GoogleDialerOverlayCustom", "DeviceDiagnostics", "Traceur",
+        "CtsShimPrebuilt", "CtsShimPrivPrebuilt",
+    ],
+}
+
+prebuilt_etc {
+    name: "j716f-input-backend-sysconfig",
+    src: "sysconfig.xml",
+    filename: "j716f-input-backend.xml",
+    sub_dir: "sysconfig",
+    system_ext_specific: true,
+}
