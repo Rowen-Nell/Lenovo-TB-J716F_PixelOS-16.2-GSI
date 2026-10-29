@@ -5,7 +5,7 @@
 基于 PixelOS 与 Treble 兼容工程，为联想小新 Pad Pro 2021（TB-J716F）适配的 Android 16 系统。沿用 **ZUI15.0.485 的 vendor、底层固件和原厂 Recovery**，配套原厂 boot 的充电电流修补方案。目前仅验证 TB-J716F。
 
 当前版本：**PixelOS-16.2_arm64_20261027.028 (Beta)**
-发布范围：本仓库提供源码修改、构建与安装资料。**系统镜像附件暂未发布**；现有 Google/OEM 二进制再分发及内核对应源码事项尚待确认。后续下载以 [Releases](https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI/releases) 为准。
+发布范围：本仓库提供源码修改、构建与安装资料。**系统镜像附件暂未公开发布**；文件准备在维护者草稿中进行。Google/OEM 闭源依赖说明见 [第三方组件](THIRD-PARTY.md)。后续下载以 [Releases](https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI/releases) 为准。
 
 > 当前为测试 Beta：SELinux **Permissive**，构建类型 **userdebug**，完整安全与长期稳定性验收尚未完成。不是 PixelOS、Lenovo 或 Google 官方发行版。
 
@@ -13,7 +13,7 @@
 
 - [版本说明](RELEASE-NOTES.md) · [文件与 SHA256](SHA256SUMS)
 - **首次安装前阅读 [安装与恢复指南](INSTALL.md)**：从匹配 ZUI15 底座全新安装，首次安装会清除用户数据。
-- [充电 boot 复现](CHARGING-BOOT.md)：从匹配原厂 boot 在电脑上生成修补镜像；原厂 boot 不包含在源码仓库中。
+- [充电 boot 复现](CHARGING-BOOT.md)：原厂和修补 boot 均不作为下载附件提供，请按安装指南从匹配原厂 boot 在电脑上生成。
 
 系统以压缩的 `.img.zst` 形式作为 Release 附件候选提供，解压为 `system.img` 后刷入。源码下载 ZIP 不是刷机包。镜像不提交到 Git 历史。
 

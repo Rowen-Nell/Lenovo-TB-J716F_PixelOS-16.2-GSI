@@ -46,8 +46,8 @@
   },
   {
     "path": "INSTALL.md",
-    "sha256": "6c6fd3db6254b6c8037450b950a85c7b7e3716e6b1418b9615bebb00337da0ee",
-    "bytes": 5477
+    "sha256": "d1daec6d686f5a5523559b52811dfb207a471ca334afe76afe8571a68ee67e7d",
+    "bytes": 6829
   },
   {
     "path": "KNOWN-ISSUES.md",
@@ -121,8 +121,8 @@
   },
   {
     "path": "LICENSES.md",
-    "sha256": "5faa0373a67c7666dd1f5129e654512cb8d1b6afe934c137b765bc7dbf7dfabd",
-    "bytes": 2304
+    "sha256": "1bbaec0cce7536b5018aef29ac81b05de67fac628242206a46aef8fdba72e82c",
+    "bytes": 2716
   },
   {
     "path": "manifest.xml",
@@ -226,8 +226,8 @@
   },
   {
     "path": "README.md",
-    "sha256": "f43c20f55228528e042367d78b304d7559be30eb3483dfa5eac03b9d098783d7",
-    "bytes": 3492
+    "sha256": "eb8480a78a0b862d539c84821acb66e815657f505425fbd8ffc9688333512efd",
+    "bytes": 3549
   },
   {
     "path": "RELEASE-CANDIDATE.md",
@@ -236,8 +236,8 @@
   },
   {
     "path": "release-files.json",
-    "sha256": "4dd3a55f104b4c7b4a97c880fbc4b409ae080e8beb9deb6ab1d84493bd4f0c72",
-    "bytes": 2015
+    "sha256": "6e77d0c40184f3891e207600bb004ea493bae1d0682f872ceffa9486351e3756",
+    "bytes": 2370
   },
   {
     "path": "RELEASE-NOTES.md",
@@ -1033,6 +1033,11 @@
     "path": "TEST-CARD.md",
     "sha256": "a34dc78c5a6f07798d6a6448ab000224c9253d28b85737f759eef0ade0c09c05",
     "bytes": 1373
+  },
+  {
+    "path": "THIRD-PARTY.md",
+    "sha256": "f6e17926c2eb336a760575b54128e77e3740e4cfc8cf1503e1806264261aa3e3",
+    "bytes": 2101
   },
   {
     "path": "tools/reproduce-charging-boot.py",

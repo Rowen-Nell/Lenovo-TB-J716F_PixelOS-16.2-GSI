@@ -4,6 +4,31 @@
 
 当前Permissive/userdebug、安全验收未完成；测试者应知悉。本说明给出已实证路线，不是代替当次设备/分区/数据影响确认的自动刷写脚本。保持BL解锁，不Root、不锁BL、不额外改SELinux/温控/FCC。先备份个人数据；关键分区备份不包含userdata。
 
+## 准备安装文件与本地生成 boot
+
+本版不提供完整原厂或修补 boot 的下载附件。先从匹配的 ZUI15 原厂材料取得 `boot.img`，大小应为 **100,663,296 B**，SHA256 应为：
+
+```text
+84cba57ff27e34669fa34d0b78d776ad621960898cdfbca3c70bcd4645043105
+```
+
+下载本仓库源码，在仓库目录中使用 Python 3 运行：
+
+```text
+python tools/reproduce-charging-boot.py --stock-boot boot.img --check-only
+python tools/reproduce-charging-boot.py --stock-boot boot.img --output boot-r28-charging-current-reg14-experimental.img
+```
+
+将 `boot.img` 换成你实际保存的原厂文件路径；输出文件必须尚不存在。脚本会核对完整输入和输出哈希，不会刷机。生成的修补镜像 SHA256 必须为 `7fc26675bf5f38c58ae4ff877508327dbe8c81671a5159e8f69a01089897a882`。保留原厂输入作为回退文件；执行本文回退命令时，可把示例名 `boot-r28-stock-restore.img` 换为该原厂输入的实际路径。
+
+系统压缩镜像须先解压为 `system.img`，再核对 [SHA256SUMS](SHA256SUMS)。在具备 zstd 的环境可运行：
+
+```text
+zstd -d PixelOS-16.2_arm64_20261027.028-Beta.img.zst -o system.img
+```
+
+以上只准备电脑上的文件。后面的安装顺序仍为先用原厂 boot 启动系统，再安装本地生成的修补 boot，与本机已验证顺序一致。
+
 ## 首次从ZUI15全新安装
 
 已验底座为ZUI15.0.485及其原厂boot、vendor、独立Recovery/fastbootd。先按匹配原厂恢复材料完成ZUI恢复并确认能启动、Recovery入口可用。完整恢复可能影响userdata/metadata、固件与分区表，须另外列清输入/范围；不要盲用一键脚本或旧设备会话。Alpha保留数据迁移不是首发路线。

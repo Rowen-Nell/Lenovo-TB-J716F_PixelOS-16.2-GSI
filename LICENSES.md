@@ -7,3 +7,7 @@ The locally built system image contains Google/prebuilt/vendor project dependenc
 This is an unofficial experimental device adaptation, not a claim of PixelOS/OEM/Google certification. Linux kernel source/device validation, SELinux Enforcing and full encryption/security acceptance remain unfinished final-product gates; Enforcing is paused for the first permissive test Beta. GMS certification, upgrade/rollback and full hardware acceptance remain separate. The paired release retains stock vendor plus a one-byte patched stock precompiled kernel; it is not a source-built kernel.
 
 The paired charging boot and exact stock rollback boot remain external large OEM binaries, not source-repository files. A one-byte Python patch script is not the matching Linux source code and does not by itself settle kernel GPL/source-offer or OEM redistribution obligations. Review the applicable exact binary provenance, corresponding-source/source-offer requirements and notices before a public binary release. Existing local full image hashes are references, not redistribution grants. No private keys are provided or regenerated here.
+
+## Current publication workflow (2026-10-29)
+
+See THIRD-PARTY.md for verified upstream statements and scope. No complete stock or patched boot binary is included as a release asset; users reproduce their own boot locally. No claim of having located exact corresponding kernel source is made. The system image retains Google/prebuilt dependencies and is staged only in a maintainer draft, not publicly released.
