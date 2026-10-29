@@ -45,9 +45,14 @@
     "bytes": 1261
   },
   {
+    "path": "INSTALL-TOOLS.json",
+    "sha256": "fc46b78fdc4c10b8d1588ec0600d948b452da131e57f240f7c60c9c12aa3de4b",
+    "bytes": 1065
+  },
+  {
     "path": "INSTALL.md",
-    "sha256": "d1daec6d686f5a5523559b52811dfb207a471ca334afe76afe8571a68ee67e7d",
-    "bytes": 6829
+    "sha256": "60db92a1021e554e8927f62eeefe161b73894c7ea70e9a1348560891d6d96ef6",
+    "bytes": 8640
   },
   {
     "path": "KNOWN-ISSUES.md",
@@ -226,8 +231,8 @@
   },
   {
     "path": "README.md",
-    "sha256": "4d90bbe57a581710c506bf2d4eb92522f84754ef993f5c526ef33cae9a544452",
-    "bytes": 3504
+    "sha256": "93c7d347a190b2cfa0a05e2ad500650a09e85ebf2be29527f03a4707c2bcf322",
+    "bytes": 3714
   },
   {
     "path": "RELEASE-CANDIDATE.md",
@@ -236,13 +241,13 @@
   },
   {
     "path": "release-files.json",
-    "sha256": "d29e47fc6d172488ee5d6d8831a31207798bfcbb3f20f67693dfff8dba4f176a",
-    "bytes": 2443
+    "sha256": "e07daacc3d7665d93bfaadedf13cc09f8fac203517139846a5ddcecd3838a259",
+    "bytes": 2882
   },
   {
     "path": "RELEASE-NOTES.md",
-    "sha256": "9081f4d6af25f3b9a2e36030a91f998255e5fbc0a465d8a584d5899feed0ad33",
-    "bytes": 2717
+    "sha256": "dee9f7d11c6bb18be3a4e0d9b0f49da210c62517cadc3daabff268c65f6f8892",
+    "bytes": 2734
   },
   {
     "path": "reviewed-history/r23-to-r24/0013-j716f-align-art-preopt-gc.patch",

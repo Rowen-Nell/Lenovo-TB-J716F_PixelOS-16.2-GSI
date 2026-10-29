@@ -12,6 +12,7 @@
 ## 下载与安装
 
 - [版本说明](RELEASE-NOTES.md) · [文件与 SHA256](SHA256SUMS)
+- [安装辅助包](https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI/releases/download/v16.2-20261027.028-beta/J716F-r28-install-tools.zip)：包含本指南配套 vbmeta 与 boot 修补脚本。
 - **首次安装前阅读 [安装与恢复指南](INSTALL.md)**：从匹配 ZUI15 底座全新安装，首次安装会清除用户数据。
 - [充电 boot 复现](CHARGING-BOOT.md)：原厂和修补 boot 均不作为下载附件提供，请按安装指南从匹配原厂 boot 在电脑上生成。
 

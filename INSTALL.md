@@ -1,84 +1,216 @@
-# TB-J716F r28配套安装与原厂boot回退
+# TB-J716F 安装 PixelOS 16.2（Windows）
 
-配套：既有028 system + 当前寄存器修补boot，全部文件名/大小/SHA见release-files.json、SHA256SUMS。raw system 4,337,688,576B；压缩件不是刷写容量；两个完整boot各100,663,296B（96MiB）。源码仓库不提供这些大二进制。
+这篇从 **已经能正常使用的 ZUI15.0.485** 开始。平板必须是 **Lenovo TB-J716F**，Bootloader 已解锁。解锁和恢复 ZUI 不包含在本文中。
 
-当前Permissive/userdebug、安全验收未完成；测试者应知悉。本说明给出已实证路线，不是代替当次设备/分区/数据影响确认的自动刷写脚本。保持BL解锁，不Root、不锁BL、不额外改SELinux/温控/FCC。先备份个人数据；关键分区备份不包含userdata。
+**第一次安装会清空平板里的应用、照片和其他个人文件，请先备份。** 当前是测试 Beta，SELinux 为 Permissive，具体限制见 [已知问题](KNOWN-ISSUES.md)。
 
-## 准备安装文件与本地生成 boot
+整个过程是：**准备文件 → 生成充电修补 boot → 刷入系统 → 清数据并首次开机 → 安装修补 boot。**
 
-本版不提供完整原厂或修补 boot 的下载附件。先从匹配的 ZUI15 原厂材料取得 `boot.img`，大小应为 **100,663,296 B**，SHA256 应为：
+如果已经装好本版、只是补装充电修复，完成第1、2步后直接看第6步，不用重刷系统或清数据。
 
-```text
-84cba57ff27e34669fa34d0b78d776ad621960898cdfbca3c70bcd4645043105
-```
+## 1. 把文件准备到同一个文件夹
 
-下载本仓库源码，在仓库目录中使用 Python 3 运行：
+电脑准备以下工具：
 
-```text
-python tools/reproduce-charging-boot.py --stock-boot boot.img --check-only
-python tools/reproduce-charging-boot.py --stock-boot boot.img --output boot-r28-charging-current-reg14-experimental.img
-```
+- [Android SDK Platform-Tools（Windows版）](https://developer.android.com/tools/releases/platform-tools)：提供 `adb.exe` 和 `fastboot.exe`。
+- [最新版7-Zip](https://www.7-zip.org/)：用于解压 `.zst` 系统镜像和 `.7z` 原厂包。
+- [Python 3（Windows版）](https://www.python.org/downloads/windows/)：只用于在电脑上生成修补 boot，不需要安装额外 Python 库。
 
-将 `boot.img` 换成你实际保存的原厂文件路径；输出文件必须尚不存在。脚本会核对完整输入和输出哈希，不会刷机。生成的修补镜像 SHA256 必须为 `7fc26675bf5f38c58ae4ff877508327dbe8c81671a5159e8f69a01089897a882`。保留原厂输入作为回退文件；执行本文回退命令时，可把示例名 `boot-r28-stock-restore.img` 换为该原厂输入的实际路径。
+再从 [本版下载页](https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI/releases/tag/v16.2-20261027.028-beta) 下载：
 
-系统压缩镜像须先解压为 `system.img`，再核对 [SHA256SUMS](SHA256SUMS)。在具备 zstd 的环境可运行：
+| 文件 | 用来做什么 |
+|---|---|
+| `PixelOS-16.2_arm64_20261027.028-Beta.img.zst` | 系统镜像 |
+| `J716F-r28-install-tools.zip` | 本指南配套的小辅助包，包含 `vbmeta.img` 和 boot 修补脚本 |
+| `SHA256SUMS` | 校验文件 |
 
-```text
-zstd -d PixelOS-16.2_arm64_20261027.028-Beta.img.zst -o system.img
-```
+**还要自行准备原厂 `boot.img`：** 从 `TB_J716F_ZUI_15.0.485.7z` 原厂包的 `image` 文件夹取出。这里要的是原厂文件，不是 Magisk 修改过的 boot。原厂包和完整 boot 不在本版下载附件里。
 
-以上只准备电脑上的文件。后面的安装顺序仍为先用原厂 boot 启动系统，再安装本地生成的修补 boot，与本机已验证顺序一致。
+在电脑上新建一个 `J716F-Flash` 文件夹，留出至少10GB空间，然后：
 
-## 首次从ZUI15全新安装
+1. 把 Platform-Tools 解压后的**所有文件**复制进去，不能只拿两个 exe。
+2. 用7-Zip解压下载的 `.img.zst`，把解压出来的 `.img` 改名为 `system.img`，放进去。
+3. 解压辅助包，把其中的 `vbmeta.img` 和 `reproduce-charging-boot.py` 放进去。
+4. 把原厂 `boot.img` 放进去并保留，后面回退会用到。
 
-已验底座为ZUI15.0.485及其原厂boot、vendor、独立Recovery/fastbootd。先按匹配原厂恢复材料完成ZUI恢复并确认能启动、Recovery入口可用。完整恢复可能影响userdata/metadata、固件与分区表，须另外列清输入/范围；不要盲用一键脚本或旧设备会话。Alpha保留数据迁移不是首发路线。
-
-1. 核对设备TB-J716F、当前槽A/解锁、原厂Recovery及无快照、实际LP组和system容量；运行名J716F、构建输出tb03_arm64、vendor p11_pro_plus不同属预期。解压后必须匹配raw system SHA，不能用压缩大小代替容量。
-2. 从Bootloader执行下列入口，然后确认`is-userspace=yes`，原厂fastbootd product为p11_pro_plus。Bootloader product kona属正常，但**不能在is-userspace=no时执行flash boot_a**，旧BL命令曾返回unknown command。示例中的SERIAL必须换为当次已核设备，不复用他人设备标识。
-
-```text
-fastboot -s SERIAL reboot fastboot
-fastboot -s SERIAL getvar is-userspace
-fastboot -s SERIAL getvar current-slot
-fastboot -s SERIAL getvar unlocked
-fastboot -s SERIAL getvar snapshot-update-status
-```
-
-3. 已验路线为A槽；必须确认current-slot=a、unlocked=yes、snapshot none和实际容量。若不是A或条件不符，停止，不把命令批量换B、不删除product/system_ext或重排分区。按完整范围卡在原厂fastbootd一次写system_a：
+准备好后，文件夹大致如下。Windows请打开“显示文件扩展名”，避免把文件误命名为 `system.img.img`。
 
 ```text
-fastboot -s SERIAL -S 64M flash system_a system.img
+J716F-Flash/
+  adb.exe
+  fastboot.exe
+  AdbWinApi.dll
+  AdbWinUsbApi.dll
+  ...其他 Platform-Tools 文件...
+  system.img
+  vbmeta.img
+  boot.img
+  reproduce-charging-boot.py
 ```
 
-4. 首次GSI安装复用精确教程vbmeta输入（4096B，SHA b3281c527ecf2a6a743b37f5b9e118f492d2038e0a82e6777d292d1c5b42601a，flags2），在已列明数据/安全影响的首次安装范围内写vbmeta_a。该小二进制同样为外部匹配输入；不生成替代密钥或临时修改flags来启动。对应单次命令为`fastboot -s SERIAL flash vbmeta_a vbmeta-input.img`（仅首次全新GSI范围，不在boot-only更新时重刷）。原厂Recovery执行一次明确授权的userdata初始化，再正常启动r28。未匹配输入/恢复流程时不要猜命令。
-5. 首次Android启动后用户自行解锁、启用USB调试并批准自己的RSA提示；没有预授权本机ADB公钥。版本应为PixelOS-16.2_arm64_20261027.028 (Beta)，incremental1793089111。此时沿用原厂boot完成首次启动，再按下一节装配套修补boot，复现已有成功顺序。没有把“两镜像合并前一次首启”冒充已测路线。
+打开这个文件夹，在资源管理器地址栏输入 `powershell` 并回车。**后面的命令都在这个窗口里执行。** 命令前面的 `.\` 表示使用当前文件夹里的文件，不用改成项目路径，也不用填写设备序列号。
 
-## 已运行r28：仅安装配套充电boot，保留userdata
+先检查系统和 vbmeta：
 
-已实证：原厂fastbootd对physical/raw boot_a完整96MiB的Sending 98,304KiB和Writing均成功，随后首启通过。旧BL直接flash拒绝不是充电失败；不要重放该命令。
-
-已在真fastbootd则不来回切模式；在BL用上节reboot fastboot；Android正常时可从已有原厂Recovery入口进入。再次核当前A槽、is-userspace=yes、解锁/无快照、boot_a=0x6000000、raw/physical、下载上限至少完整96MiB（已测256MiB）。核对修补boot SHA，随后仅一次：
-
-```text
-fastboot -s SERIAL flash boot_a boot-r28-charging-current-reg14-experimental.img
-fastboot -s SERIAL reboot
+```powershell
+Get-FileHash .\system.img, .\vbmeta.img -Algorithm SHA256
 ```
 
-boot不加-S64M/force/disable，不resize物理分区或LP，不再写system/vbmeta/vendor/dtbo/recovery，不清数据或切槽。Sending成功而Writing失败不算成功；异常停止，保存日志，不连续重试。
+结果应与下面一致，哈希大小写不影响比较。`system.img` 大小应为 **4,337,688,576 字节**；`vbmeta.img` 为 **4,096 字节**。
 
-首启核正常桌面、boot_completed与核心服务。系统仍为028、内核banner仍4.19.157-perf+，不能单凭版本识别新boot；绑定实际输入SHA、命令/目标、写入成功与新启动记录。已有本机证明不含分区SHA读回，不宣称写后逐字节验证。当前既有用户无需为本次资料整理再次刷写或重测。
+| 文件 | SHA256 |
+|---|---|
+| system.img | `7ec077d2f97d37b0ada486d6de022c3dc575c6bd962c3d38e08c4421ef979ea6` |
+| vbmeta.img | `b3281c527ecf2a6a743b37f5b9e118f492d2038e0a82e6777d292d1c5b42601a` |
 
-## 原厂boot条件回退
+## 2. 在电脑上生成充电修补 boot
 
-回退输入boot-r28-stock-restore.img，96MiB，SHA84cba57ff27e34669fa34d0b78d776ad621960898cdfbca3c70bcd4645043105。它是原boot的精确副本，不是recovery.img。
+执行：
 
-在约定的启动故障/需退出实验等条件且授权覆盖时，通过同一**独立原厂fastbootd**入口、同样前检向同一boot_a槽写一次：
-
-```text
-fastboot -s SERIAL flash boot_a boot-r28-stock-restore.img
-fastboot -s SERIAL reboot
+```powershell
+python .\reproduce-charging-boot.py --stock-boot .\boot.img --output .\boot-patched.img
 ```
 
-从BL必须先reboot fastboot并确认userspace=yes，不能直接BL flash。无法进入原厂Recovery/fastbootd时停止，不自动改走EDL、刷Recovery/ABL或vbmeta。原厂boot回退恢复内核和boot参数，保留r28 system及userdata，不会恢复整个ZUI或撤销其他状态；本次未触发实际回退，不保证未测故障均可恢复。
+成功后，文件夹里会多出 `boot-patched.img`。脚本会自动检查原厂输入和生成结果，**这一条命令不会刷平板**。
 
-本机亮屏PPS已改善，“无改善再ZUI”条件未触发，不自动恢复ZUI或清数据。若未来有新的具体故障，保留有限证据再决定下一完整范围。Google基础使用已通过，不要求重复登记/清Google数据；认证与Integrity另属未完成项。
+如果提示 Python 不存在，先完成 Python 安装并重新打开 PowerShell；如果提示 boot 不匹配，重新检查原厂包和取出的文件。若输出文件已经存在，不要反复生成，先确认是否就是前面成功生成的文件。
+
+## 3. 从 ZUI 进入 fastbootd
+
+电脑只连接这一台安卓设备，关闭安卓模拟器。在平板的“关于平板”里连续点击7次“版本号”，按提示开启开发者选项，再在开发者选项中打开 USB 调试。连接电脑后，同意平板弹出的 USB 调试授权。
+
+先执行：
+
+```powershell
+.\adb.exe devices
+```
+
+列表中应只有这台平板，后面是 `device`。若显示 `unauthorized`，先在平板上同意授权；列表为空则先处理连接或驱动，暂不刷写。
+
+然后执行：
+
+```powershell
+.\adb.exe reboot fastboot
+```
+
+平板会重启到刷机界面。接着执行下面四条检查命令：
+
+```powershell
+.\fastboot.exe getvar is-userspace
+.\fastboot.exe getvar current-slot
+.\fastboot.exe getvar unlocked
+.\fastboot.exe getvar snapshot-update-status
+```
+
+应看到：
+
+| 检查项 | 正确结果 |
+|---|---|
+| is-userspace | `yes`，表示现在是 fastbootd |
+| current-slot | `a`，本指南只覆盖已验证的A槽路线 |
+| unlocked | `yes`，表示Bootloader已解锁 |
+| snapshot-update-status | `none` |
+
+**fastbootd 和 Bootloader fastboot 是两个界面，不能只看电脑能识别就开始刷。** 如果 `is-userspace` 是 `no`，先运行下面这条切换，再重新检查：
+
+```powershell
+.\fastboot.exe reboot fastboot
+```
+
+其他结果不符合表格时，先停在这里确认底座状态，不要自行切槽或删除分区。
+
+## 4. 写入系统和 vbmeta
+
+**每次只执行一条，上一条成功后再执行下一条。** 写入过程中保持USB连接。
+
+先刷系统：
+
+```powershell
+.\fastboot.exe -S 64M flash system_a .\system.img
+```
+
+系统较大，会显示多段 `Sending` / `Writing`。等整个命令结束，确认没有 `FAILED`，再刷 vbmeta：
+
+```powershell
+.\fastboot.exe flash vbmeta_a .\vbmeta.img
+```
+
+两条均成功后，进入原厂 Recovery：
+
+```powershell
+.\fastboot.exe reboot recovery
+```
+
+这里保留原厂 vendor、Recovery 和其他固件；不需要另外刷 product/system_ext，也不需要手动调整分区大小。
+
+## 5. 在 Recovery 清数据，然后首次启动
+
+这一步需要在**平板屏幕**操作：
+
+1. 选择“清除数据 / 恢复出厂”并确认。菜单文字会随 Recovery 语言有所不同，目标是清除用户数据。
+2. 等操作完成，选择 `Reboot system now`（重启系统）。
+3. 等待 PixelOS 初始设置向导，完成设置并进入桌面。
+
+第一次开机可能较慢。如果15分钟仍无法进入设置向导，或一直反复重启，停止继续刷写，保留报错信息反馈。
+
+**先完成这次首次启动，再安装下面的充电修补 boot。** 这与本机实际验证的安装顺序一致。
+
+## 6. 安装充电修补 boot
+
+在 PixelOS 中重新开启 USB 调试，同意电脑授权。仍使用原来的 PowerShell 窗口和刷机文件夹。
+
+先让平板进入 Bootloader：
+
+```powershell
+.\adb.exe reboot bootloader
+```
+
+等界面切换完成，再进入 fastbootd：
+
+```powershell
+.\fastboot.exe reboot fastboot
+```
+
+确认下面两项仍为 `yes` 和 `a`：
+
+```powershell
+.\fastboot.exe getvar is-userspace
+.\fastboot.exe getvar current-slot
+```
+
+然后刷入第2步生成的文件：
+
+```powershell
+.\fastboot.exe flash boot_a .\boot-patched.img
+```
+
+成功后重启：
+
+```powershell
+.\fastboot.exe reboot
+```
+
+回到桌面后，在“关于平板”中确认版本为 **PixelOS-16.2_arm64_20261027.028 (Beta)**，安装完成。保留刷机文件夹里的原厂 `boot.img` 作为回退文件。
+
+## 如果装修补 boot 后出现问题
+
+以下只回退 boot，**不会把整个系统恢复成 ZUI**。
+
+在还能进入原厂 fastbootd 的前提下，先确认 `is-userspace: yes`、`current-slot: a`，然后执行：
+
+```powershell
+.\fastboot.exe flash boot_a .\boot.img
+```
+
+成功后执行 ` .\fastboot.exe reboot `。如果当前停在 Bootloader fastboot，先执行 ` .\fastboot.exe reboot fastboot ` 进入 fastbootd。无法进入原厂 fastbootd 时，需要另行处理原厂恢复，不继续尝试写其他分区。
+
+## 常见卡点
+
+| 现象 | 怎么处理 |
+|---|---|
+| PowerShell 说找不到 adb/fastboot | 确认在刷机文件夹打开窗口，并使用带 `.\` 的命令 |
+| `waiting for any device` | 先处理USB连接和ADB/Fastboot驱动，检查电脑是否只连接这一台设备 |
+| `flash boot_a` 返回 `unknown command` | 先查 `is-userspace`，本机应在 fastbootd 中写 boot，不能在 Bootloader 界面直接写 |
+| 提示分区空间不足或写入 `FAILED` | 保存完整输出，先确认ZUI15底座；不要靠删除 product/system_ext 或反复清数据处理 |
+
+辅助包的文件清单和校验值见 [INSTALL-TOOLS.json](INSTALL-TOOLS.json)。需要了解 boot 修补原理，再看 [技术说明](CHARGING-BOOT.md)；正常安装不需要阅读内部核验报告。

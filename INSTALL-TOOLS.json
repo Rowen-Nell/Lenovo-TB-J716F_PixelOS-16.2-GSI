@@ -1,0 +1,36 @@
+{
+  "filename": "J716F-r28-install-tools.zip",
+  "bytes": 10003,
+  "sha256": "52254a7f8429afc583de821828f547481741697d88fd65120171c7a0265eb45d",
+  "entries": [
+    {
+      "name": "reproduce-charging-boot.py",
+      "bytes": 5045,
+      "sha256": "aee7a64789501ba7c72aa2d1387f45f38041569f6ca4e8381e0b72290eab15a5"
+    },
+    {
+      "name": "vbmeta.img",
+      "bytes": 4096,
+      "sha256": "b3281c527ecf2a6a743b37f5b9e118f492d2038e0a82e6777d292d1c5b42601a"
+    },
+    {
+      "name": "LICENSE.txt",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "name": "README.txt",
+      "bytes": 734,
+      "sha256": "a0f27ef01d2426449aa15a7965690d617af5c79c04316df175be3dafb4a999c9"
+    },
+    {
+      "name": "CONTENTS.json",
+      "bytes": 1001,
+      "sha256": "134c2800347a5ceb1f9a8c11ef3390612a41c147ce5a6d7247e0dff4177c895e"
+    }
+  ],
+  "original_script_unchanged": true,
+  "original_vbmeta_unchanged": true,
+  "private_data_included": false,
+  "automatic_flashing_script_included": false
+}

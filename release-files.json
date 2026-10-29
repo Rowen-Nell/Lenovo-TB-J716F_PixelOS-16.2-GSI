@@ -33,6 +33,14 @@
       "sha256": "84cba57ff27e34669fa34d0b78d776ad621960898cdfbca3c70bcd4645043105",
       "in_source_repository": false,
       "release_asset_planned": false
+    },
+    {
+      "role": "installation_tools",
+      "filename": "J716F-r28-install-tools.zip",
+      "bytes": 10003,
+      "sha256": "52254a7f8429afc583de821828f547481741697d88fd65120171c7a0265eb45d",
+      "in_source_repository": false,
+      "release_asset_planned": true
     }
   ],
   "external_prerequisites": [
@@ -44,7 +52,8 @@
     {
       "role": "existing_tested_tutorial_vbmeta_input",
       "bytes": 4096,
-      "sha256": "b3281c527ecf2a6a743b37f5b9e118f492d2038e0a82e6777d292d1c5b42601a"
+      "sha256": "b3281c527ecf2a6a743b37f5b9e118f492d2038e0a82e6777d292d1c5b42601a",
+      "provided_in": "J716F-r28-install-tools.zip/vbmeta.img"
     }
   ],
   "security": {
@@ -66,5 +75,6 @@
     "boot": "local_reproduction_only_no_complete_boot_asset",
     "checksums": "expected_hashes_include_local_boot_outputs"
   },
-  "release_url": "https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI/releases/tag/v16.2-20261027.028-beta"
+  "release_url": "https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI/releases/tag/v16.2-20261027.028-beta",
+  "installation_guide": "INSTALL.md (corrected Windows walkthrough; production images unchanged)"
 }
