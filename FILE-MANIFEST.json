@@ -51,8 +51,8 @@
   },
   {
     "path": "KNOWN-ISSUES.md",
-    "sha256": "c04a0bacffca9c54057d815194b0f68577e81dde5d48d0fdeadfd3b58ac38b03",
-    "bytes": 1902
+    "sha256": "15ed7626f719eca7e350f28cd0ddda9faaee20a5fdb230b5230d15af30a75184",
+    "bytes": 1996
   },
   {
     "path": "LICENSE",
@@ -121,8 +121,8 @@
   },
   {
     "path": "LICENSES.md",
-    "sha256": "1bbaec0cce7536b5018aef29ac81b05de67fac628242206a46aef8fdba72e82c",
-    "bytes": 2716
+    "sha256": "8777f1ba5f09a950c16a7f715a31f8277d17deab18a2be17af51a4ce1a899b12",
+    "bytes": 2792
   },
   {
     "path": "manifest.xml",
@@ -226,23 +226,23 @@
   },
   {
     "path": "README.md",
-    "sha256": "eb8480a78a0b862d539c84821acb66e815657f505425fbd8ffc9688333512efd",
-    "bytes": 3549
+    "sha256": "4d90bbe57a581710c506bf2d4eb92522f84754ef993f5c526ef33cae9a544452",
+    "bytes": 3504
   },
   {
     "path": "RELEASE-CANDIDATE.md",
-    "sha256": "1404a73977ee17ba66947f9352bc58aa903c4120ea073ffb3fee9ec9d80aab4f",
-    "bytes": 688
+    "sha256": "e41d181af5cd3da9baf2adbe091241e02f8a2f5c5deb8fee970b07230425dad3",
+    "bytes": 758
   },
   {
     "path": "release-files.json",
-    "sha256": "6e77d0c40184f3891e207600bb004ea493bae1d0682f872ceffa9486351e3756",
-    "bytes": 2370
+    "sha256": "d29e47fc6d172488ee5d6d8831a31207798bfcbb3f20f67693dfff8dba4f176a",
+    "bytes": 2443
   },
   {
     "path": "RELEASE-NOTES.md",
-    "sha256": "aa38ba965db1d80fa1dd03496188c9b5e3d90d4589dcd8e5553d1cbd267a2467",
-    "bytes": 2663
+    "sha256": "9081f4d6af25f3b9a2e36030a91f998255e5fbc0a465d8a584d5899feed0ad33",
+    "bytes": 2717
   },
   {
     "path": "reviewed-history/r23-to-r24/0013-j716f-align-art-preopt-gc.patch",
@@ -1036,8 +1036,8 @@
   },
   {
     "path": "THIRD-PARTY.md",
-    "sha256": "f6e17926c2eb336a760575b54128e77e3740e4cfc8cf1503e1806264261aa3e3",
-    "bytes": 2101
+    "sha256": "106c628915a7e9ef225bdc9dc4c94d1813d521e100db36e30e867c95c096c672",
+    "bytes": 2149
   },
   {
     "path": "tools/reproduce-charging-boot.py",

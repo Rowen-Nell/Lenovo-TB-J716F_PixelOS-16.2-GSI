@@ -5,7 +5,7 @@
 基于 PixelOS 与 Treble 兼容工程，为联想小新 Pad Pro 2021（TB-J716F）适配的 Android 16 系统。沿用 **ZUI15.0.485 的 vendor、底层固件和原厂 Recovery**，配套原厂 boot 的充电电流修补方案。目前仅验证 TB-J716F。
 
 当前版本：**PixelOS-16.2_arm64_20261027.028 (Beta)**
-发布范围：本仓库提供源码修改、构建与安装资料。**系统镜像附件暂未公开发布**；文件准备在维护者草稿中进行。Google/OEM 闭源依赖说明见 [第三方组件](THIRD-PARTY.md)。后续下载以 [Releases](https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI/releases) 为准。
+发布范围：本仓库提供源码修改、构建与安装资料，系统镜像与校验文件见 [Beta Release](https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI/releases/tag/v16.2-20261027.028-beta)。Google/OEM 闭源依赖说明见 [第三方组件](THIRD-PARTY.md)。
 
 > 当前为测试 Beta：SELinux **Permissive**，构建类型 **userdebug**，完整安全与长期稳定性验收尚未完成。不是 PixelOS、Lenovo 或 Google 官方发行版。
 
