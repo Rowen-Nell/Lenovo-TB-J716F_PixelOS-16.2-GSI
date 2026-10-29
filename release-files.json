@@ -1,0 +1,59 @@
+{
+  "version": "PixelOS-16.2_arm64_20261027.028 (Beta)",
+  "status": "FIRST_TEST_BETA_PENDING_CENTRAL_REVIEW_NOT_UPLOADED",
+  "files": [
+    {
+      "role": "system_raw",
+      "filename": "system.img",
+      "bytes": 4337688576,
+      "sha256": "7ec077d2f97d37b0ada486d6de022c3dc575c6bd962c3d38e08c4421ef979ea6",
+      "in_source_repository": false
+    },
+    {
+      "role": "system_zstd",
+      "filename": "PixelOS-16.2_arm64_20261027.028-Beta.img.zst",
+      "bytes": 2059450674,
+      "sha256": "fc836378d820c436e126714e64c87b883c5f221d977781f190e07e629f56881b",
+      "in_source_repository": false
+    },
+    {
+      "role": "experimental_boot",
+      "filename": "boot-r28-charging-current-reg14-experimental.img",
+      "bytes": 100663296,
+      "sha256": "7fc26675bf5f38c58ae4ff877508327dbe8c81671a5159e8f69a01089897a882",
+      "in_source_repository": false
+    },
+    {
+      "role": "stock_recovery_boot",
+      "filename": "boot-r28-stock-restore.img",
+      "bytes": 100663296,
+      "sha256": "84cba57ff27e34669fa34d0b78d776ad621960898cdfbca3c70bcd4645043105",
+      "in_source_repository": false
+    }
+  ],
+  "external_prerequisites": [
+    {
+      "role": "matching_ZUI15_stock_boot",
+      "bytes": 100663296,
+      "sha256": "84cba57ff27e34669fa34d0b78d776ad621960898cdfbca3c70bcd4645043105"
+    },
+    {
+      "role": "existing_tested_tutorial_vbmeta_input",
+      "bytes": 4096,
+      "sha256": "b3281c527ecf2a6a743b37f5b9e118f492d2038e0a82e6777d292d1c5b42601a"
+    }
+  ],
+  "security": {
+    "selinux": "Permissive",
+    "enforcing_work": "paused by owner for first test Beta",
+    "security_acceptance_complete": false,
+    "build_variant": "userdebug"
+  },
+  "charging": {
+    "feedback": "PASS_BOUNDED_SCENE",
+    "screen_on_pps_external_power_watts_approx": 18,
+    "all_conditions_tested": false
+  },
+  "kernel_source_built": false,
+  "large_binary_files_in_repository": false
+}

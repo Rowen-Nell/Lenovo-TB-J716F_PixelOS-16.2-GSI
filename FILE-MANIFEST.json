@@ -6,18 +6,23 @@
   },
   {
     "path": "BUILD.md",
-    "sha256": "1c0d9079ea4447054150c7be437a3f7c307159572c46614c70ac3a7348d0482b",
-    "bytes": 3954
+    "sha256": "6de073433896724873304621a6fb5b2a7432c2b74be469434448dd9f9d91f7b7",
+    "bytes": 5212
+  },
+  {
+    "path": "CHARGING-BOOT.md",
+    "sha256": "0f4d7650dbbbb1dc27aaed60e8e77b68455cc51e2a73c586f89c325c4c91930b",
+    "bytes": 2794
   },
   {
     "path": "INSTALL.md",
-    "sha256": "38a6515804dc6c9916a87ea7b44a6eab8de24006ab6de68e8e6af20c65e1eda0",
-    "bytes": 1321
+    "sha256": "6c6fd3db6254b6c8037450b950a85c7b7e3716e6b1418b9615bebb00337da0ee",
+    "bytes": 5477
   },
   {
     "path": "KNOWN-ISSUES.md",
-    "sha256": "eb0dfb7680814adc2c15304df421a6101a756e7d248eddc0271ecb793f898bbe",
-    "bytes": 1278
+    "sha256": "2d1023c3ea4c2c3f36c712b14a35ec166c7e7b38c90a288ac8b913cedcd37feb",
+    "bytes": 1863
   },
   {
     "path": "LICENSE",
@@ -26,8 +31,8 @@
   },
   {
     "path": "LICENSES.md",
-    "sha256": "56230811a885b2cabac6632bfe4d88a9950113ed11a5b0827b2421443349da30",
-    "bytes": 1616
+    "sha256": "5faa0373a67c7666dd1f5129e654512cb8d1b6afe934c137b765bc7dbf7dfabd",
+    "bytes": 2304
   },
   {
     "path": "PREINSTALLED-APPS.md",
@@ -36,23 +41,33 @@
   },
   {
     "path": "PRIVACY.md",
-    "sha256": "ddbd6eb7dfee733ce781a394495ac225745c89d8ef1f0671a6a64d7428441b92",
-    "bytes": 699
+    "sha256": "09b706af3759c26eb7cd4f1ae78da88cd4e6251b5f4735575e0a8b2d80c9bca1",
+    "bytes": 939
   },
   {
     "path": "README.md",
-    "sha256": "295be9055b60c3b1a087cb739846c4256764a288563a4d2239b4965cb5e5bfd4",
-    "bytes": 975
+    "sha256": "3971cc47de0c6f05dedc5ce8d7434946437c8d35a3b192209a6e91dd698647a1",
+    "bytes": 1883
   },
   {
     "path": "RELEASE-CANDIDATE.md",
-    "sha256": "01d2d1ccfa5741c4169b8940d72acc690c602d0d32eb60169f36c2c8d0edfce9",
-    "bytes": 566
+    "sha256": "52f3d23bfca82c4a7c3925be79f221709746aa8c4942f8c50aa4a0033c1f9c17",
+    "bytes": 897
+  },
+  {
+    "path": "SHA256SUMS",
+    "sha256": "7def99b57eaf999c3720530cea1decb58873241c22e330509f703c25fdd73a60",
+    "bytes": 396
   },
   {
     "path": "TEST-CARD.md",
-    "sha256": "299177f866655200396b30368ea59c0685d2c6377f1576eed6873033a1664d7b",
-    "bytes": 2035
+    "sha256": "a34dc78c5a6f07798d6a6448ab000224c9253d28b85737f759eef0ade0c09c05",
+    "bytes": 1373
+  },
+  {
+    "path": "VALIDATED-RESULTS.md",
+    "sha256": "bbd1894d21ce4f8ebe16a8f2dce23fd61b3daa50fe831f78e348400d91548fc5",
+    "bytes": 2630
   },
   {
     "path": "apply.py",
@@ -66,8 +81,13 @@
   },
   {
     "path": "build-reference.sh",
-    "sha256": "b4bb2206d557e91645ec98a7012311c6dcac16ae28ef4c37cae04b89859ac104",
-    "bytes": 689
+    "sha256": "c03c9f0437837f769fb8255c1d5667811cda608eaa2a069dff9dfa06d4243e1d",
+    "bytes": 1495
+  },
+  {
+    "path": "charging-boot-lock.json",
+    "sha256": "3bcce43a65cdc10b1fa69a191abf68541a7a8491d5fc775a8d5d5036ab99f98d",
+    "bytes": 1115
   },
   {
     "path": "exclusions.json",
@@ -223,6 +243,11 @@
     "path": "patches/vendor__lineage.patch",
     "sha256": "122904038fd24dc0c0bea401289f3e81a264129ee29ffaf4e9eb0ad822afc341",
     "bytes": 822
+  },
+  {
+    "path": "release-files.json",
+    "sha256": "9d80e2dd15475596323768a97629f215eea3a4c2e803602e5943a0ebc379bd5c",
+    "bytes": 1907
   },
   {
     "path": "reviewed-history/r23-to-r24/0013-j716f-align-art-preopt-gc.patch",
@@ -1003,5 +1028,10 @@
     "path": "sources/packages/apps/Settings/src/com/android/settings/inputmethod/J716fPointerStylePreferenceController.java",
     "sha256": "a8a7d811e5cf8e183e4c6e9984fcb8dd4c73fd870644568c4aa2c5a13ab9af56",
     "bytes": 2419
+  },
+  {
+    "path": "tools/reproduce-charging-boot.py",
+    "sha256": "aee7a64789501ba7c72aa2d1387f45f38041569f6ca4e8381e0b72290eab15a5",
+    "bytes": 5045
   }
 ]

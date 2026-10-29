@@ -1,0 +1,34 @@
+{
+  "format": "Android boot v2, page 4096, AVB NONE",
+  "stock_boot": {
+    "role": "stock_recovery_boot",
+    "filename": "boot-r28-stock-restore.img",
+    "bytes": 100663296,
+    "sha256": "84cba57ff27e34669fa34d0b78d776ad621960898cdfbca3c70bcd4645043105",
+    "in_source_repository": false
+  },
+  "patched_boot": {
+    "role": "experimental_boot",
+    "filename": "boot-r28-charging-current-reg14-experimental.img",
+    "bytes": 100663296,
+    "sha256": "7fc26675bf5f38c58ae4ff877508327dbe8c81671a5159e8f69a01089897a882",
+    "in_source_repository": false
+  },
+  "kernel": {
+    "bytes": 39528464,
+    "original_sha256": "a60d6de51822a18358ad005991bb11c08b34e0e66f28589cdab738902eb7d46c",
+    "patched_sha256": "51fe3b7f48a4100f20336601b3c91452886dfafc458eb45543f680b8a9d7612f",
+    "raw_offset": "0x24a465c",
+    "boot_offset": "0x24a565c",
+    "before": "72",
+    "after": "14"
+  },
+  "whole_boot_difference_bytes": 53,
+  "integrity_fields": {
+    "legacy_id_offset": 576,
+    "legacy_id_bytes": 20,
+    "avb_sha256_offset": 42291624,
+    "avb_sha256_bytes": 32
+  },
+  "binary_patch_not_source_kernel": true
+}
