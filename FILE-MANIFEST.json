@@ -231,13 +231,13 @@
   },
   {
     "path": "RELEASE-CANDIDATE.md",
-    "sha256": "e8db8530ad56e70d70668eb02a8c4fc045b2774b3bd17fd3e75c035161d18ed0",
-    "bytes": 570
+    "sha256": "1404a73977ee17ba66947f9352bc58aa903c4120ea073ffb3fee9ec9d80aab4f",
+    "bytes": 688
   },
   {
     "path": "release-files.json",
-    "sha256": "9d80e2dd15475596323768a97629f215eea3a4c2e803602e5943a0ebc379bd5c",
-    "bytes": 1907
+    "sha256": "4dd3a55f104b4c7b4a97c880fbc4b409ae080e8beb9deb6ab1d84493bd4f0c72",
+    "bytes": 2015
   },
   {
     "path": "RELEASE-NOTES.md",

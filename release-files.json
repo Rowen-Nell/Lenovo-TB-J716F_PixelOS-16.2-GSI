@@ -1,6 +1,6 @@
 {
   "version": "PixelOS-16.2_arm64_20261027.028 (Beta)",
-  "status": "FIRST_TEST_BETA_PENDING_CENTRAL_REVIEW_NOT_UPLOADED",
+  "status": "SOURCE_PUBLISHED_BINARY_RELEASE_DRAFT",
   "files": [
     {
       "role": "system_raw",
@@ -55,5 +55,7 @@
     "all_conditions_tested": false
   },
   "kernel_source_built": false,
-  "large_binary_files_in_repository": false
+  "large_binary_files_in_repository": false,
+  "repository_url": "https://github.com/Rowen-Nell/Lenovo-TB-J716F_PixelOS-16.2-GSI",
+  "binary_assets_published": false
 }
