@@ -1,5 +1,13 @@
-# Privacy scope
+# 公开内容与隐私核验
 
-The candidate contains source increments, public certificates, manifests, sanitized result summaries and host-only reproduction scripts. It does not copy host/device identifiers, account/GSF/network data, private raw logs/screenshots, backup files, private signing keys or original private Git histories. The new charging reproduction script takes a SHA-pinned external stock boot; no OEM boot/kernel/system/APK large binary enters this repository. Current public history derives only from the previously sanitized root plus this reviewed documentation/script update.
+本仓库公开源码修改、构建清单、项目测试摘要和公开签名证书。私人设备日志、截图、账号、GSF ID、网络资料、备份、主机 ADB 授权密钥及发布私钥不在公开范围内。
 
-Existing image privacy proofs are reused with unchanged image references; this round scans new/changed source-publication content and Git history, not the device or unchanged ROM. No upload, device inventory or cleanup is performed. Private original evidence stays local. Scans do not establish Google/OEM binary redistribution rights; see LICENSES.md.
+2026-10-29 复核了当时公开的8次提交及其245个文件对象，连同 Git 二进制补丁解码后的6段数据、安装辅助包内5个文件和 Release 说明。未发现已知私人主机/设备标识、测试机 GSF ID、完整私钥或常见访问令牌。后续本次文档增补另行复核。
+
+提交作者为 `TB-J716F Project <build@tb-j716f.invalid>`；这是项目名和占位邮箱。上游版权文件保留原作者署名，不视为项目作者的身份信息。`signing-public` 中的证书和公钥用于校验签名，可以公开；证书主体使用项目名，含通用国家代码 `SG`，没有真实姓名、私人邮箱或街道地址。私钥未公开。
+
+系统镜像未因本次文档更新而改变，沿用此前与该版本字节绑定的隐私检查结果：包含原始镜像、文件和应用/APEX内部内容的检查。此结论有明确检查范围，不代表对所有未知形式的敏感信息作绝对保证。
+
+每位使用者遇到 Google 服务登记要求时，提交自己当前系统的 GSF ID 给 Google；不复用作者的数据。请勿将 ID、账号、令牌或未脱敏完整日志发到 GitHub Issue。具体操作见 [安装指南](INSTALL.md#7-google-服务遇到未认证拦截时自行注册)。
+
+第三方组件许可另见 [LICENSES.md](LICENSES.md)。隐私检查不等于第三方再分发许可或 Google 认证。

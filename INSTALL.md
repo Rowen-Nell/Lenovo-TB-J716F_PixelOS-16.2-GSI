@@ -192,6 +192,46 @@ python .\reproduce-charging-boot.py --stock-boot .\boot.img --output .\boot-patc
 
 回到桌面后，在“关于平板”中确认版本为 **PixelOS-16.2_arm64_20261027.028 (Beta)**，安装完成。保留刷机文件夹里的原厂 `boot.img` 作为回退文件。
 
+## 7. Google 服务：遇到未认证拦截时自行注册
+
+首次使用时，如果 Google 登录、Play 商店或 Chrome 被“此设备未经 Google Play 保护机制认证”提示拦住，可能需要先登记**这次安装生成的 GSF ID**。能正常使用时无需为了这个步骤重新注册。
+
+这是 Google 为自定义 ROM 用户提供的设备登记入口。本项目此前已在一台测试机上完成登记并验证 Google 登录、Play 下载和 Chrome 基础使用；这不是所有设备或应用均可用的保证。
+
+### 获取自己平板当前的 GSF ID
+
+平板联网、解锁并开启 USB 调试，在前面的刷机文件夹打开 PowerShell。下面的命令只读取信息，不需要 Root，也不修改系统。
+
+先执行这行，它只保留 GMS 诊断结果中的 ID 字段：
+
+```powershell
+$gsf = .\adb.exe shell dumpsys activity provider com.google.android.gms/.gservices.provider.GservicesProvider | Select-String '^\s*AndroidId\s*:\s*(?:0x)?([0-9a-fA-F]+)\s*$'
+```
+
+如果没有匹配结果，或者显示权限错误，先停止这一步并反馈错误文字；GMS 更新后可能不再开放该诊断字段。不要把完整诊断输出发到公开 Issue。
+
+有且只有一条匹配时，执行下面这行，把诊断字段中的十六进制值转为登记使用的十进制数字：
+
+```powershell
+[Convert]::ToUInt64($gsf.Matches[0].Groups[1].Value, 16).ToString()
+```
+
+这个诊断接口曾在本项目测试环境中成功读取；不是 Google 承诺长期提供的接口。**GSF ID 不是序列号，也不是 `settings get secure android_id` 的结果。**
+
+### 在 Google 官网登记
+
+1. 在电脑浏览器打开 [Google 自定义 ROM 设备登记页](https://www.google.com/android/uncertified/)，登录自己的 Google 账号。
+2. 将上一步的数字填入 **Google Services Framework Android ID**，按网页提示完成验证并注册。
+3. 确认网页接受登记，等待生效后，在平板正常打开 Google 应用并登录，分别确认账号登录、Play 下载和 Chrome 是否可用。生效时间以 Google 服务为准。
+
+每位使用者只登记自己的当前 ID，不要复用作者、其他设备或旧 ZUI 的 ID。清除用户数据或重新初始化 Google 服务后，ID 可能改变；此时如果再次遇到拦截，重新读取当前值再判断是否需要登记。**普通升级不等于一定要重新登记。**
+
+GSF ID 只在本机查看并提交给 Google，不要附在 GitHub Issue、公开截图、源码或镜像中。本仓库不包含作者的 GSF ID 或账号数据。
+
+登记解决的是自定义 ROM 使用 Google 服务时可能遇到的拦截，**不等于 ROM 获得 Google 认证，也不保证 Play Integrity 通过**。Play 商店仍可能显示“设备未通过认证”，部分应用仍可能受限；不要为改变这行文字清除 Google 数据或重新锁定 Bootloader。
+
+参考：[Google 对自定义 ROM 用户的登记提示](https://www.google.com/android/uncertified/warningauto)、[Google 设备认证说明](https://support.google.com/googleplay/answer/7165974?hl=zh-Hans)。
+
 ## 如果装修补 boot 后出现问题
 
 以下只回退 boot，**不会把整个系统恢复成 ZUI**。

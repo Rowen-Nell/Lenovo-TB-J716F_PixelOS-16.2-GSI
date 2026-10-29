@@ -51,13 +51,13 @@
   },
   {
     "path": "INSTALL.md",
-    "sha256": "60db92a1021e554e8927f62eeefe161b73894c7ea70e9a1348560891d6d96ef6",
-    "bytes": 8640
+    "sha256": "97ff4bae5ba5ab6dd5a2a5015b01b2eb559bbb56fc7ba2e365e955e82d9f8c30",
+    "bytes": 11745
   },
   {
     "path": "KNOWN-ISSUES.md",
-    "sha256": "15ed7626f719eca7e350f28cd0ddda9faaee20a5fdb230b5230d15af30a75184",
-    "bytes": 1996
+    "sha256": "ad49d2069ca30044929b0427caddb064be68fc42a7258dfd3947f89ba7feee9d",
+    "bytes": 2449
   },
   {
     "path": "LICENSE",
@@ -226,13 +226,13 @@
   },
   {
     "path": "PRIVACY.md",
-    "sha256": "09b706af3759c26eb7cd4f1ae78da88cd4e6251b5f4735575e0a8b2d80c9bca1",
-    "bytes": 939
+    "sha256": "9cbc6ade369e21b7aa69adf5ba9ede566d3ce1d4e17bde5a3a04fc5517eefdb1",
+    "bytes": 1642
   },
   {
     "path": "README.md",
-    "sha256": "93c7d347a190b2cfa0a05e2ad500650a09e85ebf2be29527f03a4707c2bcf322",
-    "bytes": 3714
+    "sha256": "4fad6d28adb062147bc14f6c0343b9090bf25fc77f9d94ee24636cd786f43ac4",
+    "bytes": 3940
   },
   {
     "path": "RELEASE-CANDIDATE.md",
